@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - FreshCatch</title>
+    <link rel="stylesheet" href="/styles/add_to_cart.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="container">
+        <div class="logo">🐟 FreshCatch</div>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="offers.html">Special Offers</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="add-to-cart.html">Cart</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="page-header">
+      <h1>Shopping Cart</h1>
+      <p>Review your items and checkout</p>
+    </section>
+
+    <div class="container">
+      <div class="cart-wrapper">
+        <div class="cart-items">
+          <h2>Your Items (3)</h2>
+
+          <div class="cart-item">
+            <div class="item-image"></div>
+            <div class="item-details">
+              <h3>Fresh Salmon</h3>
+              <p>Atlantic salmon, rich in omega-3 fatty acids</p>
+              <div class="quantity-control">
+                <button class="quantity-btn">-</button>
+                <span class="quantity-display">2</span>
+                <button class="quantity-btn">+</button>
+                <span style="margin-left: 1rem; color: #666">kg</span>
+              </div>
+            </div>
+            <div class="item-price">
+              <div class="price">₹1,700</div>
+              <button class="remove-btn">Remove</button>
+            </div>
+          </div>
+
+          <div class="cart-item">
+            <div class="item-image"></div>
+            <div class="item-details">
+              <h3>Tiger Prawns</h3>
+              <p>Large succulent prawns, fresh from the sea</p>
+              <div class="quantity-control">
+                <button class="quantity-btn">-</button>
+                <span class="quantity-display">1</span>
+                <button class="quantity-btn">+</button>
+                <span style="margin-left: 1rem; color: #666">kg</span>
+              </div>
+            </div>
+            <div class="item-price">
+              <div class="price">₹1,200</div>
+              <button class="remove-btn">Remove</button>
+            </div>
+          </div>
+
+          <div class="cart-item">
+            <div class="item-image"></div>
+            <div class="item-details">
+              <h3>Mud Crab</h3>
+              <p>Large meaty crabs, perfect for curry</p>
+              <div class="quantity-control">
+                <button class="quantity-btn">-</button>
+                <span class="quantity-display">1.5</span>
+                <button class="quantity-btn">+</button>
+                <span style="margin-left: 1rem; color: #666">kg</span>
+              </div>
+            </div>
+            <div class="item-price">
+              <div class="price">₹2,250</div>
+              <button class="remove-btn">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <h2>Order Summary</h2>
+
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>₹5,150</span>
+          </div>
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span>₹50</span>
+          </div>
+          <div class="summary-row">
+            <span>Discount</span>
+            <span style="color: #28a745">-₹0</span>
+          </div>
+
+          <div class="promo-input">
+            <input type="text" placeholder="Enter promo code" />
+            <button class="apply-btn">Apply</button>
+          </div>
+
+          <div class="summary-row total">
+            <span>Total</span>
+            <span>₹5,200</span>
+          </div>
+
+          <button class="checkout-btn">Proceed to Checkout</button>
+          <div class="continue-shopping">
+            <a href="menu.html">← Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 FreshCatch. All rights reserved.</p>
+      <p>📞 +91-9876543210 | 📧 info@freshcatch.com</p>
+    </footer>
+  </body>
+</html>
