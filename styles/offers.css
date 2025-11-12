@@ -53,7 +53,7 @@ nav a:hover {
 }
 
 .page-header {
-  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  background: linear-gradient(135deg, #46b8ff, #aee283);
   color: white;
   text-align: center;
   padding: 60px 20px;
@@ -100,7 +100,6 @@ nav a:hover {
 .offer-img {
   width: 100%;
   height: 250px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,17 +201,12 @@ footer {
   margin-top: 4rem;
 }
 
-@media (max-width: 768px) {
-  nav ul {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
+.offer-img img {
+  height: 230px;
+  width: 350px;
+  border-radius: 20px;
+}
 
-  .page-header h1 {
-    font-size: 2rem;
-  }
-
-  .offers-grid {
-    grid-template-columns: 1fr;
-  }
+.offer-card:hover{
+  transform: translateY(-5px);
 }
