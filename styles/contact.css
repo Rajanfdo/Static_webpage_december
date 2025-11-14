@@ -14,7 +14,7 @@ body {
 nav {
   background: linear-gradient(135deg, #0077be, #00a8e8);
   padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgb(73, 73, 73);
   position: sticky;
   top: 0;
   z-index: 1000;
