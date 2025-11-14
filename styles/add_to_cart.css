@@ -97,9 +97,6 @@ nav a:hover {
   align-items: center;
 }
 
-
-
-
 .item-details h3 {
   color: #0077be;
   margin-bottom: 0.5rem;
@@ -297,11 +294,8 @@ footer {
   margin-top: 4rem;
 }
 
-
-
 .item-image img {
   height: 170px;
   width: 170px;
   border-radius: 20px;
 }
-
