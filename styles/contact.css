@@ -114,10 +114,6 @@ nav a:hover {
 }
 
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
-}
 
 .submit-btn {
   width: 100%;
