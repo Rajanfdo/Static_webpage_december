@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import Users, Fish, Orders, OrderTracking, Category
 from schemas import FishCreate, FishOut, OrderOut
+from models import Admin
+from schemas import AdminCreate, AdminOut
 
 router = APIRouter()
 
@@ -14,6 +16,39 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+
+@router.post("/create", response_model=AdminOut)
+def create_admin(payload: AdminCreate, db: Session = Depends(get_db)):
+
+    existing_admin = db.query(Admin).filter(Admin.email == payload.email).first()
+    if existing_admin:
+        raise HTTPException(status_code=400, detail="Admin already exists")
+
+    admin = Admin(**payload.dict())
+    db.add(admin)
+    db.commit()
+    db.refresh(admin)
+
+    return admin
+
+
+@router.post("/login")
+def admin_login(email: str, password: str, db: Session = Depends(get_db)):
+
+    admin = db.query(Admin).filter(Admin.email == email).first()
+
+    if not admin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+
+    if admin.password != password:
+        raise HTTPException(status_code=401, detail="Invalid password")
+
+    return {
+        "message": "Admin login successful",
+        "admin_id": admin.id
+    }
 
 
 
