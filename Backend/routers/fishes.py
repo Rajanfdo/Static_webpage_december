@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from Backend.database import SessionLocal
-from Backend.models import Fish, Category
-from Backend.schemas import FishCreate, FishOut
+from database import SessionLocal
+from models import Fish, Category
+from schemas import FishCreate, FishOut
 
 router = APIRouter()
 
