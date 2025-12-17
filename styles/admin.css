@@ -11,7 +11,7 @@ body {
   background: linear-gradient(135deg, #f1f5f9, #e9f5f8);
 }
 
-/* ========== SIDEBAR ========== */
+
 .sidebar {
   width: 240px;
   background: linear-gradient(180deg, #1c53d3, #1098ad);
@@ -51,13 +51,13 @@ body {
   font-weight: bold;
 }
 
-/* ========== MAIN CONTENT ========== */
+
 .main-content {
   flex: 1;
   padding: 30px;
 }
 
-/* ========== TOP BAR ========== */
+
 .topbar {
   background: #fff;
   padding: 18px 25px;
@@ -79,7 +79,7 @@ body {
   font-size: 14px;
 }
 
-/* ========== STATS CARDS ========== */
+
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -137,7 +137,6 @@ body {
   color: #0b7285;
 }
 
-/* ========== TABLE ========== */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -169,7 +168,7 @@ tbody tr:hover {
   background: #e6f7f9;
 }
 
-/* ========== STATUS COLORS ========== */
+
 .success {
   color: #2b8a3e;
   font-weight: bold;
