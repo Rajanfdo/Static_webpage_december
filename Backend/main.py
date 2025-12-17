@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from database import Base, engine  
 from routers import (
     admin , login, users, address, categories,
-    fishes, orders, order_items, order_tracking, reviews
+    fishes, orders, order_items, reviews
 )
 
 Base.metadata.create_all(bind=engine)
@@ -20,7 +20,6 @@ app.include_router(categories.router, prefix="/api/categories", tags=["categorie
 app.include_router(fishes.router, prefix="/api/fishes", tags=["fishes"])
 app.include_router(orders.router, prefix="/api/orders", tags=["orders"])
 app.include_router(order_items.router, prefix="/api/order-items", tags=["order-items"])
-app.include_router(order_tracking.router, prefix="/api/order-tracking", tags=["order-tracking"])
 app.include_router(reviews.router, prefix="/api/reviews", tags=["reviews"])
 
 

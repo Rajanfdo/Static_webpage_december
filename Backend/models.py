@@ -2,6 +2,10 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Date
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from database import Base
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+from database import Base
+
 
 
 class Login(Base):
@@ -90,18 +94,6 @@ class OrderItem(Base):
     fish = relationship("Fish", back_populates="order_items")
 
 
-class OrderTracking(Base):
-    __tablename__ = "order_tracking"
-    order_id = Column(Integer, primary_key=True, index=True)
-    login_id = Column(Integer, ForeignKey("login.login_id"))
-    category_id = Column(Integer, ForeignKey("categories.category_id"))
-    address_id = Column(Integer, ForeignKey("address.address_id"))
-    order_date = Column(DateTime, default=datetime.utcnow)
-    status = Column(String(50))
-
-    login = relationship("Login", back_populates="order_tracking")
-    category = relationship("Category", back_populates="order_tracking")
-    address = relationship("Address", back_populates="order_tracking")
 
 
 class Review(Base):
@@ -116,9 +108,7 @@ class Review(Base):
     fish = relationship("Fish", back_populates="reviews")
 
 
-from sqlalchemy import Column, Integer, String, DateTime
-from datetime import datetime
-from database import Base
+
 
 class Admin(Base):
     __tablename__ = "admin"

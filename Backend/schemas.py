@@ -120,19 +120,6 @@ class OrderOut(BaseModel):
         orm_mode = True
 
 
-class OrderTrackingCreate(BaseModel):
-    order_id: int
-    login_id: int
-    category_id: int
-    address_id: int
-    status: str
-
-
-class OrderTrackingOut(OrderTrackingCreate):
-    order_date: datetime
-
-    class Config:
-        orm_mode = True
 
 
 class ReviewCreate(BaseModel):
