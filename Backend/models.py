@@ -17,7 +17,7 @@ class Login(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     addresses = relationship("Address", back_populates="login")
-    order_tracking = relationship("OrderTracking", back_populates="login")
+    
 
 
 class Address(Base):
@@ -31,7 +31,7 @@ class Address(Base):
     country = Column(String(100))
 
     login = relationship("Login", back_populates="addresses")
-    order_tracking = relationship("OrderTracking", back_populates="address")
+    
 
 
 class Users(Base):
@@ -55,7 +55,7 @@ class Category(Base):
     description = Column(Text)
 
     fishes = relationship("Fish", back_populates="category")
-    order_tracking = relationship("OrderTracking", back_populates="category")
+   
 
 
 class Fish(Base):
@@ -118,3 +118,34 @@ class Admin(Base):
     email = Column(String(150), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# models/cart.py (or models.py la add pannalam)
+
+from sqlalchemy import Column, Integer, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from database import Base
+
+
+class Cart(Base):
+    __tablename__ = "cart"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), unique=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("Users")
+    items = relationship("CartItem", back_populates="cart", cascade="all, delete")
+
+
+class CartItem(Base):
+    __tablename__ = "cart_item"
+
+    id = Column(Integer, primary_key=True, index=True)
+    cart_id = Column(Integer, ForeignKey("cart.id"))
+    fish_id = Column(Integer, ForeignKey("fishes.id"))
+    quantity = Column(Integer, default=1)
+
+    cart = relationship("Cart", back_populates="items")
+    fish = relationship("Fish")

@@ -88,13 +88,4 @@ def admin_list_orders(db: Session = Depends(get_db)):
 
 
 
-@router.put("/order-status/{order_id}")
-def admin_update_order_status(order_id: int, status: str, db: Session = Depends(get_db)):
-    tracking = db.query(OrderTracking).filter(OrderTracking.order_id == order_id).first()
 
-    if not tracking:
-        raise HTTPException(status_code=404, detail="Order tracking not found")
-
-    tracking.status = status
-    db.commit()
-    return {"message": "Order status updated", "new_status": status}

@@ -41,23 +41,3 @@ def get_fish(fish_id: int, db: Session = Depends(get_db)):
     return f
 
 
-@router.put("/{fish_id}", response_model=FishOut)
-def update_fish(fish_id: int, payload: FishCreate, db: Session = Depends(get_db)):
-    f = db.query(Fish).filter(Fish.id == fish_id).first()
-    if not f:
-        raise HTTPException(status_code=404, detail="Fish not found")
-    for k, v in payload.dict().items():
-        setattr(f, k, v)
-    db.commit()
-    db.refresh(f)
-    return f
-
-
-@router.delete("/{fish_id}")
-def delete_fish(fish_id: int, db: Session = Depends(get_db)):
-    f = db.query(Fish).filter(Fish.id == fish_id).first()
-    if not f:
-        raise HTTPException(status_code=404, detail="Fish not found")
-    db.delete(f)
-    db.commit()
-    return {"detail": "Fish deleted"}

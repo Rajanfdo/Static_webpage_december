@@ -153,3 +153,40 @@ class AdminOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+
+
+from pydantic import BaseModel
+from typing import List
+from datetime import datetime
+
+
+
+class CartItemCreate(BaseModel):
+    fish_id: int
+    quantity: int = 1
+
+
+class CartItemOut(BaseModel):
+    id: int
+    fish_id: int
+    quantity: int
+
+    class Config:
+        orm_mode = True
+
+
+class CartCreate(BaseModel):
+    user_id: int
+    items: List[CartItemCreate]
+
+
+class CartOut(BaseModel):
+    id: int
+    user_id: int
+    created_at: datetime
+    items: List[CartItemOut] = []
+
+    class Config:
+        orm_mode = True
