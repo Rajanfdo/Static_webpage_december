@@ -33,7 +33,6 @@ def admin_login(email: str, password: str, db: Session = Depends(get_db)):
 
 @router.post("/fish", response_model=FishOut)
 def admin_add_fish(payload: FishCreate, db: Session = Depends(get_db)):
-    # Check category
     if payload.category_id:
         cat = db.query(Category).filter(Category.category_id == payload.category_id).first()
         if not cat:
