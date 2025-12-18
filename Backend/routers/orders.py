@@ -35,7 +35,7 @@ def create_order(payload: OrderCreate, db: Session = Depends(get_db)):
             raise HTTPException(status_code=404, detail=f"Fish {it.fish_id} not found")
         oi = OrderItem(order_id=order.id, fish_id=it.fish_id, quantity=it.quantity)
         db.add(oi)
-        # optionally decrease stock
+    
         if fish.stock is not None:
             fish.stock = max(0, fish.stock - it.quantity)
         db.commit()
