@@ -270,21 +270,6 @@ nav a:hover {
   margin-bottom: 1rem;
 }
 
-.shop-now-btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background: #ff6b35;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  margin-top: 1rem;
-  transition: background 0.3s;
-}
-
-.shop-now-btn:hover {
-  background: #e55a2a;
-}
 
 footer {
   background: #1a1a1a;

@@ -23,10 +23,3 @@ app.include_router(cart.router, prefix="/api/cart", tags=["cart"])
 app.include_router(orders.router, prefix="/api/orders", tags=["orders"])
 app.include_router(order_items.router, prefix="/api/order-items", tags=["order-items"])
 app.include_router(reviews.router, prefix="/api/reviews", tags=["reviews"])
-
-
-
-
-    
-
-
