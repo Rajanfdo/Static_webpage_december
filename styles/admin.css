@@ -88,7 +88,7 @@ body {
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  transition: all 0.3s;
   position: relative;
   overflow: hidden;
 }
