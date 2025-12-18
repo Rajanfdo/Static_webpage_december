@@ -17,14 +17,7 @@ def get_db():
 
 @router.post("/", response_model=UserOut)
 def create_user(payload: UserCreate, db: Session = Depends(get_db)):
-    user = Users(
-        name=payload.name,
-        email=payload.email,
-        password=payload.password,
-        role=payload.role,
-        phone=payload.phone,
-        address=payload.address
-    )
+    user = Users(**payload.dict())
     db.add(user)
     db.commit()
     db.refresh(user)

@@ -45,11 +45,7 @@ body {
   transform: translateX(6px);
 }
 
-.sidebar ul li.active {
-  background: #ffffff;
-  color: #0b7285;
-  font-weight: bold;
-}
+
 
 
 .main-content {
@@ -97,15 +93,7 @@ body {
   overflow: hidden;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(90deg, #0b7285, #38d9a9);
-}
+
 
 .card:hover {
   transform: translateY(-6px);
@@ -124,7 +112,6 @@ body {
   color: #0b7285;
 }
 
-/* ========== TABLE SECTION ========== */
 .table-section {
   background: #fff;
   padding: 25px;
