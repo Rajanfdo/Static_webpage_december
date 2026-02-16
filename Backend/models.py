@@ -2,9 +2,10 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Date
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from database import Base
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime,Text
 from datetime import datetime
 from database import Base
+
 
 
 
@@ -31,6 +32,8 @@ class Address(Base):
     country = Column(String(100))
 
     login = relationship("Login", back_populates="addresses")
+   
+    
     
 
 
@@ -62,6 +65,7 @@ class Fish(Base):
     __tablename__ = "fishes"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(200))
+    price = Column(Integer)
     description = Column(Text)
     stock = Column(Integer)
     catch_date = Column(Date)
@@ -119,7 +123,7 @@ class Admin(Base):
     password = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-# models/cart.py (or models.py la add pannalam)
+
 
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
@@ -148,3 +152,14 @@ class CartItem(Base):
 
     cart = relationship("Cart", back_populates="items")
     fish = relationship("Fish")
+
+
+class ContactUs(Base):
+    __tablename__ = "contactus"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(150), nullable=False)
+    email = Column(String(200), nullable=False)
+    subject = Column(String(255), nullable=False)
+    message = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

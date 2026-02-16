@@ -3,6 +3,8 @@ from typing import Optional, List
 from datetime import datetime, date
 from pydantic import BaseModel
 from typing import List
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 
 
@@ -188,6 +190,25 @@ class CartOut(BaseModel):
     user_id: int
     created_at: datetime
     items: List[CartItemOut] = []
+
+    class Config:
+        orm_mode = True
+
+
+
+class ContactUsCreate(BaseModel):
+    name: str
+    email: EmailStr
+    subject: str
+    message: str
+
+class ContactUsOut(BaseModel):
+    id: int
+    name: str
+    email: str
+    subject: str
+    message: str
+    created_at: datetime
 
     class Config:
         orm_mode = True

@@ -1,96 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Dashboard - FreshCatch</title>
-  <link rel="stylesheet" href="./styles/admin.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - FreshCatch</title>
+    <link rel="stylesheet" href="./styles/admin.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <h2>🐟 Admin Panel</h2>
+      <ul>
+        <li class="active">Dashboard</li>
+        <li>Manage Products</li>
+        <li><a href="/add-to-cart.html">orders</a></li>
+        <li>Customers</li>
+        <li><a href="/offers.html">special offers</a></li>
+        <li>Reports</li>
+        <li><a href="/index.html">Logout</a></li>
+      </ul>
+    </aside>
 
-  
-  <aside class="sidebar">
-    <h2>🐟 Admin Panel</h2>
-    <ul>
-      <li class="active">Dashboard</li>
-      <li>Manage Products</li>
-      <li><a href="/add-to-cart.html">orders</a></li>
-      <li>Customers</li>
-      <li><a href="/offers.html">special offers</a></li>
-      <li>Reports</li>
-      <li><a href="/index.html">Logout</a></li>
-    </ul>
-  </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Welcome, Admin</h1>
+        <span>FreshCatch Management</span>
+      </header>
 
- 
-  <main class="main-content">
+      <section class="stats">
+        <div class="card">
+          <h3>Total Orders</h3>
+          <p>1,245</p>
+        </div>
+        <div class="card">
+          <h3>Total Products</h3>
+          <p>28</p>
+        </div>
+        <div class="card">
+          <h3>Customers</h3>
+          <p>820</p>
+        </div>
+        <div class="card">
+          <h3>Revenue</h3>
+          <p>₹4,85,000</p>
+        </div>
+      </section>
 
-    
-    <header class="topbar">
-      <h1>Welcome, Admin</h1>
-      <span>FreshCatch Management</span>
-    </header>
-
-  
-    <section class="stats">
-      <div class="card">
-        <h3>Total Orders</h3>
-        <p>1,245</p>
-      </div>
-      <div class="card">
-        <h3>Total Products</h3>
-        <p>28</p>
-      </div>
-      <div class="card">
-        <h3>Customers</h3>
-        <p>820</p>
-      </div>
-      <div class="card">
-        <h3>Revenue</h3>
-        <p>₹4,85,000</p>
-      </div>
-    </section>
-
-
-    <section class="table-section">
-      <h2>Recent Orders</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Item</th>
-            <th>Amount</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#FC101</td>
-            <td>Rajan</td>
-            <td>Salmon</td>
-            <td>₹1700</td>
-            <td class="success">Delivered</td>
-          </tr>
-          <tr>
-            <td>#FC102</td>
-            <td>Kumar</td>
-            <td>Tiger Prawns</td>
-            <td>₹1200</td>
-            <td class="pending">Pending</td>
-          </tr>
-          <tr>
-            <td>#FC103</td>
-            <td>Arun</td>
-            <td>Mud Crab</td>
-            <td>₹2250</td>
-            <td class="cancel">Cancelled</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-  </main>
-
-</body>
+      <section class="table-section">
+        <h2>Recent Orders</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Item</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#FC101</td>
+              <td>Rajan</td>
+              <td>Salmon</td>
+              <td>₹1700</td>
+              <td class="success">Delivered</td>
+            </tr>
+            <tr>
+              <td>#FC102</td>
+              <td>Kumar</td>
+              <td>Tiger Prawns</td>
+              <td>₹1200</td>
+              <td class="pending">Pending</td>
+            </tr>
+            <tr>
+              <td>#FC103</td>
+              <td>Arun</td>
+              <td>Mud Crab</td>
+              <td>₹2250</td>
+              <td class="cancel">Cancelled</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
 </html>
