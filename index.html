@@ -1,116 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menu - FreshCatch</title>
-    <style>
-      nav {
-        background: linear-gradient(135deg, #0077be, #00a8e8);
-        padding: 1rem 0;
-        box-shadow: 0 2px 10px rgb(73, 73, 73);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-      nav .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      nav .logo {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: white;
-      }
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 2rem;
-      }
-      nav a {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        transition: opacity 0.3s;
-      }
-      nav a:hover {
-        opacity: 0.8;
-      }
-      .menu-card {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        padding: 20px;
-        background-color: #f5f5f5;
-      }
-
-      .menu-card > div {
-        background: #fff;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        transition:
-          transform 0.3s,
-          box-shadow 0.3s;
-      }
-
-      .menu-card > div:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-      }
-
-      .menu-card img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        border-radius: 12px;
-      }
-
-      .menu-card h2 {
-        font-size: 1.2rem;
-        color: #0077be;
-      }
-
-      .menu-card p:nth-of-type(1) {
-        font-size: 0.9rem;
-        color: #666;
-        min-height: 50px;
-      }
-
-      .menu-card p:nth-of-type(2) {
-        font-weight: 600;
-        color: #28a745;
-      }
-
-      .menu-card p:nth-of-type(3) {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #ff6b35;
-      }
-
-      .menu-card button {
-        margin-top: auto;
-        padding: 12px;
-        background: #ff6b35;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      .menu-card button:hover {
-        background: #e55a2a;
-      }
-    </style>
+    <title>FreshCoastel - Premium Fish Delivery</title>
+    <link rel="stylesheet" href="./styles/home.css" />
   </head>
   <body>
     <nav>
@@ -129,147 +23,85 @@
       </div>
     </nav>
 
-    <div class="menu-card" id="menu-card"></div>
+    <section class="hero">
+      <h1>Fresh Fish Delivered to Your Door</h1>
+      <p>Premium quality seafood, caught daily and delivered fresh</p>
+      <a href="./menu.html" class="btn">Order Now</a>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>Why Choose FreshCatch?</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎣</div>
+            <h3>Daily Fresh Catch</h3>
+            <p>All our fish are caught daily from sustainable sources</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚚</div>
+            <h3>Fast Delivery</h3>
+            <p>Same-day delivery available in your area</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💯</div>
+            <h3>Quality Guaranteed</h3>
+            <p>100% satisfaction guarantee or your money back</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌊</div>
+            <h3>Sustainable Fishing</h3>
+            <p>We care about ocean conservation</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="popular">
+      <div class="container">
+        <h2>Popular Items</h2>
+        <div class="fish-grid">
+          <div class="fish-card">
+            <div class="fish-img"><img src="/assets/salmon.jpeg"></div>
+            <div class="fish-info">
+              <h3>Fresh Salmon</h3>
+              <p>Atlantic salmon, rich in omega-3</p>
+              <div class="price">₹850/kg</div>
+              <a href="./add-to-cart.html" class="btn">Add to Cart</a>
+            </div>
+          </div>
+          <div class="fish-card">
+            <div class="fish-img"><img src="/assets/Raw-Black-Tiger-Shrimp-Shellon_B.jpg"></div>
+            <div class="fish-info">
+              <h3>Tiger Prawns</h3>
+              <p>Large, succulent prawns</p>
+              <div class="price">₹1200/kg</div>
+              <a href="./add-to-cart.html" class="btn">Add to Cart</a>
+            </div>
+          </div>
+          <div class="fish-card">
+            <div class="fish-img"><img src="/assets/tunafish.webp"></div>
+            <div class="fish-info">
+              <h3>Tuna Steak</h3>
+              <p>Premium quality tuna</p>
+              <div class="price">₹950/kg</div>
+              <a href="./add-to-cart.html" class="btn">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 FreshCatch. All rights reserved.</p>
+        <p>📞 +91-9876543210 | 📧 info@freshcatch.com</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">📷</a>
+          <a href="#">🐦</a>
+        </div>
+      </div>
+    </footer>
   </body>
-  <script>
-    const menuCard = document.getElementById("menu-card");
-
-    fetch("http://127.0.0.1:8000/api/fishes")
-      .then((res) => res.json())
-      .then((Neymar_Jr) => {
-        console.log(Neymar_Jr);
-        display(Neymar_Jr);
-      });
-    // const seafoodMenu = [
-    //   {
-    //     name: "Fresh Salmon",
-    //     price: 850,
-    //     unit: "kg",
-    //     image:
-    //       "https://cambaytiger-media.farziengineer.co/products/Norwegian_Salmon_Whole_1-9bc232bb5cce.png",
-    //     stock: "In Stock",
-    //     details:
-    //       "Atlantic salmon, rich in omega-3 fatty acids. Very healthy and perfect for grilling or pan-fry.",
-    //   },
-    //   {
-    //     name: "Tiger Prawns",
-    //     price: 1200,
-    //     unit: "kg",
-    //     image:
-    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0xyoZJ3cpSBegUiV2lRu9mgtG8CFHYizMQ&s",
-    //     stock: "In Stock",
-    //     details:
-    //       "Large succulent tiger prawns, fresh from the sea. Ideal for fry, curry, and grills.",
-    //   },
-    //   {
-    //     name: "Tuna Steak",
-    //     price: 950,
-    //     unit: "kg",
-    //     image: "https://www.nuste.in/cdn/shop/files/tunafish.png?v=1710501908",
-    //     stock: "In Stock",
-    //     details:
-    //       "Premium quality tuna steak, perfect for grilling and searing with spices.",
-    //   },
-    //   {
-    //     name: "Lobster",
-    //     price: 2500,
-    //     unit: "kg",
-    //     image:
-    //       "https://img.freepik.com/free-photo/top-view-mix-fresh-fishes-ice_23-2148295251.jpg?semt=ais_hybrid&w=740&q=80",
-    //     stock: "In Stock",
-    //     details:
-    //       "Fresh lobster, a luxury seafood item mainly used for special occasions.",
-    //   },
-    //   {
-    //     name: "Mud Crab",
-    //     price: 1500,
-    //     unit: "kg",
-    //     image:
-    //       "https://media.istockphoto.com/id/476899600/photo/two-raw-seabass-with-spices-on-an-old-wooden-background.jpg?s=612x612&w=0&k=20&c=j5_XpOQjJNRxEwQ4FvpKXvYO0n_s4dh7IQ0RWIp23z8=",
-    //     stock: "In Stock",
-    //     details:
-    //       "Large meaty mud crabs, perfect for spicy South Indian crab curry.",
-    //   },
-    //   {
-    //     name: "Squid",
-    //     price: 650,
-    //     unit: "kg",
-    //     image:
-    //       "https://t4.ftcdn.net/jpg/01/85/38/17/360_F_185381723_iLyNfQRVZg6Sk8FsZjst1pZtY6dYaPZ9.jpg",
-    //     stock: "In Stock",
-    //     details:
-    //       "Fresh squid, best suited for frying, grilling, or making calamari.",
-    //   },
-    //   {
-    //     name: "Pomfret",
-    //     price: 750,
-    //     unit: "kg",
-    //     image:
-    //       "https://static.vecteezy.com/system/resources/previews/032/018/593/large_2x/variety-of-fresh-fish-photo.jpg",
-    //     stock: "In Stock",
-    //     details:
-    //       "White pomfret, a South Indian favorite known for its soft meat and taste.",
-    //   },
-    //   {
-    //     name: "Seer Fish",
-    //     price: 800,
-    //     unit: "kg",
-    //     image:
-    //       "https://static.vecteezy.com/system/resources/previews/032/018/593/large_2x/variety-of-fresh-fish-photo.jpg",
-    //     stock: "In Stock",
-    //     details:
-    //       "Seer fish (Vanjaram), excellent for curry, tawa fry, and grilling.",
-    //   },
-    //   {
-    //     name: "Octopus",
-    //     price: 700,
-    //     stock: "kg",
-    //     image:
-    //       "https://thumbs.dreamstime.com/b/octobus-reader-eat-octopus-ice-reader-consumption-right-now-246895963.jpg",
-    //     stock: "In Stock",
-    //     details: "Fresh octopus, tender and flavorful when cooked properly.",
-    //   },
-    // ];
-
-
-    // name": "string",
-    // "description": "string",
-    // "stock": 0,
-    // "catch_date": "2026-02-16",
-    // "category_id": 0,
-    // "id"
-
-    // seafoodMenu.forEach(createMenuItem);
-
-    function display(data) {
-      data.forEach(createMenuItem);
-
-      function createMenuItem(value) {
-        const container = document.createElement("div");
-
-        const image = document.createElement("img");
-        const heading = document.createElement("h2");
-        const description = document.createElement("p");
-        const stock = document.createElement("p");
-        const price = document.createElement("p");
-        const button = document.createElement("button");
-
-        heading.innerText = value.name;
-        image.src = value.image;
-        description.innerText = value.details;
-        stock.innerText = value.stock;
-        price.innerText = `Price: ₹${value.price} per ${value.unit}`;
-        button.innerText = "Add to Cart";
-
-        container.appendChild(image);
-        container.appendChild(heading);
-        container.appendChild(description);
-        container.appendChild(stock);
-        container.appendChild(price);
-        container.appendChild(button);
-
-        menuCard.appendChild(container);
-      }
-    }
-  </script>
 </html>

@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 username = "postgres"
 password = "AcademyRootPassword"
 port = "5432"
-db_name = "project_api"
+db_name = "full_project"
 hostname = "localhost"
 
 DB_URL = f"postgresql+psycopg2://{username}:{password}@{hostname}:{port}/{db_name}"

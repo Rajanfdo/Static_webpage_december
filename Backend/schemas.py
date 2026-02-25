@@ -12,6 +12,7 @@ from datetime import datetime
 
 
 
+
 class LoginCreate(BaseModel):
     username: str
     email: Optional[str]
@@ -80,19 +81,24 @@ class CategoryOut(CategoryCreate):
 
 
 
+
+
 class FishCreate(BaseModel):
     name: str
-    description: Optional[str]
+    description: Optional[str] = None
     stock: int
-    catch_date: Optional[date]
-    category_id: Optional[int]
+    category_id: Optional[int] = None
+    price: Optional[int] = None
+    img_url: Optional[str] = None
+
 
 
 class FishOut(FishCreate):
     id: int
 
-    class Config:
-        orm_mode = True
+model_config = {
+    "from_attributes": True
+}
 
 
 

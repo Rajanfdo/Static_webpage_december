@@ -65,12 +65,12 @@ class Fish(Base):
     __tablename__ = "fishes"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(200))
-    price = Column(Integer)
     description = Column(Text)
     stock = Column(Integer)
-    catch_date = Column(Date)
     category_id = Column(Integer, ForeignKey("categories.category_id"))
-
+    price = Column(Integer)
+    img_url = Column(String)
+    
     category = relationship("Category", back_populates="fishes")
     order_items = relationship("OrderItem", back_populates="fish")
     reviews = relationship("Review", back_populates="fish")
