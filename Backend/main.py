@@ -10,7 +10,7 @@ origins = [
     "http://127.0.0.1:5502",   # your frontend
     "http://localhost:5502"
 ]
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)   
 
 app = FastAPI(title="FishStore API")
 

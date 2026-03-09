@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCoastal - Menu</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        color: #333;
+      }
+      nav {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .nav-links a:hover {
+        opacity: 0.75;
+      }
+      .nav-links a.active {
+        border-bottom: 2px solid white;
+      }
+      .hero {
+        background:
+          linear-gradient(rgba(0, 119, 190, 0.7), rgba(0, 168, 232, 0.7)),
+          url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200")
+            center/cover;
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 16px;
+      }
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 28px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 13px 36px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn:hover {
+        background: #d9620f;
+      }
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+      .btn-outline {
+        display: inline-block;
+        padding: 13px 36px;
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 12px;
+      }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .filter-bar {
+        background: #f2f4f5;
+        padding: 20px;
+      }
+      .filter-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .cat-btn {
+        padding: 8px 20px;
+        border-radius: 20px;
+        border: 2px solid #0077be;
+        background: transparent;
+        color: #0077be;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.88rem;
+      }
+      .cat-btn.active {
+        background: #0077be;
+        color: white;
+      }
+      .section {
+        padding: 60px 20px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        color: #0077be;
+        margin-bottom: 40px;
+      }
+      .text-center {
+        text-align: center;
+        margin-top: 32px;
+      }
+      .fish-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+      }
+      .fish-card {
+        background: white;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
+      .fish-card img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+      }
+      .fish-body {
+        padding: 16px;
+      }
+      .fish-body h3 {
+        margin-bottom: 6px;
+      }
+      .fish-body p {
+        color: #777;
+        font-size: 0.88rem;
+        margin-bottom: 8px;
+      }
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .fish-price {
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+      .stock-badge {
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.76rem;
+        font-weight: 600;
+      }
+      .in-stock {
+        background: #d4edda;
+        color: #155724;
+      }
+      .out-stock {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      .fish-btn {
+        width: 100%;
+        padding: 10px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .fish-btn:hover {
+        background: #d9620f;
+      }
+      .fish-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+      .banner {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 60px 20px;
+        text-align: center;
+        color: white;
+      }
+      .banner h2 {
+        font-size: 1.9rem;
+        margin-bottom: 12px;
+      }
+      .banner p {
+        font-size: 1.05rem;
+        margin-bottom: 24px;
+        opacity: 0.9;
+      }
+      footer {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 36px 20px;
+      }
+      footer p {
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin: 10px 0;
+      }
+      .footer-links a {
+        color: #aaa;
+        font-size: 0.88rem;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: #00a8e8;
+      }
+      #toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        display: none;
+        z-index: 9999;
+      }
+      #toast.error {
+        background: #dc3545;
+      }
+      .msg-box {
+        background: #fff3cd;
+        border-radius: 10px;
+        padding: 20px;
+        color: #856404;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="logo">🐟 FreshCoastal</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html" class="active">Menu</a></li>
+          <li><a href="offers.html">Offers</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="add_to_cart.html">🛒 Cart</a></li>
+          <li id="navUser"><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>🐟 Our Fresh Menu</h1>
+      <p>Today's catch loaded live from our inventory</p>
+      <a href="add_to_cart.html" class="btn">View Cart 🛒</a>
+    </section>
+
+    <div class="filter-bar">
+      <div class="filter-inner" id="categoryBar">
+        <button class="cat-btn active" onclick="filterByCategory(0, this)">
+          All
+        </button>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">All Seafood Items</h2>
+        <div id="fishGrid" class="fish-grid">
+          <p style="text-align: center; padding: 40px; color: #0077be">
+            Loading menu...
+          </p>
+        </div>
+        <div class="text-center">
+          <a href="add_to_cart.html" class="btn">Go to Cart 🛒</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="banner">
+      <h2>🎉 Special Deals Available!</h2>
+      <p>Check today's exclusive discounts on fresh seafood.</p>
+      <a href="offers.html" class="btn">See All Offers</a>
+      <a href="contact.html" class="btn-outline">Contact Us</a>
+    </div>
+
+    <footer>
+      <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
+      <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="offers.html">Offers</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="add_to_cart.html">Cart</a>
+        <a href="login.html">Login</a>
+      </div>
+      <p style="color: #555; font-size: 0.8rem">
+        &copy; 2025 FreshCoastal. All rights reserved.
+      </p>
+    </footer>
+
+    <div id="toast"></div>
+
+    <script>
+      var API = "http://127.0.0.1:8000";
+      var allFishItems = [];
+
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("fc_user"));
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function showToast(message, isError) {
+        var toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = isError ? "error" : "";
+        toast.style.display = "block";
+        setTimeout(function () {
+          toast.style.display = "none";
+        }, 2500);
+      }
+
+      var user = getUser();
+      if (user) {
+        document.getElementById("navUser").innerHTML =
+          "👤 " +
+          user.name +
+          " &nbsp; <a href='login.html' onclick='logout()'>Logout</a>";
+      }
+      function logout() {
+        localStorage.removeItem("fc_user");
+        location.reload();
+      }
+
+      function loadCategories() {
+        fetch(API + "/api/categories/")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (categories) {
+            var bar = document.getElementById("categoryBar");
+            for (var i = 0; i < categories.length; i++) {
+              var cat = categories[i];
+              var btn = document.createElement("button");
+              btn.className = "cat-btn";
+              btn.textContent = cat.category_name;
+              btn.setAttribute("data-id", cat.category_id);
+              btn.onclick = makeCategoryClickHandler(cat.category_id, btn);
+              bar.appendChild(btn);
+            }
+          })
+          .catch(function () {
+            /* silently skip if categories fail */
+          });
+      }
+
+      function makeCategoryClickHandler(categoryId, button) {
+        return function () {
+          filterByCategory(categoryId, button);
+        };
+      }
+
+      function loadMenu() {
+        fetch(API + "/api/fishes/")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (fishList) {
+            allFishItems = fishList;
+            renderFishCards(fishList);
+          })
+          .catch(function () {
+            document.getElementById("fishGrid").innerHTML =
+              "<div class='msg-box'>⚠️ Could not load menu. Make sure the backend is running at " +
+              API +
+              "</div>";
+          });
+      }
+
+      function filterByCategory(categoryId, clickedBtn) {
+        var allButtons = document.querySelectorAll(".cat-btn");
+        for (var i = 0; i < allButtons.length; i++)
+          allButtons[i].classList.remove("active");
+        clickedBtn.classList.add("active");
+        if (categoryId === 0) {
+          renderFishCards(allFishItems);
+        } else {
+          var filtered = allFishItems.filter(function (f) {
+            return f.category_id === categoryId;
+          });
+          renderFishCards(filtered);
+        }
+      }
+
+      function renderFishCards(fishList) {
+        var grid = document.getElementById("fishGrid");
+        grid.innerHTML = "";
+        if (fishList.length === 0) {
+          grid.innerHTML =
+            "<div class='msg-box'>No items found in this category.</div>";
+          return;
+        }
+        for (var i = 0; i < fishList.length; i++) {
+          var fish = fishList[i];
+          var imgSrc =
+            fish.img_url ||
+            "https://picsum.photos/seed/" + fish.id + "/400/200";
+          var isOutOfStock = fish.stock <= 0;
+          var card = document.createElement("div");
+          card.className = "fish-card";
+          card.innerHTML =
+            "<img src='" +
+            imgSrc +
+            "' alt='" +
+            fish.name +
+            "' onerror=\"this.src='https://picsum.photos/seed/" +
+            fish.id +
+            "/400/200'\">" +
+            "<div class='fish-body'>" +
+            "<h3>" +
+            fish.name +
+            "</h3>" +
+            "<p>" +
+            (fish.description || "") +
+            "</p>" +
+            "<div class='price-row'>" +
+            "<span class='fish-price'>₹" +
+            fish.price +
+            "/kg</span>" +
+            "<span class='stock-badge " +
+            (isOutOfStock ? "out-stock" : "in-stock") +
+            "'>" +
+            (isOutOfStock ? "Out of Stock" : "In Stock (" + fish.stock + ")") +
+            "</span>" +
+            "</div>" +
+            "<button class='fish-btn'" +
+            (isOutOfStock ? " disabled" : "") +
+            ">" +
+            (isOutOfStock ? "Out of Stock" : "Add to Cart") +
+            "</button>" +
+            "</div>";
+          var btn = card.querySelector(".fish-btn");
+          if (!isOutOfStock)
+            btn.onclick = makeAddToCartHandler(fish.id, fish.name, btn);
+          grid.appendChild(card);
+        }
+      }
+
+      function makeAddToCartHandler(fishId, fishName, button) {
+        return function () {
+          addToCart(fishId, fishName, button);
+        };
+      }
+
+      /* BUG FIX: Cart API expects { user_id, items: [{fish_id, quantity}] }
+     Previously was sending flat { user_id, fish_id, quantity } which caused 422 Unprocessable Entity */
+      function addToCart(fishId, fishName, button) {
+        var user = getUser();
+        if (!user) {
+          showToast("Please login first!", true);
+          setTimeout(function () {
+            window.location.href = "login.html";
+          }, 1500);
+          return;
+        }
+        button.disabled = true;
+        button.textContent = "Adding...";
+        fetch(API + "/api/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: user.id,
+            items: [{ fish_id: fishId, quantity: 1 }],
+          }),
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error("Server error");
+            return r.json();
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = "Add to Cart";
+            showToast("✅ " + fishName + " added to cart!");
+          })
+          .catch(function () {
+            button.disabled = false;
+            button.textContent = "Add to Cart";
+            showToast("❌ Could not add item.", true);
+          });
+      }
+
+      loadCategories();
+      loadMenu();
+    </script>
+  </body>
+</html>

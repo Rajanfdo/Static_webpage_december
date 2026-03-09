@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCoastal - Contact Us</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      nav {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      nav .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      nav .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 1.8rem;
+        align-items: center;
+      }
+      nav ul a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      nav ul a:hover {
+        opacity: 0.75;
+      }
+      nav ul a.active {
+        border-bottom: 2px solid white;
+        padding-bottom: 2px;
+      }
+      .nav-user {
+        color: white;
+        font-size: 0.85rem;
+      }
+      .hero {
+        background:
+          linear-gradient(rgba(0, 119, 190, 0.72), rgba(0, 168, 232, 0.72)),
+          url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200&q=80")
+            center/cover;
+        color: white;
+        text-align: center;
+        padding: 90px 20px;
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+      .btn {
+        display: inline-block;
+        padding: 14px 38px;
+        background: #f57215;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.35);
+      }
+      .btn:hover {
+        background: #d9620f;
+      }
+      .btn:disabled {
+        background: #ccc;
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+      .btn-outline {
+        display: inline-block;
+        padding: 14px 38px;
+        background: transparent;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        border: 2px solid white;
+        margin-left: 14px;
+      }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.18);
+      }
+      .section {
+        padding: 80px 20px;
+      }
+      .section.grey {
+        background: #f2f4f5;
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .sec-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: #0077be;
+      }
+      .contact-wrap {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 2rem;
+      }
+      @media (max-width: 768px) {
+        .contact-wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+      .contact-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+      }
+      .contact-form h3 {
+        color: #0077be;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 0.93rem;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: inherit;
+        background: #f9fafb;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #0077be;
+      }
+      .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.35);
+        margin-top: 6px;
+      }
+      .submit-btn:hover {
+        background: #d9620f;
+      }
+      .submit-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+      .api-err {
+        background: #f8d7da;
+        color: #721c24;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        display: none;
+      }
+      .success-box {
+        background: #d4edda;
+        color: #155724;
+        border-radius: 8px;
+        padding: 18px;
+        text-align: center;
+        font-weight: 600;
+        display: none;
+      }
+      .info-col {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .info-card {
+        background: white;
+        padding: 1.8rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+      }
+      .info-card h3 {
+        color: #0077be;
+        margin-bottom: 1rem;
+      }
+      .info-item {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+        align-items: flex-start;
+      }
+      .info-ico {
+        font-size: 1.4rem;
+        flex-shrink: 0;
+      }
+      .info-text strong {
+        display: block;
+        color: #0077be;
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+      }
+      .info-text {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      .hours-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .hours-table tr {
+        border-bottom: 1px solid #eee;
+      }
+      .hours-table td {
+        padding: 8px 0;
+        font-size: 0.9rem;
+      }
+      .hours-table td:last-child {
+        text-align: right;
+        font-weight: 600;
+      }
+      .cta-card {
+        background: white;
+        padding: 1.8rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+        text-align: center;
+      }
+      .cta-card .icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+      }
+      .cta-card h3 {
+        color: #0077be;
+        margin-bottom: 0.5rem;
+      }
+      .cta-card p {
+        color: #666;
+        font-size: 0.88rem;
+        margin-bottom: 1rem;
+      }
+      .banner {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 60px 20px;
+        text-align: center;
+        color: white;
+      }
+      .banner h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .banner p {
+        font-size: 1.1rem;
+        margin-bottom: 1.8rem;
+        opacity: 0.9;
+      }
+      footer {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 2.5rem 20px;
+      }
+      footer p {
+        margin-bottom: 0.8rem;
+        font-size: 0.92rem;
+      }
+      footer a {
+        color: #00a8e8;
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      .foot-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        margin: 0.6rem 0;
+      }
+      .foot-links a {
+        color: #aaa;
+        font-size: 0.88rem;
+      }
+      .foot-links a:hover {
+        color: #00a8e8;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <a href="index.html" class="logo">🐟 FreshCoastal</a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="offers.html">Special Offers</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+          <li><a href="add_to_cart.html">🛒 Cart</a></li>
+          <li id="navUser"><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+    <section class="hero">
+      <h1>📞 Contact Us</h1>
+      <p>Questions, feedback or special orders — we'd love to hear from you</p>
+      <a href="menu.html" class="btn">Browse Menu</a>
+      <a href="about.html" class="btn-outline">About Us</a>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2 class="sec-title">Get in Touch</h2>
+        <div class="contact-wrap">
+          <div class="contact-form">
+            <h3>✉️ Send us a Message</h3>
+            <div class="api-err" id="formErr"></div>
+            <div class="success-box" id="successBox">
+              ✅ Message sent! We'll get back to you within 24 hours.
+            </div>
+            <div id="formFields">
+              <div class="form-group">
+                <label>Full Name *</label
+                ><input type="text" id="cName" placeholder="Your full name" />
+              </div>
+              <div class="form-group">
+                <label>Email Address *</label
+                ><input type="email" id="cEmail" placeholder="your@email.com" />
+              </div>
+              <div class="form-group">
+                <label>Subject *</label>
+                <select id="cSubject">
+                  <option value="">— Select a subject —</option>
+                  <option>Order Inquiry</option>
+                  <option>Quality Issue</option>
+                  <option>Delivery Question</option>
+                  <option>Feedback</option>
+                  <option>Partnership</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message *</label
+                ><textarea
+                  id="cMessage"
+                  placeholder="Tell us how we can help..."
+                ></textarea>
+              </div>
+              <button class="submit-btn" id="sendBtn" onclick="sendContact()">
+                Send Message 📨
+              </button>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>📋 Contact Information</h3>
+              <div class="info-item">
+                <div class="info-ico">📱</div>
+                <div class="info-text">
+                  <strong>Phone</strong>+91-9876543210<br />+91-9876543211
+                  (WhatsApp)
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-ico">📧</div>
+                <div class="info-text">
+                  <strong>Email</strong
+                  >info@freshcatch.com<br />support@freshcatch.com
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-ico">📍</div>
+                <div class="info-text">
+                  <strong>Address</strong>West Street, 2/120, Kuthenkuzhi<br />Tirunelveli,
+                  Tamil Nadu 627104
+                </div>
+              </div>
+            </div>
+            <div class="info-card">
+              <h3>⏰ Business Hours</h3>
+              <table class="hours-table">
+                <tr>
+                  <td>Monday – Friday</td>
+                  <td>6 AM – 9 PM</td>
+                </tr>
+                <tr>
+                  <td>Saturday</td>
+                  <td>6 AM – 10 PM</td>
+                </tr>
+                <tr>
+                  <td>Sunday</td>
+                  <td>7 AM – 8 PM</td>
+                </tr>
+                <tr>
+                  <td>Delivery Hours</td>
+                  <td>8 AM – 8 PM</td>
+                </tr>
+              </table>
+            </div>
+            <div class="cta-card">
+              <div class="icon">🛒</div>
+              <h3>Ready to Order?</h3>
+              <p>Browse fresh seafood and get it delivered today.</p>
+              <a
+                href="menu.html"
+                class="btn"
+                style="border-radius: 8px; padding: 12px 28px; display: block"
+                >View Our Menu</a
+              >
+              <br />
+              <a
+                href="offers.html"
+                style="color: #0077be; font-weight: 600; text-decoration: none"
+                >See Today's Offers →</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="banner">
+      <h2>📦 Free Delivery on Orders Over ₹2000</h2>
+      <p>Order now and get your fresh catch at no extra cost.</p>
+      <a href="menu.html" class="btn">Shop Now</a>
+      <a href="offers.html" class="btn-outline">View Offers</a>
+    </div>
+    <footer>
+      <p><strong>🐟 FreshCoastal</strong> — Fresh Seafood Delivered Daily</p>
+      <p>
+        📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com &nbsp;|&nbsp;
+        Tirunelveli, Tamil Nadu
+      </p>
+      <div class="foot-links">
+        <a href="index.html">Home</a><a href="menu.html">Menu</a
+        ><a href="offers.html">Special Offers</a><a href="about.html">About</a
+        ><a href="contact.html">Contact</a><a href="add_to_cart.html">Cart</a
+        ><a href="login.html">Login</a>
+      </div>
+      <p style="color: #555; font-size: 0.8rem">
+        &copy; 2025 FreshCoastal. All rights reserved.
+      </p>
+    </footer>
+    <script>
+      var API = "http://127.0.0.1:8000";
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("fc_user"));
+        } catch (e) {
+          return null;
+        }
+      }
+      var u = getUser();
+      if (u) {
+        document.getElementById("navUser").innerHTML =
+          '<span class="nav-user">👤 ' +
+          u.name +
+          '</span> <a href="login.html" onclick="doLogout(event)">Logout</a>';
+        document.getElementById("cName").value = u.name || "";
+        document.getElementById("cEmail").value = u.email || "";
+      }
+      function doLogout(e) {
+        e.preventDefault();
+        localStorage.removeItem("fc_user");
+        location.reload();
+      }
+      function sendContact() {
+        var name = document.getElementById("cName").value.trim();
+        var email = document.getElementById("cEmail").value.trim();
+        var subject = document.getElementById("cSubject").value;
+        var message = document.getElementById("cMessage").value.trim();
+        var errEl = document.getElementById("formErr");
+        errEl.style.display = "none";
+        if (!name || !email || !subject || !message) {
+          errEl.textContent = "Please fill in all required fields.";
+          errEl.style.display = "block";
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          errEl.textContent = "Please enter a valid email address.";
+          errEl.style.display = "block";
+          return;
+        }
+        var btn = document.getElementById("sendBtn");
+        btn.disabled = true;
+        btn.textContent = "Sending...";
+        fetch(API + "/api/contactus/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            subject: subject,
+            message: message,
+          }),
+        })
+          .then(function (r) {
+            if (!r.ok)
+              return r.json().then(function (e) {
+                throw new Error(e.detail || "Failed");
+              });
+            return r.json();
+          })
+          .then(function () {
+            document.getElementById("formFields").style.display = "none";
+            document.getElementById("successBox").style.display = "block";
+          })
+          .catch(function (err) {
+            errEl.textContent =
+              err.message ||
+              "Could not send. Make sure backend is running at " + API;
+            errEl.style.display = "block";
+            btn.disabled = false;
+            btn.textContent = "Send Message 📨";
+          });
+      }
+    </script>
+  </body>
+</html>

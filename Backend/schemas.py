@@ -1,42 +1,42 @@
-from pydantic import BaseModel
-from typing import Optional, List
-from datetime import datetime, date
-from pydantic import BaseModel
-from typing import List
 from pydantic import BaseModel, EmailStr
+from typing import Optional, List
 from datetime import datetime
 
 
-
-
-
-
-
+# ──────────────────────────────────────────
+# LOGIN
+# ──────────────────────────────────────────
 
 class LoginCreate(BaseModel):
     username: str
-    email: Optional[str]
-    password: Optional[str]
-    created_at: datetime 
+    email: Optional[str] = None
+    password: Optional[str] = None
+    # BUG FIX #2: was required `datetime` — model has a server-side default,
+    # so the client should never need to send this field.
+    created_at: Optional[datetime] = None
+
 
 class LoginOut(BaseModel):
     login_id: int
     username: str
-    email: Optional[str]
+    email: Optional[str] = None
     created_at: datetime
 
     class Config:
         orm_mode = True
 
 
+# ──────────────────────────────────────────
+# ADDRESS
+# ──────────────────────────────────────────
 
 class AddressCreate(BaseModel):
     login_id: int
-    street: Optional[str]
-    city: Optional[str]
-    state: Optional[str]
-    pincode: Optional[str]
-    country: Optional[str]
+    street: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
+    pincode: Optional[str] = None
+    country: Optional[str] = None
 
 
 class AddressOut(AddressCreate):
@@ -46,31 +46,44 @@ class AddressOut(AddressCreate):
         orm_mode = True
 
 
+# ──────────────────────────────────────────
+# USERS
+# ──────────────────────────────────────────
 
 class UserCreate(BaseModel):
     name: str
     email: str
-    password: Optional[str]
+    password: Optional[str] = None
     role: Optional[str] = "customer"
-    phone: Optional[str]
-    address: Optional[str]
+    phone: Optional[str] = None
+    address: Optional[str] = None
 
 
 class UserOut(BaseModel):
     id: int
     name: str
     email: str
-    role: Optional[str]
-    phone: Optional[str]
+    role: Optional[str] = None
+    phone: Optional[str] = None
 
     class Config:
         orm_mode = True
 
 
-# ---- Category ----
+# BUG FIX #6: New schema for the POST /api/users/login endpoint so the
+# frontend can authenticate without fetching the entire users list.
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+
+# ──────────────────────────────────────────
+# CATEGORY
+# ──────────────────────────────────────────
+
 class CategoryCreate(BaseModel):
     category_name: str
-    description: Optional[str]
+    description: Optional[str] = None
 
 
 class CategoryOut(CategoryCreate):
@@ -80,8 +93,9 @@ class CategoryOut(CategoryCreate):
         orm_mode = True
 
 
-
-
+# ──────────────────────────────────────────
+# FISH
+# ──────────────────────────────────────────
 
 class FishCreate(BaseModel):
     name: str
@@ -92,15 +106,19 @@ class FishCreate(BaseModel):
     img_url: Optional[str] = None
 
 
-
 class FishOut(FishCreate):
     id: int
 
-model_config = {
-    "from_attributes": True
-}
+    # BUG FIX #1: model_config dict was placed OUTSIDE the class body so
+    # orm_mode never activated. All fish endpoints were returning Pydantic
+    # validation errors. Fixed by using the proper inner Config class.
+    class Config:
+        orm_mode = True
 
 
+# ──────────────────────────────────────────
+# ORDER ITEMS & ORDERS
+# ──────────────────────────────────────────
 
 class OrderItemCreate(BaseModel):
     fish_id: int
@@ -134,7 +152,9 @@ class OrderOut(BaseModel):
         orm_mode = True
 
 
-
+# ──────────────────────────────────────────
+# REVIEWS
+# ──────────────────────────────────────────
 
 class ReviewCreate(BaseModel):
     user_id: int
@@ -150,6 +170,9 @@ class ReviewOut(ReviewCreate):
         orm_mode = True
 
 
+# ──────────────────────────────────────────
+# ADMIN
+# ──────────────────────────────────────────
 
 class AdminCreate(BaseModel):
     username: str
@@ -167,10 +190,16 @@ class AdminOut(BaseModel):
         orm_mode = True
 
 
+# BUG FIX #5: New schema so admin login uses a JSON request body
+# instead of exposing credentials as query parameters in the URL.
+class AdminLogin(BaseModel):
+    email: str
+    password: str
 
 
-
-
+# ──────────────────────────────────────────
+# CART
+# ──────────────────────────────────────────
 
 class CartItemCreate(BaseModel):
     fish_id: int
@@ -201,12 +230,16 @@ class CartOut(BaseModel):
         orm_mode = True
 
 
+# ──────────────────────────────────────────
+# CONTACT US
+# ──────────────────────────────────────────
 
 class ContactUsCreate(BaseModel):
     name: str
     email: EmailStr
     subject: str
     message: str
+
 
 class ContactUsOut(BaseModel):
     id: int
