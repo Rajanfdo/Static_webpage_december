@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshCoastal - Fish Detail</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f2f4f5; }
+
+    /* NAV */
+    nav { background: linear-gradient(135deg, #0077be, #00a8e8); padding: 12px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.7rem; font-weight: bold; color: white; text-decoration: none; }
+    .nav-links { list-style: none; display: flex; gap: 24px; align-items: center; }
+    .nav-links a { color: white; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: opacity 0.2s; }
+    .nav-links a:hover { opacity: 0.75; }
+    .nav-links a.active { border-bottom: 2px solid white; padding-bottom: 2px; }
+
+    /* BREADCRUMB */
+    .breadcrumb { max-width: 1200px; margin: 24px auto 0; padding: 0 20px; font-size: 0.88rem; color: #888; }
+    .breadcrumb a { color: #0077be; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* DETAIL SECTION */
+    .detail-section { padding: 30px 20px 80px; }
+    .detail-wrap { max-width: 1200px; margin: 0 auto; }
+
+    /* STATE BOX */
+    .state-box { text-align: center; padding: 80px 20px; background: white; border-radius: 18px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+    .state-box .ico { font-size: 4rem; margin-bottom: 1rem; }
+    .state-box h3 { font-size: 1.3rem; color: #555; margin-bottom: 0.5rem; }
+    .state-box p { color: #888; margin-bottom: 1.5rem; }
+
+    /* MAIN DETAIL CARD */
+    .detail-card { background: white; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 768px) { .detail-card { grid-template-columns: 1fr; } }
+
+    .detail-img-wrap { background: linear-gradient(135deg, #e8f4fd, #cce8f8); display: flex; align-items: center; justify-content: center; min-height: 380px; padding: 40px; position: relative; }
+    .detail-img-wrap img { width: 100%; max-height: 340px; object-fit: cover; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .stock-ribbon { position: absolute; top: 20px; left: 20px; padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+    .in-stock-r  { background: #d4edda; color: #155724; }
+    .out-stock-r { background: #f8d7da; color: #721c24; }
+
+    .detail-info { padding: 40px; display: flex; flex-direction: column; justify-content: space-between; }
+    .detail-category { font-size: 0.82rem; font-weight: 700; color: #00a8e8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .detail-name { font-size: 2rem; font-weight: 800; color: #1a1a1a; margin-bottom: 14px; line-height: 1.2; }
+    .detail-desc { color: #666; font-size: 0.96rem; line-height: 1.8; margin-bottom: 24px; }
+
+    .detail-meta { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .meta-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f8fafb; border-radius: 10px; }
+    .meta-label { font-size: 0.85rem; color: #888; font-weight: 600; }
+    .meta-value { font-size: 0.95rem; font-weight: 700; color: #333; }
+    .price-big  { font-size: 2rem; font-weight: 900; color: #0077be; }
+
+    /* QUANTITY */
+    .qty-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .qty-label { font-size: 0.9rem; font-weight: 600; color: #555; }
+    .qty-ctrl { display: flex; align-items: center; border: 2px solid #0077be; border-radius: 8px; overflow: hidden; }
+    .qty-btn { width: 38px; height: 38px; background: #0077be; color: white; border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .qty-btn:hover { background: #005a94; }
+    .qty-num { width: 50px; height: 38px; text-align: center; border: none; font-size: 1rem; font-weight: 700; color: #0077be; outline: none; background: white; }
+
+    /* ACTION ROW */
+    .action-row { display: flex; gap: 12px; }
+    .cart-btn { flex: 1; padding: 14px; background: #f57215; color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(245,114,21,0.35); transition: background 0.2s; }
+    .cart-btn:hover { background: #d9620f; }
+    .cart-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+    .back-btn { padding: 14px 24px; background: transparent; color: #0077be; border: 2px solid #0077be; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: background 0.2s, color 0.2s; }
+    .back-btn:hover { background: #0077be; color: white; }
+
+    /* REVIEWS */
+    .reviews-wrap { margin-top: 36px; background: white; border-radius: 18px; padding: 32px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+    .reviews-wrap h2 { font-size: 1.3rem; color: #0077be; margin-bottom: 6px; }
+    .reviews-sub { color: #aaa; font-size: 0.88rem; margin-bottom: 24px; }
+    .review-form { background: #f8fafb; border-radius: 12px; padding: 20px; margin-bottom: 28px; }
+    .review-form h3 { font-size: 1rem; color: #333; margin-bottom: 14px; }
+    .star-row { display: flex; gap: 6px; margin-bottom: 14px; }
+    .star { font-size: 1.8rem; cursor: pointer; color: #ddd; transition: color 0.15s; line-height: 1; }
+    .star.lit { color: #f5a623; }
+    .submit-review-btn { padding: 10px 28px; background: #0077be; color: white; border: none; border-radius: 50px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+    .submit-review-btn:hover { background: #005a94; }
+    .submit-review-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .rev-err { color: #dc3545; font-size: 0.85rem; margin-top: 8px; display: none; }
+    .rev-ok  { color: #28a745; font-size: 0.85rem; margin-top: 8px; display: none; }
+    .reviews-list { display: flex; flex-direction: column; gap: 14px; }
+    .review-card { background: #f8fafb; border-radius: 10px; padding: 16px 18px; }
+    .review-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .reviewer-name { font-weight: 700; font-size: 0.92rem; color: #333; }
+    .review-stars  { color: #f5a623; font-size: 1rem; }
+    .review-date   { font-size: 0.78rem; color: #bbb; }
+    .no-reviews    { text-align: center; color: #bbb; padding: 20px; font-size: 0.9rem; }
+
+    /* SIMILAR FISH */
+    .similar-wrap { margin-top: 36px; }
+    .similar-wrap h2 { font-size: 1.3rem; color: #0077be; margin-bottom: 20px; }
+    .similar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+    .sim-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.08); cursor: pointer; transition: transform 0.2s; }
+    .sim-card:hover { transform: translateY(-4px); }
+    .sim-card img { width: 100%; height: 150px; object-fit: cover; }
+    .sim-body { padding: 12px; }
+    .sim-body h4 { font-size: 0.92rem; margin-bottom: 4px; color: #333; }
+    .sim-price { font-weight: 700; color: #0077be; font-size: 1rem; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: white; text-align: center; padding: 36px 20px; }
+    footer p { margin-bottom: 10px; font-size: 0.9rem; }
+    footer a { color: #00a8e8; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin: 10px 0; }
+    .footer-links a { color: #aaa; font-size: 0.88rem; text-decoration: none; }
+    .footer-links a:hover { color: #00a8e8; }
+
+    /* TOAST */
+    #toast { position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white; padding: 12px 20px; border-radius: 8px; font-weight: 600; display: none; z-index: 9999; }
+    #toast.error { background: #dc3545; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">🐟 FreshCoastal</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html" class="active">Menu</a></li>
+      <li><a href="offers.html">Offers</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="add_to_cart.html">🛒 Cart</a></li>
+      <li id="navUser"><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span>›</span>
+  <a href="menu.html">Menu</a><span>›</span>
+  <span id="breadcrumbName">Loading...</span>
+</div>
+
+<div class="detail-section">
+  <div class="detail-wrap">
+    <div id="detailContent">
+      <div class="state-box"><div class="ico">🐟</div><h3>Loading fish details...</h3></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<footer>
+  <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
+  <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a><a href="menu.html">Menu</a>
+    <a href="offers.html">Offers</a><a href="about.html">About</a>
+    <a href="contact.html">Contact</a><a href="add_to_cart.html">Cart</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p style="color:#555;font-size:0.8rem;">&copy; 2025 FreshCoastal. All rights reserved.</p>
+</footer>
+
+<script>
+  var API="http://127.0.0.1:8000", currentFish=null, selectedRating=0;
+  function getParam(n){ return new URLSearchParams(window.location.search).get(n); }
+  function getUser(){ try{ return JSON.parse(localStorage.getItem("fc_user")); }catch(e){ return null; } }
+  function showToast(msg,isErr){
+    var t=document.getElementById("toast"); t.textContent=msg;
+    t.className=isErr?"error":""; t.style.display="block";
+    setTimeout(function(){ t.style.display="none"; }, 2500);
+  }
+
+  var u=getUser();
+  if(u) document.getElementById("navUser").innerHTML="👤 "+u.name+" &nbsp; <a href='login.html' onclick='logout()'>Logout</a>";
+  function logout(){ localStorage.removeItem("fc_user"); location.reload(); }
+
+  var fishId=getParam("id");
+  if(!fishId) showError("No fish selected."); else loadFishDetail(fishId);
+
+  function loadFishDetail(id){
+    Promise.all([
+      fetch(API+"/api/fishes/"+id).then(function(r){ if(!r.ok) throw new Error("Fish not found"); return r.json(); }),
+      fetch(API+"/api/reviews/").then(function(r){ return r.json(); }).catch(function(){ return []; }),
+      fetch(API+"/api/categories/").then(function(r){ return r.json(); }).catch(function(){ return []; }),
+      fetch(API+"/api/fishes/").then(function(r){ return r.json(); }).catch(function(){ return []; })
+    ])
+    .then(function(res){
+      var fish=res[0];
+      var reviews=res[1].filter(function(rv){ return rv.fish_id===fish.id; });
+      var cats=res[2];
+      var similar=res[3].filter(function(f){ return f.id!==fish.id && f.category_id===fish.category_id; }).slice(0,4);
+      currentFish=fish;
+      var catName="Seafood";
+      cats.forEach(function(c){ if(c.category_id===fish.category_id) catName=c.category_name; });
+      document.getElementById("breadcrumbName").textContent=fish.name;
+      document.title="FreshCoastal - "+fish.name;
+      renderDetail(fish,catName,reviews,similar);
+    })
+    .catch(function(err){ showError(err.message||"Could not load fish details."); });
+  }
+
+  function renderDetail(fish,catName,reviews,similar){
+    var oos=fish.stock<=0;
+    var imgSrc=fish.img_url||("https://picsum.photos/seed/"+fish.id+"/600/400");
+    var avg=reviews.length ? reviews.reduce(function(s,r){ return s+r.rating; },0)/reviews.length : 0;
+    var user=getUser();
+
+    var html=
+      '<div class="detail-card">'+
+        '<div class="detail-img-wrap">'+
+          '<span class="stock-ribbon '+(oos?"out-stock-r":"in-stock-r")+'">'+(oos?"❌ Out of Stock":"✅ In Stock")+'</span>'+
+          '<img src="'+imgSrc+'" alt="'+fish.name+'" onerror="this.src=\'https://picsum.photos/seed/'+fish.id+'/600/400\'">'+
+        '</div>'+
+        '<div class="detail-info"><div>'+
+          '<div class="detail-category">🐟 '+catName+'</div>'+
+          '<div class="detail-name">'+fish.name+'</div>'+
+          '<div class="detail-desc">'+(fish.description||"Fresh catch from Tamil Nadu\'s coast, delivered same day.")+'</div>'+
+          '<div class="detail-meta">'+
+            '<div class="meta-row"><span class="meta-label">Price</span><span class="price-big">₹'+(fish.price||0)+'<small style="font-size:1rem;font-weight:500;color:#888">/kg</small></span></div>'+
+            '<div class="meta-row"><span class="meta-label">Stock</span><span class="meta-value">'+(oos?'<span style="color:#dc3545">Out of Stock</span>':fish.stock+' kg')+'</span></div>'+
+            '<div class="meta-row"><span class="meta-label">Rating</span><span class="meta-value">'+(reviews.length ? renderStars(avg)+' <span style="color:#aaa;font-size:0.82rem;">('+reviews.length+' reviews)</span>' : '<span style="color:#bbb">No reviews yet</span>')+'</span></div>'+
+          '</div>'+
+          '<div class="qty-row">'+
+            '<span class="qty-label">Quantity (kg):</span>'+
+            '<div class="qty-ctrl">'+
+              '<button class="qty-btn" onclick="changeQty(-1)">−</button>'+
+              '<input class="qty-num" type="number" id="qtyInput" value="1" min="1" max="'+(fish.stock||99)+'" onchange="validateQty()" />'+
+              '<button class="qty-btn" onclick="changeQty(1)">+</button>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="action-row">'+
+          '<a href="menu.html" class="back-btn">← Back</a>'+
+          '<button class="cart-btn" id="cartBtn" '+(oos?"disabled ":"")+'onclick="addToCart()">'+(oos?"Out of Stock":"🛒 Add to Cart")+'</button>'+
+        '</div></div>'+
+      '</div>';
+
+    /* Reviews section */
+    html+='<div class="reviews-wrap"><h2>⭐ Customer Reviews</h2><p class="reviews-sub">'+reviews.length+' review(s) for '+fish.name+'</p>';
+    if(user){
+      html+=
+        '<div class="review-form"><h3>Write a Review</h3><div class="star-row">'+
+        '<span class="star" onclick="setRating(1)" id="s1">★</span>'+
+        '<span class="star" onclick="setRating(2)" id="s2">★</span>'+
+        '<span class="star" onclick="setRating(3)" id="s3">★</span>'+
+        '<span class="star" onclick="setRating(4)" id="s4">★</span>'+
+        '<span class="star" onclick="setRating(5)" id="s5">★</span>'+
+        '</div><button class="submit-review-btn" id="revBtn" onclick="submitReview()">Submit Review</button>'+
+        '<div class="rev-err" id="revErr">Please select a star rating first.</div>'+
+        '<div class="rev-ok" id="revOk">✅ Review submitted! Thank you.</div></div>';
+    } else {
+      html+='<p style="color:#aaa;font-size:0.88rem;margin-bottom:20px;"><a href="login.html" style="color:#0077be;font-weight:600;">Login</a> to write a review.</p>';
+    }
+
+    html+='<div class="reviews-list">';
+    if(!reviews.length){ html+='<div class="no-reviews">🐟 No reviews yet. Be the first!</div>'; }
+    else { reviews.forEach(function(rv){
+      var d=rv.created_at ? new Date(rv.created_at).toLocaleDateString("en-IN") : "";
+      html+='<div class="review-card"><div class="review-top"><span class="reviewer-name">👤 User #'+rv.user_id+'</span><span class="review-stars">'+renderStars(rv.rating)+'</span></div><div class="review-date">'+d+'</div></div>';
+    }); }
+    html+='</div></div>';
+
+    /* Similar fish */
+    if(similar.length){
+      html+='<div class="similar-wrap"><h2>🐟 Similar Fish</h2><div class="similar-grid">';
+      similar.forEach(function(f){
+        var si=f.img_url||("https://picsum.photos/seed/"+f.id+"/400/200");
+        html+='<div class="sim-card" onclick="window.location.href=\'fish_detail.html?id='+f.id+'\'"><img src="'+si+'" alt="'+f.name+'" onerror="this.src=\'https://picsum.photos/seed/'+f.id+'/400/200\'"><div class="sim-body"><h4>'+f.name+'</h4><div class="sim-price">₹'+(f.price||0)+'/kg</div></div></div>';
+      });
+      html+='</div></div>';
+    }
+
+    document.getElementById("detailContent").innerHTML=html;
+  }
+
+  function renderStars(r){ var s=""; for(var i=1;i<=5;i++) s+=i<=Math.round(r)?"★":"☆"; return s; }
+
+  function showError(msg){
+    document.getElementById("detailContent").innerHTML=
+      '<div class="state-box"><div class="ico">⚠️</div><h3>'+msg+'</h3>'+
+      '<p>The fish could not be found.</p>'+
+      '<a href="menu.html" style="display:inline-block;padding:12px 28px;background:#f57215;color:white;border-radius:50px;text-decoration:none;font-weight:bold;">← Back to Menu</a></div>';
+  }
+
+  function changeQty(delta){
+    var inp=document.getElementById("qtyInput"); if(!inp) return;
+    var v=parseInt(inp.value)+delta, mx=parseInt(inp.max)||99;
+    inp.value=v<1?1:v>mx?mx:v;
+  }
+  function validateQty(){
+    var inp=document.getElementById("qtyInput"); if(!inp) return;
+    var v=parseInt(inp.value), mx=parseInt(inp.max)||99;
+    inp.value=isNaN(v)||v<1?1:v>mx?mx:v;
+  }
+
+  /* GET current cart → merge new qty → POST full cart */
+  function addToCart(){
+    var u=getUser();
+    if(!u){ showToast("Please login first!",true); setTimeout(function(){ window.location.href="login.html"; },1500); return; }
+    var qty=parseInt(document.getElementById("qtyInput").value)||1;
+    var btn=document.getElementById("cartBtn");
+    btn.disabled=true; btn.textContent="Adding...";
+
+    fetch(API+"/api/cart/"+u.id+"/")
+      .then(function(r){ if(!r.ok) return {items:[]}; return r.json(); })
+      .catch(function(){ return {items:[]}; })
+      .then(function(cart){
+        var items=(cart&&Array.isArray(cart.items))?cart.items:[];
+        var currentQty=0;
+        items.forEach(function(ci){ if(ci.fish_id===currentFish.id) currentQty=ci.quantity; });
+        var found=false;
+        var merged=items.map(function(ci){
+          if(ci.fish_id===currentFish.id){ found=true; return {fish_id:ci.fish_id, quantity:currentQty+qty}; }
+          return {fish_id:ci.fish_id, quantity:ci.quantity};
+        });
+        if(!found) merged.push({fish_id:currentFish.id, quantity:qty});
+        return fetch(API+"/api/cart/",{
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({user_id:u.id, items:merged})
+        });
+      })
+      .then(function(r){ if(!r.ok) throw new Error("Save failed"); return r.json(); })
+      .then(function(){
+        btn.disabled=false; btn.textContent="✅ Added!";
+        setTimeout(function(){ btn.textContent="🛒 Add to Cart"; },1500);
+        showToast("✅ "+currentFish.name+" × "+qty+"kg added to cart!");
+      })
+      .catch(function(err){
+        btn.disabled=false; btn.textContent="🛒 Add to Cart";
+        showToast("❌ "+(err.message||"Could not add to cart."),true);
+      });
+  }
+
+  function setRating(val){
+    selectedRating=val;
+    for(var i=1;i<=5;i++){ var s=document.getElementById("s"+i); if(s) s.className="star"+(i<=val?" lit":""); }
+  }
+
+  function submitReview(){
+    var u=getUser(); if(!u) return;
+    var errEl=document.getElementById("revErr"), okEl=document.getElementById("revOk");
+    errEl.style.display="none"; okEl.style.display="none";
+    if(!selectedRating){ errEl.style.display="block"; return; }
+    var btn=document.getElementById("revBtn"); btn.disabled=true; btn.textContent="Submitting...";
+    fetch(API+"/api/reviews/",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({user_id:u.id, fish_id:currentFish.id, rating:selectedRating})})
+    .then(function(r){ if(!r.ok) throw new Error("Failed"); return r.json(); })
+    .then(function(){ okEl.style.display="block"; btn.textContent="Submitted ✓"; loadFishDetail(currentFish.id); })
+    .catch(function(){ errEl.textContent="Could not submit review."; errEl.style.display="block"; btn.disabled=false; btn.textContent="Submit Review"; });
+  }
+</script>
+</body>
+</html>

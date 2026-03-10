@@ -1,627 +1,386 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FreshCoastal - Cart</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-      }
-      nav {
-        background: linear-gradient(135deg, #0077be, #00a8e8);
-        padding: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-      nav .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      nav .logo {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: white;
-        text-decoration: none;
-      }
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 1.8rem;
-        align-items: center;
-      }
-      nav ul a {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.95rem;
-      }
-      nav ul a:hover {
-        opacity: 0.75;
-      }
-      nav ul a.active {
-        border-bottom: 2px solid white;
-        padding-bottom: 2px;
-      }
-      .nav-user {
-        color: white;
-        font-size: 0.85rem;
-      }
-      .hero {
-        background:
-          linear-gradient(rgba(0, 119, 190, 0.72), rgba(0, 168, 232, 0.72)),
-          url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200&q=80")
-            center/cover;
-        color: white;
-        text-align: center;
-        padding: 80px 20px;
-      }
-      .hero h1 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
-      .hero p {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-      }
-      .btn {
-        display: inline-block;
-        padding: 14px 38px;
-        background: #f57215;
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.35);
-      }
-      .btn:hover {
-        background: #d9620f;
-      }
-      .btn-outline {
-        display: inline-block;
-        padding: 14px 38px;
-        background: transparent;
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        font-weight: bold;
-        border: 2px solid white;
-        margin-left: 14px;
-      }
-      .btn-outline:hover {
-        background: rgba(255, 255, 255, 0.18);
-      }
-      .cart-section {
-        padding: 80px 20px;
-      }
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .cart-layout {
-        display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 2rem;
-        align-items: start;
-      }
-      @media (max-width: 900px) {
-        .cart-layout {
-          grid-template-columns: 1fr;
-        }
-      }
-      .items-box {
-        background: white;
-        border-radius: 15px;
-        padding: 2rem;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.09);
-      }
-      .items-box h3 {
-        color: #0077be;
-        margin-bottom: 1.5rem;
-        font-size: 1.3rem;
-      }
-      .cart-item {
-        display: grid;
-        grid-template-columns: 110px 1fr 110px;
-        gap: 16px;
-        align-items: center;
-        padding: 16px 0;
-        border-bottom: 1px solid #eee;
-      }
-      .cart-item:last-child {
-        border-bottom: none;
-      }
-      .cart-item img {
-        width: 110px;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 10px;
-      }
-      .item-name {
-        font-weight: 700;
-        color: #0077be;
-        font-size: 1rem;
-        margin-bottom: 4px;
-      }
-      .item-meta {
-        color: #999;
-        font-size: 0.82rem;
-      }
-      .item-price {
-        text-align: right;
-      }
-      .price {
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: #000;
-      }
-      .per {
-        font-size: 0.76rem;
-        color: #bbb;
-      }
-      .state-box {
-        text-align: center;
-        padding: 60px 20px;
-      }
-      .state-box .ico {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-      }
-      .state-box h3 {
-        font-size: 1.3rem;
-        color: #555;
-        margin-bottom: 0.5rem;
-      }
-      .state-box p {
-        color: #888;
-        margin-bottom: 1.5rem;
-        font-size: 0.95rem;
-      }
-      .summary {
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
-        position: sticky;
-        top: 80px;
-      }
-      .summary h3 {
-        color: #0077be;
-        margin-bottom: 1.5rem;
-        font-size: 1.2rem;
-      }
-      .sum-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 0;
-        font-size: 0.9rem;
-        border-bottom: 1px solid #f0f0f0;
-        color: #555;
-      }
-      .sum-total {
-        display: flex;
-        justify-content: space-between;
-        padding-top: 14px;
-        font-size: 1.2rem;
-        font-weight: bold;
-      }
-      .addr-input {
-        width: 100%;
-        padding: 11px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 14px;
-        font-family: inherit;
-        background: #f9fafb;
-        margin: 14px 0 10px;
-      }
-      .addr-input:focus {
-        outline: none;
-        border-color: #0077be;
-      }
-      .order-btn {
-        width: 100%;
-        padding: 14px;
-        background: #f57215;
-        color: white;
-        border: none;
-        border-radius: 50px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.35);
-      }
-      .order-btn:hover {
-        background: #d9620f;
-      }
-      .order-btn:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        box-shadow: none;
-      }
-      .back-link {
-        display: block;
-        text-align: center;
-        margin-top: 12px;
-        color: #0077be;
-        text-decoration: none;
-        font-size: 0.92rem;
-        font-weight: 600;
-      }
-      .back-link:hover {
-        text-decoration: underline;
-      }
-      .api-err {
-        background: #fff3cd;
-        border-radius: 8px;
-        padding: 12px;
-        color: #856404;
-        font-size: 0.88rem;
-        margin-bottom: 10px;
-        display: none;
-      }
-      .banner {
-        background: linear-gradient(135deg, #0077be, #00a8e8);
-        padding: 60px 20px;
-        text-align: center;
-        color: white;
-      }
-      .banner h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-      .banner p {
-        font-size: 1.1rem;
-        margin-bottom: 1.8rem;
-        opacity: 0.9;
-      }
-      footer {
-        background: #1a1a1a;
-        color: white;
-        text-align: center;
-        padding: 2.5rem 20px;
-      }
-      footer p {
-        margin-bottom: 0.8rem;
-        font-size: 0.92rem;
-      }
-      footer a {
-        color: #00a8e8;
-        text-decoration: none;
-      }
-      footer a:hover {
-        text-decoration: underline;
-      }
-      .foot-links {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px 20px;
-        margin: 0.6rem 0;
-      }
-      .foot-links a {
-        color: #aaa;
-        font-size: 0.88rem;
-      }
-      .foot-links a:hover {
-        color: #00a8e8;
-      }
-      #toast {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        background: #28a745;
-        color: white;
-        padding: 12px 22px;
-        border-radius: 8px;
-        font-weight: 600;
-        opacity: 0;
-        transform: translateY(12px);
-        transition:
-          opacity 0.3s,
-          transform 0.3s;
-        pointer-events: none;
-        z-index: 9999;
-      }
-      #toast.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      #toast.err {
-        background: #dc3545;
-      }
-      .loading {
-        text-align: center;
-        padding: 40px;
-        color: #0077be;
-      }
-    </style>
-  </head>
-  <body>
-    <nav>
-      <div class="wrap">
-        <a href="index.html" class="logo">🐟 FreshCoastal</a>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="menu.html">Menu</a></li>
-          <li><a href="offers.html">Special Offers</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="add_to_cart.html" class="active">🛒 Cart</a></li>
-          <li id="navUser"><a href="login.html">Login</a></li>
-        </ul>
-      </div>
-    </nav>
-    <section class="hero">
-      <h1>🛒 Your Cart</h1>
-      <p>Review your items and place your order</p>
-      <a href="menu.html" class="btn">Continue Shopping</a>
-      <a href="offers.html" class="btn-outline">View Deals</a>
-    </section>
-    <section class="cart-section">
-      <div class="wrap">
-        <div class="cart-layout">
-          <div class="items-box">
-            <h3>🛒 Cart Items</h3>
-            <div id="cartBody">
-              <div class="loading">Loading your cart...</div>
-            </div>
-          </div>
-          <div class="summary">
-            <h3>📋 Order Summary</h3>
-            <div id="sumRows">
-              <div style="color: #bbb; font-size: 0.9rem">No items yet</div>
-            </div>
-            <div class="sum-total">
-              <span>Total</span><span id="grandTotal">₹0</span>
-            </div>
-            <div class="api-err" id="orderErr"></div>
-            <input
-              type="text"
-              class="addr-input"
-              id="deliveryAddr"
-              placeholder="Delivery address *"
-            />
-            <button
-              class="order-btn"
-              id="orderBtn"
-              onclick="placeOrder()"
-              disabled
-            >
-              Place Order →
-            </button>
-            <a href="menu.html" class="back-link">← Continue Shopping</a>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshCoastal - Cart</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+
+    /* NAV */
+    nav { background: linear-gradient(135deg, #0077be, #00a8e8); padding: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 1000; }
+    nav .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+    nav .logo { font-size: 1.8rem; font-weight: bold; color: white; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+    nav ul a { color: white; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: opacity 0.2s; }
+    nav ul a:hover { opacity: 0.75; }
+    nav ul a.active { border-bottom: 2px solid white; padding-bottom: 2px; }
+    .nav-user { color: white; font-size: 0.85rem; }
+
+    /* HERO */
+    .hero { background: linear-gradient(rgba(0,119,190,0.72), rgba(0,168,232,0.72)), url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200&q=80") center/cover; color: white; text-align: center; padding: 80px 20px; }
+    .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+
+    /* BUTTONS */
+    .btn { display: inline-block; padding: 14px 38px; background: #f57215; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(245,114,21,0.35); transition: background 0.2s, transform 0.2s; }
+    .btn:hover { background: #d9620f; transform: translateY(-2px); }
+    .btn-outline { display: inline-block; padding: 14px 38px; background: transparent; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; border: 2px solid white; margin-left: 14px; transition: background 0.2s; }
+    .btn-outline:hover { background: rgba(255,255,255,0.18); }
+
+    /* CART LAYOUT */
+    .cart-section { padding: 80px 20px; }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+    .cart-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start; }
+    @media (max-width: 900px) { .cart-layout { grid-template-columns: 1fr; } }
+
+    /* ITEMS BOX */
+    .items-box { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.09); }
+    .items-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .items-header h3 { color: #0077be; font-size: 1.3rem; }
+    .clear-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; background: #fff0f0; color: #dc3545; border: 1px solid #f5c6cb; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+    .clear-btn:hover { background: #dc3545; color: white; border-color: #dc3545; }
+    .clear-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* CART ITEM ROW */
+    .cart-item { display: grid; grid-template-columns: 100px 1fr auto; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 1px solid #eee; }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item img { width: 100px; height: 82px; object-fit: cover; border-radius: 10px; }
+    .item-info { min-width: 0; }
+    .item-name { font-weight: 700; color: #0077be; font-size: 1rem; margin-bottom: 3px; }
+    .item-rate { color: #aaa; font-size: 0.8rem; margin-bottom: 10px; }
+
+    /* QUANTITY CONTROL */
+    .qty-ctrl { display: inline-flex; align-items: center; border: 2px solid #0077be; border-radius: 8px; overflow: hidden; }
+    .qty-btn { width: 32px; height: 32px; background: #0077be; color: white; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .qty-btn:hover { background: #005a94; }
+    .qty-btn:disabled { background: #b0cfe8; cursor: not-allowed; }
+    .qty-num { width: 44px; height: 32px; text-align: center; border: none; font-size: 0.95rem; font-weight: 700; color: #0077be; outline: none; background: white; }
+
+    /* ITEM RIGHT */
+    .item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    .item-subtotal { font-size: 1.2rem; font-weight: 800; color: #111; }
+    .item-subtotal-lbl { font-size: 0.72rem; color: #bbb; text-align: right; }
+    .remove-btn { background: #fff0f0; color: #dc3545; border: 1px solid #f5c6cb; border-radius: 6px; padding: 5px 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
+    .remove-btn:hover { background: #dc3545; color: white; border-color: #dc3545; }
+    .remove-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* STATES */
+    .state-box { text-align: center; padding: 60px 20px; }
+    .state-box .ico { font-size: 4rem; margin-bottom: 1rem; }
+    .state-box h3 { font-size: 1.3rem; color: #555; margin-bottom: 0.5rem; }
+    .state-box p { color: #888; margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .loading { text-align: center; padding: 40px; color: #0077be; }
+
+    /* SUMMARY PANEL */
+    .summary { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.09); position: sticky; top: 80px; }
+    .summary h3 { color: #0077be; margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .sum-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0; color: #555; }
+    .sum-total { display: flex; justify-content: space-between; padding-top: 14px; font-size: 1.2rem; font-weight: bold; }
+    .addr-input { width: 100%; padding: 11px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; background: #f9fafb; margin: 14px 0 10px; }
+    .addr-input:focus { outline: none; border-color: #0077be; }
+    .order-btn { width: 100%; padding: 14px; background: #f57215; color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(245,114,21,0.35); transition: background 0.2s; }
+    .order-btn:hover { background: #d9620f; }
+    .order-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+    .back-link { display: block; text-align: center; margin-top: 12px; color: #0077be; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+    .back-link:hover { text-decoration: underline; }
+    .api-err { background: #fff3cd; border-radius: 8px; padding: 12px; color: #856404; font-size: 0.88rem; margin-bottom: 10px; display: none; }
+
+    /* BANNER */
+    .banner { background: linear-gradient(135deg, #0077be, #00a8e8); padding: 60px 20px; text-align: center; color: white; }
+    .banner h2 { font-size: 2rem; margin-bottom: 1rem; }
+    .banner p { font-size: 1.1rem; margin-bottom: 1.8rem; opacity: 0.9; }
+
+    /* FOOTER */
+    footer { background: #1a1a1a; color: white; text-align: center; padding: 2.5rem 20px; }
+    footer p { margin-bottom: 0.8rem; font-size: 0.92rem; }
+    footer a { color: #00a8e8; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .foot-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 0.6rem 0; }
+    .foot-links a { color: #aaa; font-size: 0.88rem; }
+    .foot-links a:hover { color: #00a8e8; }
+
+    /* TOAST */
+    #toast { position: fixed; bottom: 24px; right: 24px; background: #28a745; color: white; padding: 12px 22px; border-radius: 8px; font-weight: 600; opacity: 0; transform: translateY(12px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; z-index: 9999; }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.err { background: #dc3545; }
+
+    @media (max-width: 600px) {
+      .cart-item { grid-template-columns: 80px 1fr; }
+      .item-right { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="logo">🐟 FreshCoastal</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="offers.html">Special Offers</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="add_to_cart.html" class="active">🛒 Cart</a></li>
+      <li id="navUser"><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>🛒 Your Cart</h1>
+  <p>Review your items and place your order</p>
+  <a href="menu.html" class="btn">Continue Shopping</a>
+  <a href="offers.html" class="btn-outline">View Deals</a>
+</section>
+
+<section class="cart-section">
+  <div class="wrap">
+    <div class="cart-layout">
+      <div class="items-box">
+        <div class="items-header">
+          <h3>🛒 Cart Items</h3>
+          <button class="clear-btn" id="clearBtn" onclick="clearCart()" style="display:none;">🗑 Clear All</button>
         </div>
+        <div id="cartBody"><div class="loading">Loading your cart...</div></div>
       </div>
-    </section>
-    <div class="banner">
-      <h2>🎉 More Deals Waiting!</h2>
-      <p>Check out today's discounts before you checkout.</p>
-      <a href="offers.html" class="btn">See All Offers</a>
-      <a href="menu.html" class="btn-outline">Browse Menu</a>
+
+      <div class="summary">
+        <h3>📋 Order Summary</h3>
+        <div id="sumRows"><div style="color:#bbb;font-size:0.9rem;">No items yet</div></div>
+        <div class="sum-total"><span>Total</span><span id="grandTotal">₹0</span></div>
+        <div class="api-err" id="orderErr"></div>
+        <input type="text" class="addr-input" id="deliveryAddr" placeholder="Delivery address *" />
+        <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>Place Order →</button>
+        <a href="menu.html" class="back-link">← Continue Shopping</a>
+      </div>
     </div>
-    <footer>
-      <p><strong>🐟 FreshCoastal</strong> — Fresh Seafood Delivered Daily</p>
-      <p>
-        📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com &nbsp;|&nbsp;
-        Tirunelveli, Tamil Nadu
-      </p>
-      <div class="foot-links">
-        <a href="index.html">Home</a><a href="menu.html">Menu</a
-        ><a href="offers.html">Special Offers</a><a href="about.html">About</a
-        ><a href="contact.html">Contact</a><a href="add_to_cart.html">Cart</a
-        ><a href="login.html">Login</a>
-      </div>
-      <p style="color: #555; font-size: 0.8rem">
-        &copy; 2025 FreshCoastal. All rights reserved.
-      </p>
-    </footer>
-    <div id="toast"></div>
-    <script>
-      var API = "http://127.0.0.1:8000";
-      var cartData = null;
-      var fishMap = {};
-      function getUser() {
-        try {
-          return JSON.parse(localStorage.getItem("fc_user"));
-        } catch (e) {
-          return null;
-        }
-      }
-      function toast(msg, err) {
-        var t = document.getElementById("toast");
-        t.textContent = msg;
-        t.className = err ? "err" : "";
-        t.classList.add("show");
-        setTimeout(function () {
-          t.classList.remove("show");
-        }, 2800);
-      }
-      var u = getUser();
-      if (u) {
-        document.getElementById("navUser").innerHTML =
-          '<span class="nav-user">👤 ' +
-          u.name +
-          '</span> <a href="login.html" onclick="doLogout(event)">Logout</a>';
-      }
-      function doLogout(e) {
-        e.preventDefault();
-        localStorage.removeItem("fc_user");
-        location.reload();
-      }
-      var body = document.getElementById("cartBody");
-      if (!u) {
-        body.innerHTML =
-          '<div class="state-box"><div class="ico">🔒</div><h3>Please login to view your cart</h3><p>You need an account to add items and place orders.</p><a href="login.html" class="btn">Login / Register</a><br/><br/><a href="menu.html" style="color:#0077be;font-weight:600;text-decoration:none;">Browse Menu as Guest →</a></div>';
-      } else {
-        loadCart();
-      }
-      function loadCart() {
-        Promise.all([
-          fetch(API + "/api/fishes/").then(function (r) {
-            return r.json();
-          }),
-          fetch(API + "/api/cart/" + u.id + "/").then(function (r) {
-            if (r.status === 404) return null;
-            if (!r.ok) throw new Error("err");
-            return r.json();
-          }),
-        ])
-          .then(function (res) {
-            res[0].forEach(function (f) {
-              fishMap[f.id] = f;
-            });
-            cartData = res[1];
-            renderCart();
-          })
-          .catch(function () {
-            body.innerHTML =
-              '<div class="state-box"><div class="ico">⚠️</div><h3>Could not load cart</h3><p>Make sure your FastAPI server is running at <b>' +
-              API +
-              '</b>.</p><a href="menu.html" class="btn">Browse Menu</a></div>';
-          });
-      }
-      function renderCart() {
-        body.innerHTML = "";
-        if (!cartData || !cartData.items || !cartData.items.length) {
-          body.innerHTML =
-            '<div class="state-box"><div class="ico">🧺</div><h3>Your cart is empty</h3><p>Add some fresh seafood from our menu!</p><a href="menu.html" class="btn">Browse Menu</a><br/><br/><a href="offers.html" style="color:#0077be;font-weight:600;text-decoration:none;">See Today\'s Deals →</a></div>';
-          return;
-        }
-        var sumEl = document.getElementById("sumRows");
-        sumEl.innerHTML = "";
-        var total = 0;
-        cartData.items.forEach(function (ci) {
-          var fish = fishMap[ci.fish_id] || {
-            name: "Item #" + ci.fish_id,
-            price: 0,
-            img_url: "",
-          };
-          var line = (fish.price || 0) * ci.quantity;
-          total += line;
-          var row = document.createElement("div");
-          row.className = "cart-item";
-          var img = document.createElement("img");
-          img.src =
-            fish.img_url ||
-            "https://picsum.photos/seed/f" + ci.fish_id + "/110/90";
-          img.alt = fish.name;
-          img.onerror = function () {
-            this.src = "https://picsum.photos/seed/f" + ci.fish_id + "/110/90";
-          };
-          var info = document.createElement("div");
-          info.innerHTML =
-            '<div class="item-name">' +
-            fish.name +
-            '</div><div class="item-meta">Qty: ' +
-            ci.quantity +
-            " kg &nbsp;|&nbsp; ₹" +
-            (fish.price || 0) +
-            "/kg</div>";
-          var priceEl = document.createElement("div");
-          priceEl.className = "item-price";
-          priceEl.innerHTML =
-            '<div class="price">₹' +
-            line +
-            '</div><div class="per">subtotal</div>';
-          row.appendChild(img);
-          row.appendChild(info);
-          row.appendChild(priceEl);
-          body.appendChild(row);
-          var sr = document.createElement("div");
-          sr.className = "sum-row";
-          sr.innerHTML =
-            "<span>" +
-            fish.name +
-            " × " +
-            ci.quantity +
-            "</span><span>₹" +
-            line +
-            "</span>";
-          sumEl.appendChild(sr);
-        });
-        document.getElementById("grandTotal").textContent = "₹" + total;
-        document.getElementById("orderBtn").disabled = false;
-      }
-      function placeOrder() {
-        var errEl = document.getElementById("orderErr");
-        errEl.style.display = "none";
-        var u = getUser();
-        if (!u) {
-          errEl.textContent = "Please login first.";
-          errEl.style.display = "block";
-          return;
-        }
-        var addr = document.getElementById("deliveryAddr").value.trim();
-        if (!addr) {
-          errEl.textContent = "Please enter a delivery address.";
-          errEl.style.display = "block";
-          return;
-        }
-        if (!cartData || !cartData.items || !cartData.items.length) {
-          errEl.textContent = "Your cart is empty.";
-          errEl.style.display = "block";
-          return;
-        }
-        var btn = document.getElementById("orderBtn");
-        btn.disabled = true;
-        btn.textContent = "Placing order...";
-        fetch(API + "/api/orders/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: u.id,
-            delivery_address: addr,
-            items: cartData.items.map(function (ci) {
-              return { fish_id: ci.fish_id, quantity: ci.quantity };
-            }),
-          }),
-        })
-          .then(function (r) {
-            if (!r.ok)
-              return r.json().then(function (e) {
-                throw new Error(e.detail || "Failed");
-              });
-            return r.json();
-          })
-          .then(function (order) {
-            toast(
-              "✅ Order #" + order.id + " placed! Fresh catch on its way 🐟",
-            );
-            body.innerHTML =
-              '<div class="state-box"><div class="ico">✅</div><h3>Order #' +
-              order.id +
-              ' Confirmed!</h3><p>Your fresh seafood will be delivered to your door today.</p><a href="menu.html" class="btn">Order More</a><br/><br/><a href="offers.html" style="color:#0077be;font-weight:600;text-decoration:none;">See More Deals →</a></div>';
-            document.getElementById("sumRows").innerHTML = "";
-            document.getElementById("grandTotal").textContent = "₹0";
-            btn.textContent = "Order Placed ✓";
-          })
-          .catch(function (err) {
-            errEl.textContent =
-              err.message || "Failed to place order. Try again.";
-            errEl.style.display = "block";
-            btn.disabled = false;
-            btn.textContent = "Place Order →";
-          });
-      }
-    </script>
-  </body>
+  </div>
+</section>
+
+<div class="banner">
+  <h2>🎉 More Deals Waiting!</h2>
+  <p>Check out today's discounts before you checkout.</p>
+  <a href="offers.html" class="btn">See All Offers</a>
+  <a href="menu.html" class="btn-outline">Browse Menu</a>
+</div>
+
+<footer>
+  <p><strong>🐟 FreshCoastal</strong> — Fresh Seafood Delivered Daily</p>
+  <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com &nbsp;|&nbsp; Tirunelveli, Tamil Nadu</p>
+  <div class="foot-links">
+    <a href="index.html">Home</a><a href="menu.html">Menu</a>
+    <a href="offers.html">Special Offers</a><a href="about.html">About</a>
+    <a href="contact.html">Contact</a><a href="add_to_cart.html">Cart</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p style="color:#555;font-size:0.8rem;">&copy; 2025 FreshCoastal. All rights reserved.</p>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+  var API="http://127.0.0.1:8000", cartData=null, fishMap={};
+
+  function getUser(){ try{ return JSON.parse(localStorage.getItem("fc_user")); }catch(e){ return null; } }
+  function showToast(msg,isErr){
+    var t=document.getElementById("toast"); t.textContent=msg;
+    t.className=isErr?"err":""; t.classList.add("show");
+    setTimeout(function(){ t.classList.remove("show"); },2800);
+  }
+
+  var u=getUser();
+  if(u){ document.getElementById("navUser").innerHTML='<span class="nav-user">👤 '+u.name+'</span> <a href="login.html" onclick="doLogout(event)">Logout</a>'; }
+  function doLogout(e){ e.preventDefault(); localStorage.removeItem("fc_user"); location.reload(); }
+
+  var cartBody=document.getElementById("cartBody");
+  if(!u){
+    cartBody.innerHTML=
+      '<div class="state-box"><div class="ico">🔒</div><h3>Please login to view your cart</h3>'+
+      '<p>You need an account to add items and place orders.</p>'+
+      '<a href="login.html" class="btn">Login / Register</a><br/><br/>'+
+      '<a href="menu.html" style="color:#0077be;font-weight:600;text-decoration:none;">Browse Menu as Guest →</a></div>';
+  } else { loadCart(); }
+
+  function loadCart(){
+    Promise.all([
+      fetch(API+"/api/fishes/").then(function(r){ return r.json(); }),
+      fetch(API+"/api/cart/"+u.id+"/").then(function(r){ if(!r.ok) return {items:[]}; return r.json(); }).catch(function(){ return {items:[]}; })
+    ])
+    .then(function(res){
+      res[0].forEach(function(f){ fishMap[f.id]=f; });
+      cartData=res[1]||{items:[]};
+      if(!cartData.items) cartData.items=[];
+      renderCart();
+    })
+    .catch(function(){
+      cartBody.innerHTML=
+        '<div class="state-box"><div class="ico">⚠️</div><h3>Could not load cart</h3>'+
+        '<p>Make sure your FastAPI server is running at <b>'+API+'</b>.</p>'+
+        '<a href="menu.html" class="btn">Browse Menu</a></div>';
+    });
+  }
+
+  function renderCart(){
+    cartBody.innerHTML="";
+    var clearBtn=document.getElementById("clearBtn");
+    if(!cartData.items.length){
+      clearBtn.style.display="none";
+      cartBody.innerHTML=
+        '<div class="state-box"><div class="ico">🧺</div><h3>Your cart is empty</h3>'+
+        '<p>Browse the menu and add fresh seafood!</p>'+
+        '<a href="menu.html" class="btn">Browse Menu</a><br/><br/>'+
+        '<a href="offers.html" style="color:#0077be;font-weight:600;text-decoration:none;">See Today\'s Deals →</a></div>';
+      updateSummary();
+      document.getElementById("orderBtn").disabled=true;
+      return;
+    }
+    clearBtn.style.display="inline-flex";
+    cartData.items.forEach(function(ci){
+      var fish=fishMap[ci.fish_id]||{name:"Item #"+ci.fish_id, price:0, img_url:""};
+      cartBody.appendChild(buildItemRow(ci,fish));
+    });
+    updateSummary();
+    document.getElementById("orderBtn").disabled=false;
+  }
+
+  function buildItemRow(ci,fish){
+    var row=document.createElement("div"); row.className="cart-item"; row.id="row-"+ci.fish_id;
+    var img=document.createElement("img");
+    img.src=fish.img_url||"https://picsum.photos/seed/f"+ci.fish_id+"/200/164";
+    img.alt=fish.name;
+    img.onerror=function(){ this.src="https://picsum.photos/seed/f"+ci.fish_id+"/200/164"; };
+    var info=document.createElement("div"); info.className="item-info";
+    info.innerHTML=
+      '<div class="item-name">'+fish.name+'</div>'+
+      '<div class="item-rate">₹'+(fish.price||0)+' / kg</div>'+
+      '<div class="qty-ctrl">'+
+        '<button class="qty-btn" onclick="changeQty('+ci.fish_id+',-1)">−</button>'+
+        '<input class="qty-num" id="qty-'+ci.fish_id+'" type="number" value="'+ci.quantity+'" min="1" max="'+(fish.stock||99)+'" onchange="onQtyInput('+ci.fish_id+',this)" />'+
+        '<button class="qty-btn" onclick="changeQty('+ci.fish_id+',1)">+</button>'+
+      '</div>';
+    var right=document.createElement("div"); right.className="item-right";
+    right.innerHTML=
+      '<div><div class="item-subtotal" id="sub-'+ci.fish_id+'">₹'+((fish.price||0)*ci.quantity)+'</div>'+
+      '<div class="item-subtotal-lbl">subtotal</div></div>'+
+      '<button class="remove-btn" id="rm-'+ci.fish_id+'" onclick="removeItem('+ci.fish_id+')">🗑 Remove</button>';
+    row.appendChild(img); row.appendChild(info); row.appendChild(right);
+    return row;
+  }
+
+  function changeQty(fishId,delta){
+    var inp=document.getElementById("qty-"+fishId); if(!inp) return;
+    var v=parseInt(inp.value)+delta, mx=parseInt(inp.max)||99;
+    inp.value=v<1?1:v>mx?mx:v;
+    applyQtyChange(fishId,parseInt(inp.value));
+  }
+  function onQtyInput(fishId,inp){
+    var v=parseInt(inp.value), mx=parseInt(inp.max)||99;
+    inp.value=isNaN(v)||v<1?1:v>mx?mx:v;
+    applyQtyChange(fishId,parseInt(inp.value));
+  }
+  function applyQtyChange(fishId,newQty){
+    var item=getCartItem(fishId); if(!item) return;
+    item.quantity=newQty;
+    var fish=fishMap[fishId]||{price:0};
+    var subEl=document.getElementById("sub-"+fishId);
+    if(subEl) subEl.textContent="₹"+((fish.price||0)*newQty);
+    updateSummary();
+    syncCart();
+  }
+
+  /* Remove single item via DELETE endpoint */
+  function removeItem(fishId){
+    var rmBtn=document.getElementById("rm-"+fishId);
+    if(rmBtn){ rmBtn.disabled=true; rmBtn.textContent="Removing…"; }
+    fetch(API+"/api/cart/"+u.id+"/item/"+fishId,{method:"DELETE"})
+      .catch(function(){})
+      .then(function(){
+        cartData.items=cartData.items.filter(function(ci){ return ci.fish_id!==fishId; });
+        var row=document.getElementById("row-"+fishId); if(row) row.remove();
+        updateSummary(); showToast("🗑 Item removed");
+        if(!cartData.items.length) renderCart();
+      });
+  }
+
+  /* Clear all via DELETE /{user_id}/ */
+  function clearCart(){
+    if(!confirm("Remove all items from your cart?")) return;
+    var btn=document.getElementById("clearBtn");
+    if(btn){ btn.disabled=true; btn.textContent="Clearing…"; }
+    fetch(API+"/api/cart/"+u.id+"/",{method:"DELETE"})
+      .catch(function(){})
+      .then(function(){ cartData={items:[]}; showToast("🗑 Cart cleared"); renderCart(); });
+  }
+
+  /* Sync: POST full cart — backend SETs each quantity */
+  function syncCart(){
+    if(!u) return;
+    fetch(API+"/api/cart/",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({user_id:u.id, items:cartData.items.map(function(ci){ return {fish_id:ci.fish_id,quantity:ci.quantity}; })})
+    })
+    .then(function(r){ if(!r.ok) throw new Error(); return r.json(); })
+    .then(function(updated){ if(updated&&updated.items) cartData=updated; })
+    .catch(function(){});
+  }
+
+  function updateSummary(){
+    var sumEl=document.getElementById("sumRows"), grandEl=document.getElementById("grandTotal");
+    sumEl.innerHTML=""; var total=0;
+    if(!cartData.items.length){
+      sumEl.innerHTML='<div style="color:#bbb;font-size:0.9rem;">No items yet</div>';
+      grandEl.textContent="₹0"; return;
+    }
+    cartData.items.forEach(function(ci){
+      var fish=fishMap[ci.fish_id]||{name:"Item #"+ci.fish_id,price:0};
+      var line=(fish.price||0)*ci.quantity; total+=line;
+      var sr=document.createElement("div"); sr.className="sum-row";
+      sr.innerHTML="<span>"+fish.name+" × "+ci.quantity+" kg</span><span>₹"+line+"</span>";
+      sumEl.appendChild(sr);
+    });
+    grandEl.textContent="₹"+total;
+  }
+
+  function getCartItem(fishId){
+    if(!cartData||!cartData.items) return null;
+    for(var i=0;i<cartData.items.length;i++) if(cartData.items[i].fish_id===fishId) return cartData.items[i];
+    return null;
+  }
+
+  function placeOrder(){
+    var errEl=document.getElementById("orderErr"); errEl.style.display="none";
+    if(!u){ errEl.textContent="Please login first."; errEl.style.display="block"; return; }
+    var addr=document.getElementById("deliveryAddr").value.trim();
+    if(!addr){ errEl.textContent="Please enter a delivery address."; errEl.style.display="block"; return; }
+    if(!cartData.items.length){ errEl.textContent="Your cart is empty."; errEl.style.display="block"; return; }
+    var btn=document.getElementById("orderBtn"); btn.disabled=true; btn.textContent="Placing order...";
+    fetch(API+"/api/orders/",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ user_id:u.id, delivery_address:addr,
+        items:cartData.items.map(function(ci){ return {fish_id:ci.fish_id,quantity:ci.quantity}; }) })
+    })
+    .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.detail||"Failed"); }); return r.json(); })
+    .then(function(order){
+      showToast("✅ Order #"+order.id+" placed! Fresh catch on its way 🐟");
+      fetch(API+"/api/cart/"+u.id+"/",{method:"DELETE"}).catch(function(){});
+      cartData={items:[]};
+      cartBody.innerHTML=
+        '<div class="state-box"><div class="ico">✅</div><h3>Order #'+order.id+' Confirmed!</h3>'+
+        '<p>Your fresh seafood will be delivered to your door today.</p>'+
+        '<a href="menu.html" class="btn">Order More</a></div>';
+      document.getElementById("sumRows").innerHTML="";
+      document.getElementById("grandTotal").textContent="₹0";
+      document.getElementById("clearBtn").style.display="none";
+      btn.textContent="Order Placed ✓";
+    })
+    .catch(function(err){
+      errEl.textContent=err.message||"Failed to place order."; errEl.style.display="block";
+      btn.disabled=false; btn.textContent="Place Order →";
+    });
+  }
+</script>
+</body>
 </html>
