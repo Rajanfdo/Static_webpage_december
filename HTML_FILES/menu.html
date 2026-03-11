@@ -144,7 +144,7 @@
 <div id="toast"></div>
 
 <script>
-  var API = window.location.origin;
+  var API = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" ? "http://127.0.0.1:8000" : window.location.origin;
   var allFishItems = [];
 
   function getUser(){ try{ return JSON.parse(localStorage.getItem("fc_user")); }catch(e){ return null; } }
