@@ -23,7 +23,7 @@ class LoginOut(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -43,7 +43,7 @@ class AddressOut(AddressCreate):
     address_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -67,7 +67,7 @@ class UserOut(BaseModel):
     phone: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # BUG FIX #6: New schema for the POST /api/users/login endpoint so the
@@ -90,7 +90,7 @@ class CategoryOut(CategoryCreate):
     category_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -113,7 +113,7 @@ class FishOut(FishCreate):
     # orm_mode never activated. All fish endpoints were returning Pydantic
     # validation errors. Fixed by using the proper inner Config class.
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -138,7 +138,7 @@ class OrderItemOut(BaseModel):
     quantity: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrderOut(BaseModel):
@@ -149,7 +149,7 @@ class OrderOut(BaseModel):
     items: List[OrderItemOut] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -167,7 +167,7 @@ class ReviewOut(ReviewCreate):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -187,7 +187,7 @@ class AdminOut(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # BUG FIX #5: New schema so admin login uses a JSON request body
@@ -212,7 +212,7 @@ class CartItemOut(BaseModel):
     quantity: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CartCreate(BaseModel):
@@ -227,7 +227,7 @@ class CartOut(BaseModel):
     items: List[CartItemOut] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ──────────────────────────────────────────
@@ -250,4 +250,4 @@ class ContactUsOut(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
