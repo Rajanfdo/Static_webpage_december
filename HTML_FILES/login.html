@@ -5,315 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FreshCoastal - Login</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+
       nav {
         background: linear-gradient(135deg, #0077be, #00a8e8);
-        padding: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        padding: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        position: sticky; top: 0; z-index: 1000;
       }
-      nav .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      nav .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+      nav .logo { font-size: 1.8rem; font-weight: bold; color: white; text-decoration: none; }
+      nav ul { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+      nav ul a { color: white; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+      nav ul a:hover { opacity: 0.75; }
+      nav ul a.active { border-bottom: 2px solid white; padding-bottom: 2px; }
+
+      /* Admin nav badge — hidden until admin logs in */
+      #navAdminItem { display: none; }
+      #navAdminItem a {
+        background: rgba(255,255,255,0.2);
+        border: 1.5px solid rgba(255,255,255,0.6);
+        border-radius: 20px; padding: 5px 14px;
+        font-weight: 700; font-size: 0.88rem; color: white !important;
+        transition: background 0.2s;
       }
-      nav .logo {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: white;
-        text-decoration: none;
-      }
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 1.8rem;
-        align-items: center;
-      }
-      nav ul a {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.95rem;
-      }
-      nav ul a:hover {
-        opacity: 0.75;
-      }
-      nav ul a.active {
-        border-bottom: 2px solid white;
-        padding-bottom: 2px;
-      }
+      #navAdminItem a:hover { background: rgba(255,255,255,0.35); opacity: 1; }
+
       .hero {
-        background:
-          linear-gradient(rgba(0, 119, 190, 0.72), rgba(0, 168, 232, 0.72)),
-          url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200&q=80")
-            center/cover;
-        color: white;
-        text-align: center;
-        padding: 80px 20px;
+        background: linear-gradient(rgba(0,119,190,0.72), rgba(0,168,232,0.72)),
+          url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200&q=80") center/cover;
+        color: white; text-align: center; padding: 80px 20px;
       }
-      .hero h1 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
-      .hero p {
-        font-size: 1.2rem;
-      }
-      .btn {
-        display: inline-block;
-        padding: 14px 38px;
-        background: #f57215;
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.35);
-      }
-      .btn:hover {
-        background: #d9620f;
-      }
-      .section {
-        padding: 80px 20px;
-        background: #f2f4f5;
-      }
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .sec-title {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        color: #0077be;
-      }
-      .auth-wrap {
-        max-width: 480px;
-        margin: 0 auto 4rem;
-      }
-      .tab-row {
-        display: flex;
-        border-radius: 12px 12px 0 0;
-        overflow: hidden;
-      }
-      .tab-btn {
-        flex: 1;
-        padding: 14px;
-        background: #daeaf8;
-        border: none;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #0077be;
-        cursor: pointer;
-      }
-      .tab-btn.active {
-        background: white;
-        border-bottom: 3px solid #f57215;
-      }
-      .auth-form {
-        background: white;
-        border-radius: 0 0 15px 15px;
-        padding: 2rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+      .hero p  { font-size: 1.2rem; }
+
+      .btn { display: inline-block; padding: 14px 38px; background: #f57215; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(245,114,21,0.35); }
+      .btn:hover { background: #d9620f; }
+
+      .section { padding: 80px 20px; background: #f2f4f5; }
+      .wrap { max-width: 1200px; margin: 0 auto; }
+      .sec-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #0077be; }
+
+      /* ── Already logged-in card ── */
+      #alreadyLoggedIn {
         display: none;
+        max-width: 480px; margin: 0 auto 2.5rem;
+        background: white; border-radius: 15px; padding: 32px 28px;
+        text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       }
-      .auth-form.show {
-        display: block;
+      #alreadyLoggedIn .ali-icon { font-size: 3rem; margin-bottom: 10px; }
+      #alreadyLoggedIn h3 { font-size: 1.3rem; color: #0077be; margin-bottom: 6px; }
+      #alreadyLoggedIn p  { color: #666; font-size: 0.95rem; margin-bottom: 22px; }
+      .ali-btns { display: flex; flex-direction: column; gap: 12px; }
+      .ali-btns a, .ali-btns button {
+        display: block; width: 100%; padding: 13px;
+        border-radius: 50px; font-size: 1rem; font-weight: 700;
+        text-decoration: none; text-align: center; border: none; cursor: pointer;
       }
-      .fg {
-        margin-bottom: 16px;
-      }
-      .fg label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 600;
-        font-size: 0.93rem;
-      }
-      .fg input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 15px;
-        font-family: inherit;
-        background: #f9fafb;
-      }
-      .fg input:focus {
-        outline: none;
-        border-color: #0077be;
-      }
-      .sub-btn {
-        width: 100%;
-        padding: 14px;
-        background: #f57215;
-        color: white;
-        border: none;
-        border-radius: 50px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.35);
-        margin-top: 6px;
-      }
-      .sub-btn:hover {
-        background: #d9620f;
-      }
-      .sub-btn:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        box-shadow: none;
-      }
-      .divider {
-        text-align: center;
-        margin: 14px 0;
-        color: #bbb;
-        font-size: 0.9rem;
-      }
-      .guest-btn {
-        display: block;
-        width: 100%;
-        padding: 13px;
-        background: transparent;
-        border: 2px solid #0077be;
-        border-radius: 50px;
-        color: #0077be;
-        font-weight: bold;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        font-size: 1rem;
-        font-family: inherit;
-      }
-      .guest-btn:hover {
-        background: #0077be;
-        color: white;
-      }
-      .form-note {
-        text-align: center;
-        margin-top: 14px;
-        font-size: 0.88rem;
-        color: #777;
-      }
-      .form-note a {
-        color: #0077be;
-        cursor: pointer;
-        font-weight: 600;
-      }
-      .api-err {
-        background: #f8d7da;
-        color: #721c24;
-        border-radius: 8px;
-        padding: 10px 14px;
-        margin-bottom: 12px;
-        font-size: 0.9rem;
+      .btn-menu { background: #f57215; color: white; box-shadow: 0 4px 12px rgba(245,114,21,0.3); }
+      .btn-menu:hover { background: #d9620f; }
+
+      /* Admin panel button — hidden until JS reveals it */
+      #aliAdminBtn {
         display: none;
+        background: linear-gradient(90deg, #0077be, #005a94);
+        color: white; box-shadow: 0 4px 12px rgba(0,119,190,0.3);
       }
-      .success-box {
+      #aliAdminBtn.show { display: block; }
+      #aliAdminBtn:hover { opacity: 0.9; }
+
+      .btn-logout { background: #f2f4f5; color: #555; }
+      .btn-logout:hover { background: #e0e2e5; }
+
+      /* ── Auth forms ── */
+      .auth-wrap { max-width: 480px; margin: 0 auto 4rem; }
+      .tab-row { display: flex; border-radius: 12px 12px 0 0; overflow: hidden; }
+      .tab-btn { flex: 1; padding: 14px; background: #daeaf8; border: none; font-size: 1rem; font-weight: 600; color: #0077be; cursor: pointer; }
+      .tab-btn.active { background: white; border-bottom: 3px solid #f57215; }
+      .auth-form { background: white; border-radius: 0 0 15px 15px; padding: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: none; }
+      .auth-form.show { display: block; }
+
+      .fg { margin-bottom: 16px; }
+      .fg label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.93rem; }
+      .fg input  { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; font-family: inherit; background: #f9fafb; }
+      .fg input:focus { outline: none; border-color: #0077be; }
+
+      .sub-btn { width: 100%; padding: 14px; background: #f57215; color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(245,114,21,0.35); margin-top: 6px; }
+      .sub-btn:hover { background: #d9620f; }
+      .sub-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+
+      .divider  { text-align: center; margin: 14px 0; color: #bbb; font-size: 0.9rem; }
+      .guest-btn { display: block; width: 100%; padding: 13px; background: transparent; border: 2px solid #0077be; border-radius: 50px; color: #0077be; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 1rem; font-family: inherit; }
+      .guest-btn:hover { background: #0077be; color: white; }
+      .form-note { text-align: center; margin-top: 14px; font-size: 0.88rem; color: #777; }
+      .form-note a { color: #0077be; cursor: pointer; font-weight: 600; }
+      .api-err { background: #f8d7da; color: #721c24; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 0.9rem; display: none; }
+
+      /* Success box shown after login */
+      .success-box { display: none; text-align: center; padding: 32px 16px; }
+      .success-box .s-ico { font-size: 4rem; margin-bottom: 1rem; }
+      .success-box h3 { font-size: 1.4rem; color: #28a745; margin-bottom: 0.5rem; }
+      .success-box p  { color: #666; margin-bottom: 1.5rem; }
+
+      /* Admin notice — only shown inside success box for admins */
+      .admin-notice {
         display: none;
-        text-align: center;
-        padding: 40px 20px;
+        background: linear-gradient(135deg, #003d6b, #0077be);
+        color: white; border-radius: 12px; padding: 16px 20px;
+        margin-bottom: 16px; text-align: left;
       }
-      .success-box .s-ico {
-        font-size: 4rem;
-        margin-bottom: 1rem;
+      .admin-notice strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+      .admin-notice span   { font-size: 0.88rem; opacity: 0.88; }
+      .btn-admin-notice {
+        display: inline-block; margin-top: 12px;
+        padding: 10px 24px; background: white; color: #0077be;
+        border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.9rem;
       }
-      .success-box h3 {
-        font-size: 1.4rem;
-        color: #28a745;
-        margin-bottom: 0.5rem;
-      }
-      .success-box p {
-        color: #666;
-        margin-bottom: 1.5rem;
-      }
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 2rem;
-      }
-      .feature-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
-      }
-      .feature-card:hover {
-        transform: translateY(-5px);
-      }
-      .ficon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-      .feature-card h3 {
-        margin-bottom: 0.8rem;
-        color: #0077be;
-      }
-      .banner {
-        background: linear-gradient(135deg, #0077be, #00a8e8);
-        padding: 60px 20px;
-        text-align: center;
-        color: white;
-      }
-      .banner h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-      .banner p {
-        font-size: 1.1rem;
-        margin-bottom: 1.8rem;
-        opacity: 0.9;
-      }
-      footer {
-        background: #1a1a1a;
-        color: white;
-        text-align: center;
-        padding: 2.5rem 20px;
-      }
-      footer p {
-        margin-bottom: 0.8rem;
-        font-size: 0.92rem;
-      }
-      footer a {
-        color: #00a8e8;
-        text-decoration: none;
-      }
-      footer a:hover {
-        text-decoration: underline;
-      }
-      .foot-links {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px 20px;
-        margin: 0.6rem 0;
-      }
-      .foot-links a {
-        color: #aaa;
-        font-size: 0.88rem;
-      }
-      .foot-links a:hover {
-        color: #00a8e8;
-      }
+      .btn-admin-notice:hover { background: #e8f4fd; }
+
+      .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+      .feature-card { background: white; padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.09); transition: transform 0.2s; }
+      .feature-card:hover { transform: translateY(-5px); }
+      .ficon { font-size: 3rem; margin-bottom: 1rem; }
+      .feature-card h3 { margin-bottom: 0.8rem; color: #0077be; }
+
+      .banner { background: linear-gradient(135deg, #0077be, #00a8e8); padding: 60px 20px; text-align: center; color: white; }
+      .banner h2 { font-size: 2rem; margin-bottom: 1rem; }
+      .banner p  { font-size: 1.1rem; margin-bottom: 1.8rem; opacity: 0.9; }
+
+      footer { background: #1a1a1a; color: white; text-align: center; padding: 2.5rem 20px; }
+      footer p  { margin-bottom: 0.8rem; font-size: 0.92rem; }
+      footer a  { color: #00a8e8; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .foot-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 0.6rem 0; }
+      .foot-links a { color: #aaa; font-size: 0.88rem; }
+      .foot-links a:hover { color: #00a8e8; }
     </style>
   </head>
   <body>
+
+    <!-- NAV -->
     <nav>
       <div class="wrap">
         <a href="index.html" class="logo">🐟 FreshCoastal</a>
@@ -325,6 +156,8 @@
           <li><a href="contact.html">Contact</a></li>
           <li><a href="add_to_cart.html">🛒 Cart</a></li>
           <li><a href="login.html" class="active">Login</a></li>
+          <!-- Shown ONLY when admin is logged in -->
+          <li id="navAdminItem"><a href="admin.html">🔧 Admin</a></li>
         </ul>
       </div>
     </nav>
@@ -337,54 +170,58 @@
     <section class="section">
       <div class="wrap">
         <h2 class="sec-title">Your Account</h2>
-        <div class="auth-wrap">
+
+        <!-- Already logged-in card -->
+        <div id="alreadyLoggedIn">
+          <div class="ali-icon">👋</div>
+          <h3 id="aliName">Welcome back!</h3>
+          <p id="aliEmail"></p>
+          <div class="ali-btns">
+            <a href="menu.html" class="btn-menu">🛒 Go to Menu</a>
+            <!-- Admin only — JS adds class "show" -->
+            <a href="admin.html" id="aliAdminBtn">🔧 Admin Panel</a>
+            <button class="btn-logout" onclick="doLogout()">🚪 Logout</button>
+          </div>
+        </div>
+
+        <!-- Login / Register (hidden when already logged in) -->
+        <div class="auth-wrap" id="authWrap">
           <div class="tab-row">
-            <button
-              class="tab-btn active"
-              id="tabLogin"
-              onclick="switchTab('login')"
-            >
-              Login
-            </button>
-            <button class="tab-btn" id="tabReg" onclick="switchTab('register')">
-              Register
-            </button>
+            <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Login</button>
+            <button class="tab-btn"        id="tabReg"   onclick="switchTab('register')">Register</button>
           </div>
 
-          <!-- LOGIN PANEL -->
+          <!-- LOGIN -->
           <div class="auth-form show" id="loginPanel">
             <div class="success-box" id="loginSuccess">
               <div class="s-ico">🎉</div>
               <h3>Login Successful!</h3>
-              <p id="loginMsg">Taking you to the menu...</p>
+              <div class="admin-notice" id="loginAdminNotice">
+                <strong>🔧 Admin Access Granted</strong>
+                <span>You have administrator privileges on FreshCoastal.</span><br>
+                <a href="admin.html" class="btn-admin-notice">Open Admin Panel →</a>
+              </div>
+              <p id="loginMsg"></p>
               <a href="menu.html" class="btn">Go to Menu</a>
             </div>
             <div id="loginFields">
               <div class="api-err" id="loginErr"></div>
               <div class="fg">
-                <label>Email Address</label
-                ><input type="email" id="lEmail" placeholder="your@email.com" />
+                <label>Email Address</label>
+                <input type="email" id="lEmail" placeholder="your@email.com" />
               </div>
               <div class="fg">
-                <label>Password</label
-                ><input
-                  type="password"
-                  id="lPass"
-                  placeholder="Your password"
-                />
+                <label>Password</label>
+                <input type="password" id="lPass" placeholder="Your password" />
               </div>
-              <button class="sub-btn" id="loginBtn" onclick="doLogin()">
-                Login to My Account
-              </button>
+              <button class="sub-btn" id="loginBtn" onclick="doLogin()">Login to My Account</button>
               <div class="divider">or</div>
               <a href="menu.html" class="guest-btn">Continue as Guest →</a>
-              <div class="form-note">
-                No account? <a onclick="switchTab('register')">Register here</a>
-              </div>
+              <div class="form-note">No account? <a onclick="switchTab('register')">Register here</a></div>
             </div>
           </div>
 
-          <!-- REGISTER PANEL -->
+          <!-- REGISTER -->
           <div class="auth-form" id="regPanel">
             <div class="success-box" id="regSuccess">
               <div class="s-ico">🎊</div>
@@ -394,70 +231,21 @@
             </div>
             <div id="regFields">
               <div class="api-err" id="regErr"></div>
-              <div class="fg">
-                <label>Full Name *</label
-                ><input type="text" id="rName" placeholder="Your full name" />
-              </div>
-              <div class="fg">
-                <label>Email Address *</label
-                ><input type="email" id="rEmail" placeholder="your@email.com" />
-              </div>
-              <div class="fg">
-                <label>Phone Number</label
-                ><input type="tel" id="rPhone" placeholder="+91-XXXXXXXXXX" />
-              </div>
-              <div class="fg">
-                <label>Delivery Address</label
-                ><input
-                  type="text"
-                  id="rAddr"
-                  placeholder="Your delivery address"
-                />
-              </div>
-              <div class="fg">
-                <label>Password *</label
-                ><input
-                  type="password"
-                  id="rPass"
-                  placeholder="Min 6 characters"
-                />
-              </div>
-              <button class="sub-btn" id="regBtn" onclick="doRegister()">
-                Create My Account
-              </button>
-              <div class="form-note">
-                Already have an account?
-                <a onclick="switchTab('login')">Login here</a>
-              </div>
+              <div class="fg"><label>Full Name *</label><input type="text"    id="rName"  placeholder="Your full name" /></div>
+              <div class="fg"><label>Email Address *</label><input type="email"   id="rEmail" placeholder="your@email.com" /></div>
+              <div class="fg"><label>Phone Number</label><input type="tel"     id="rPhone" placeholder="+91-XXXXXXXXXX" /></div>
+              <div class="fg"><label>Delivery Address</label><input type="text"    id="rAddr"  placeholder="Your delivery address" /></div>
+              <div class="fg"><label>Password *</label><input type="password" id="rPass"  placeholder="Min 6 characters" /></div>
+              <button class="sub-btn" id="regBtn" onclick="doRegister()">Create My Account</button>
+              <div class="form-note">Already have an account? <a onclick="switchTab('login')">Login here</a></div>
             </div>
           </div>
         </div>
 
         <div class="feature-grid">
-          <div class="feature-card">
-            <div class="ficon">📦</div>
-            <h3>Track Orders</h3>
-            <p>
-              Real-time updates on your delivery from our fishing boat to your
-              doorstep.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="ficon">🎁</div>
-            <h3>Exclusive Deals</h3>
-            <p>
-              Members get first access to special offers, combos and seasonal
-              discounts.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="ficon">⚡</div>
-            <h3>Quick Reorder</h3>
-            <p>
-              Save favourites and reorder your usual seafood with just one
-              click.
-            </p>
-          </div>
+          <div class="feature-card"><div class="ficon">📦</div><h3>Track Orders</h3><p>Real-time updates on your delivery from our fishing boat to your doorstep.</p></div>
+          <div class="feature-card"><div class="ficon">🎁</div><h3>Exclusive Deals</h3><p>Members get first access to special offers, combos and seasonal discounts.</p></div>
+          <div class="feature-card"><div class="ficon">⚡</div><h3>Quick Reorder</h3><p>Save favourites and reorder your usual seafood with just one click.</p></div>
         </div>
       </div>
     </section>
@@ -470,162 +258,157 @@
 
     <footer>
       <p><strong>🐟 FreshCoastal</strong> — Fresh Seafood Delivered Daily</p>
-      <p>
-        📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com &nbsp;|&nbsp;
-        Tirunelveli, Tamil Nadu
-      </p>
+      <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com &nbsp;|&nbsp; Tirunelveli, Tamil Nadu</p>
       <div class="foot-links">
-        <a href="index.html">Home</a>
-        <a href="menu.html">Menu</a>
-        <a href="offers.html">Special Offers</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="add_to_cart.html">Cart</a>
+        <a href="index.html">Home</a> <a href="menu.html">Menu</a>
+        <a href="offers.html">Special Offers</a> <a href="about.html">About</a>
+        <a href="contact.html">Contact</a> <a href="add_to_cart.html">Cart</a>
         <a href="login.html">Login</a>
       </div>
-      <p style="color: #555; font-size: 0.8rem">
-        &copy; 2025 FreshCoastal. All rights reserved.
-      </p>
+      <p style="color:#555;font-size:0.8rem">&copy; 2025 FreshCoastal. All rights reserved.</p>
     </footer>
 
     <script>
       var API = window.location.origin;
 
+      /* ── Session helpers ── */
+      function getSession()       { try { return JSON.parse(localStorage.getItem("fc_user")); } catch(e) { return null; } }
+      function saveSession(user)  { localStorage.setItem("fc_user", JSON.stringify(user)); }
+      function clearSession()     { localStorage.removeItem("fc_user"); }
+      function isAdmin(user)      { return user && user.role === "admin"; }
+
+      /* ── On page load: show greeting card if already logged in ── */
+      (function init() {
+        var user = getSession();
+        if (user && user.id) { showLoggedInCard(user); }
+      })();
+
+      function showLoggedInCard(user) {
+        document.getElementById("alreadyLoggedIn").style.display = "block";
+        document.getElementById("authWrap").style.display        = "none";
+        document.getElementById("aliName").textContent  = "Welcome back, " + (user.username || user.name || "User") + "!";
+        document.getElementById("aliEmail").textContent = user.email || "";
+
+        /* Admin-only elements */
+        if (isAdmin(user)) {
+          document.getElementById("aliAdminBtn").classList.add("show");
+          document.getElementById("navAdminItem").style.display = "list-item";
+        }
+      }
+
+      function doLogout() { clearSession(); location.reload(); }
+
+      /* ── Tab switching ── */
       function switchTab(t) {
         document.getElementById("loginPanel").classList.remove("show");
         document.getElementById("regPanel").classList.remove("show");
         document.getElementById("tabLogin").classList.remove("active");
         document.getElementById("tabReg").classList.remove("active");
-        document
-          .getElementById(t === "login" ? "loginPanel" : "regPanel")
-          .classList.add("show");
-        document
-          .getElementById(t === "login" ? "tabLogin" : "tabReg")
-          .classList.add("active");
+        document.getElementById(t === "login" ? "loginPanel" : "regPanel").classList.add("show");
+        document.getElementById(t === "login" ? "tabLogin"   : "tabReg").classList.add("active");
       }
 
-      function showErr(id, msg) {
-        var e = document.getElementById(id);
-        e.textContent = msg;
-        e.style.display = "block";
-      }
-      function hideErr(id) {
-        document.getElementById(id).style.display = "none";
-      }
+      function showErr(id, msg) { var e = document.getElementById(id); e.textContent = msg; e.style.display = "block"; }
+      function hideErr(id)      { document.getElementById(id).style.display = "none"; }
 
-      /* LOGIN — POST /api/users/login */
+      /* ══════════════════════════════════════════════
+         LOGIN  →  POST /api/login/auth
+         Backend returns: { id, username, email, role }
+         ══════════════════════════════════════════════ */
       function doLogin() {
         hideErr("loginErr");
         var email = document.getElementById("lEmail").value.trim();
-        var pass = document.getElementById("lPass").value.trim();
-        if (!email || !pass) {
-          showErr("loginErr", "Please fill in both fields.");
-          return;
-        }
+        var pass  = document.getElementById("lPass").value.trim();
+        if (!email || !pass) { showErr("loginErr", "Please fill in both fields."); return; }
 
         var btn = document.getElementById("loginBtn");
-        btn.disabled = true;
-        btn.textContent = "Logging in...";
+        btn.disabled = true; btn.textContent = "Logging in...";
 
-        fetch(API + "/api/users/login", {
+        fetch(API + "/api/login/auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, password: pass }),
+          body: JSON.stringify({ email: email, password: pass })
         })
-          .then(function (r) {
-            if (r.status === 401)
-              throw new Error("Incorrect password. Please try again.");
-            if (r.status === 404)
-              throw new Error("No account found with this email.");
-            if (!r.ok) throw new Error("Server error. Please try again.");
-            return r.json();
-          })
-          .then(function (user) {
-            localStorage.setItem("fc_user", JSON.stringify(user));
-            document.getElementById("loginFields").style.display = "none";
-            document.getElementById("loginMsg").textContent =
-              "Welcome back, " + user.name + "! Redirecting...";
-            document.getElementById("loginSuccess").style.display = "block";
-            setTimeout(function () {
-              location.href = "menu.html";
-            }, 1800);
-          })
-          .catch(function (err) {
-            showErr(
-              "loginErr",
-              err.message ||
-                "Cannot reach server at " + API + ". Is FastAPI running?",
-            );
-            btn.disabled = false;
-            btn.textContent = "Login to My Account";
-          });
+        .then(function(r) {
+          if (r.status === 401) throw new Error("Incorrect password. Please try again.");
+          if (r.status === 404) throw new Error("No account found with this email.");
+          if (!r.ok)            throw new Error("Server error. Please try again.");
+          return r.json();
+        })
+        .then(function(user) {
+          /* Save session — includes role */
+          saveSession(user);
+
+          /* Show success box */
+          document.getElementById("loginFields").style.display = "none";
+          document.getElementById("loginSuccess").style.display = "block";
+
+          if (isAdmin(user)) {
+            /* Admin: show the blue admin notice, don't auto-redirect */
+            document.getElementById("loginAdminNotice").style.display = "block";
+            document.getElementById("loginMsg").textContent = "Welcome, Admin " + (user.username || user.name) + "!";
+            document.getElementById("navAdminItem").style.display = "list-item";
+          } else {
+            /* Customer: show message and redirect to menu */
+            document.getElementById("loginMsg").textContent = "Welcome back, " + (user.username || user.name) + "! Taking you to the menu...";
+            setTimeout(function() { location.href = "menu.html"; }, 1800);
+          }
+        })
+        .catch(function(err) {
+          showErr("loginErr", err.message || "Cannot reach server. Is FastAPI running?");
+          btn.disabled = false;
+          btn.textContent = "Login to My Account";
+        });
       }
 
-      /* REGISTER — POST /api/users/ */
+      /* ══════════════════════════════════════════════
+         REGISTER  →  POST /api/login/
+         ══════════════════════════════════════════════ */
       function doRegister() {
         hideErr("regErr");
-        var name = document.getElementById("rName").value.trim();
+        var name  = document.getElementById("rName").value.trim();
         var email = document.getElementById("rEmail").value.trim();
         var phone = document.getElementById("rPhone").value.trim();
-        var addr = document.getElementById("rAddr").value.trim();
-        var pass = document.getElementById("rPass").value.trim();
-        if (!name || !email || !pass) {
-          showErr("regErr", "Name, email and password are required.");
-          return;
-        }
-        if (pass.length < 6) {
-          showErr("regErr", "Password must be at least 6 characters.");
-          return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          showErr("regErr", "Please enter a valid email.");
-          return;
-        }
+        var addr  = document.getElementById("rAddr").value.trim();
+        var pass  = document.getElementById("rPass").value.trim();
+
+        if (!name || !email || !pass) { showErr("regErr", "Name, email and password are required."); return; }
+        if (pass.length < 6)          { showErr("regErr", "Password must be at least 6 characters."); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr("regErr", "Please enter a valid email."); return; }
 
         var btn = document.getElementById("regBtn");
-        btn.disabled = true;
-        btn.textContent = "Creating account...";
+        btn.disabled = true; btn.textContent = "Creating account...";
 
-        fetch(API + "/api/users/", {
+        fetch(API + "/api/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            password: pass,
-            role: "customer",
-            phone: phone,
-            address: addr,
-          }),
+          body: JSON.stringify({ username: name, email: email, password: pass })
         })
-          .then(function (r) {
-            if (!r.ok)
-              return r.json().then(function (e) {
-                throw new Error(e.detail || "Registration failed.");
-              });
-            return r.json();
-          })
-          .then(function (newUser) {
-            localStorage.setItem("fc_user", JSON.stringify(newUser));
-            document.getElementById("regFields").style.display = "none";
-            document.getElementById("regMsg").textContent =
-              "Welcome, " +
-              newUser.name +
-              "! Your account is ready. Redirecting...";
-            document.getElementById("regSuccess").style.display = "block";
-            setTimeout(function () {
-              location.href = "menu.html";
-            }, 1800);
-          })
-          .catch(function (err) {
-            showErr(
-              "regErr",
-              err.message || "Registration failed. Please try again.",
-            );
-            btn.disabled = false;
-            btn.textContent = "Create My Account";
-          });
+        .then(function(r) {
+          if (!r.ok) return r.json().then(function(e) { throw new Error(e.detail || "Registration failed."); });
+          return r.json();
+        })
+        .then(function(newUser) {
+          saveSession(newUser);
+          document.getElementById("regFields").style.display  = "none";
+          document.getElementById("regMsg").textContent = "Welcome, " + (newUser.username || newUser.name) + "! Redirecting...";
+          document.getElementById("regSuccess").style.display = "block";
+          setTimeout(function() { location.href = "menu.html"; }, 1800);
+        })
+        .catch(function(err) {
+          showErr("regErr", err.message || "Registration failed. Please try again.");
+          btn.disabled = false;
+          btn.textContent = "Create My Account";
+        });
       }
+
+      /* Enter key submits login form */
+      document.addEventListener("keydown", function(e) {
+        if (e.key !== "Enter") return;
+        var lp = document.getElementById("loginPanel");
+        var lf = document.getElementById("loginFields");
+        if (lp.classList.contains("show") && lf.style.display !== "none") doLogin();
+      });
     </script>
   </body>
 </html>
