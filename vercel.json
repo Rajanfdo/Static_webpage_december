@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "Backend/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "HTML_FILES/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "Backend/main.py"
+    },
+    {
+      "src": "/HTML_FILES/(.*)",
+      "dest": "/HTML_FILES/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/HTML_FILES/$1"
+    }
+  ]
+}
