@@ -7,8 +7,7 @@ from routers import (
     fishes, orders, order_items, reviews,cart,contactus
 )
 origins = [
-    "http://127.0.0.1:5502",   # your frontend
-    "http://localhost:5502"
+    "*"
 ]
 Base.metadata.create_all(bind=engine)   
 
