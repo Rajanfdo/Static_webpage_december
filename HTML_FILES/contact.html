@@ -527,12 +527,13 @@
         // Template variables — make sure these match the variable names
         // you used inside your EmailJS templates (e.g. {{from_name}}, {{from_email}}, etc.)
         var templateParams = {
-          from_name:    name,
-          from_email:   email,
+          name:         name,
+          phone:        "",
           subject:      subject,
           message:      message,
+          email:        email,
           reply_to:     email,
-          to_name:      "FreshCoastal Team"   // used in auto-reply greeting
+          to_name:      "FreshCoastal Team"
         };
 
         // 1️⃣  Send "Contact Us" email → to YOU (rajanudson1@gmail.com)
@@ -547,8 +548,12 @@
             document.getElementById("successBox").style.display = "block";
           })
           .catch(function(error) {
-            console.error("EmailJS error:", error);
-            errEl.textContent = "Failed to send message. Please try again or email us directly.";
+            console.error("EmailJS full error:", JSON.stringify(error));
+            var detail = "";
+            if (error && error.text) detail = " — " + error.text;
+            else if (error && error.message) detail = " — " + error.message;
+            else if (typeof error === "string") detail = " — " + error;
+            errEl.textContent = "EmailJS Error" + detail + " (status: " + (error && error.status ? error.status : "unknown") + ")";
             errEl.style.display = "block";
             btn.disabled = false;
             btn.textContent = "Send Message 📨";

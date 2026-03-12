@@ -1,279 +1,1120 @@
-  <!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreshCoastal - Offers</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Segoe UI", sans-serif; color: #333; }
-    nav { background: linear-gradient(135deg, #0077be, #00a8e8); padding: 12px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.7rem; font-weight: bold; color: white; text-decoration: none; }
-    .nav-links { list-style: none; display: flex; gap: 24px; align-items: center; }
-    .nav-links a { color: white; text-decoration: none; font-weight: 500; }
-    .nav-links a:hover { opacity: 0.75; }
-    .nav-links a.active { border-bottom: 2px solid white; }
-    .hero { background: linear-gradient(rgba(0,119,190,0.7), rgba(0,168,232,0.7)), url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200") center/cover; color: white; text-align: center; padding: 90px 20px; }
-    .hero h1 { font-size: 3rem; margin-bottom: 16px; }
-    .hero p { font-size: 1.2rem; margin-bottom: 28px; }
-    .btn { display: inline-block; padding: 13px 36px; background: #f57215; color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; }
-    .btn:hover { background: #d9620f; }
-    .btn-outline { display: inline-block; padding: 13px 36px; background: transparent; color: white; border: 2px solid white; border-radius: 50px; font-size: 1rem; font-weight: bold; text-decoration: none; margin-left: 12px; }
-    .btn-outline:hover { background: rgba(255,255,255,0.15); }
-    .section { padding: 70px 20px; }
-    .section-grey { background: #f2f4f5; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    .section-title { text-align: center; font-size: 2.2rem; color: #0077be; margin-bottom: 10px; }
-    .section-sub { text-align: center; color: #888; margin-bottom: 40px; }
-    .text-center { text-align: center; margin-top: 32px; }
-    .deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-    .deal-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-    .deal-header { padding: 28px 20px; text-align: center; color: white; position: relative; }
-    .deal-tag { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.25); padding: 3px 10px; border-radius: 20px; font-size: 0.76rem; font-weight: 700; }
-    .deal-percent { font-size: 3.5rem; font-weight: 900; line-height: 1; }
-    .deal-label { font-size: 0.9rem; margin-top: 6px; opacity: 0.9; }
-    .deal-body { padding: 16px; }
-    .deal-body h3 { margin-bottom: 6px; }
-    .deal-body p { color: #777; font-size: 0.88rem; margin-bottom: 10px; }
-    .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
-    .new-price { font-size: 1.5rem; font-weight: bold; }
-    .old-price { font-size: 0.95rem; color: #bbb; text-decoration: line-through; }
-    .expires { font-size: 0.82rem; color: #f57215; font-weight: 600; margin-bottom: 14px; }
-    .fish-btn { width: 100%; padding: 10px; background: #f57215; color: white; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; }
-    .fish-btn:hover { background: #d9620f; }
-    .fish-btn:disabled { background: #ccc; cursor: not-allowed; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-    .info-card { background: white; padding: 28px; border-radius: 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-    .card-icon { font-size: 2.8rem; margin-bottom: 12px; }
-    .info-card h3 { color: #0077be; margin-bottom: 10px; }
-    .info-card p { color: #666; font-size: 0.93rem; margin-bottom: 14px; }
-    .combo-price { font-size: 1.6rem; font-weight: bold; margin-bottom: 14px; }
-    .combo-price .old { font-size: 0.95rem; color: #bbb; text-decoration: line-through; margin-left: 8px; font-weight: normal; }
-    .combo-btn { display: inline-block; padding: 10px 28px; background: #f57215; color: white; border-radius: 8px; font-weight: bold; text-decoration: none; }
-    .combo-btn:hover { background: #d9620f; }
-    .banner { background: linear-gradient(135deg, #0077be, #00a8e8); padding: 60px 20px; text-align: center; color: white; }
-    .banner h2 { font-size: 1.9rem; margin-bottom: 12px; }
-    .banner p { font-size: 1.05rem; margin-bottom: 24px; opacity: 0.9; }
-    footer { background: #1a1a1a; color: white; text-align: center; padding: 36px 20px; }
-    footer p { margin-bottom: 10px; font-size: 0.9rem; }
-    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin: 10px 0; }
-    .footer-links a { color: #aaa; font-size: 0.88rem; text-decoration: none; }
-    .footer-links a:hover { color: #00a8e8; }
-    #toast { position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white; padding: 12px 20px; border-radius: 8px; font-weight: 600; display: none; z-index: 9999; }
-    #toast.error { background: #dc3545; }
-    .msg-box { background: #fff3cd; border-radius: 10px; padding: 20px; color: #856404; text-align: center; }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCoastal - Special Offers</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        color: #333;
+      }
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="logo">🐟 FreshCoastal</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="menu.html">Menu</a></li>
-      <li><a href="offers.html" class="active">Offers</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="add_to_cart.html">🛒 Cart</a></li>
-      <li id="navUser"><a href="login.html">Login</a></li>
-    </ul>
-  </div>
-</nav>
+      nav {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .nav-links a:hover {
+        opacity: 0.75;
+      }
+      .nav-links a.active {
+        border-bottom: 2px solid white;
+        padding-bottom: 2px;
+      }
+      .nav-user {
+        color: white;
+        font-size: 0.88rem;
+      }
 
-<section class="hero">
-  <h1>🎉 Special Offers</h1>
-  <p>Live deals on the freshest seafood — limited time only!</p>
-  <a href="menu.html" class="btn">Shop All Items</a>
-  <a href="add_to_cart.html" class="btn-outline">🛒 View Cart</a>
-</section>
+      /* HERO */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #0077be 0%,
+          #00a8e8 50%,
+          #f57215 100%
+        );
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -20%;
+        width: 60%;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+      }
+      .hero-badge {
+        display: inline-block;
+        background: #f57215;
+        color: white;
+        padding: 6px 18px;
+        border-radius: 50px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 12px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 28px;
+        opacity: 0.92;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        padding: 13px 34px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(245, 114, 21, 0.4);
+        transition: background 0.2s;
+      }
+      .btn:hover {
+        background: #d9620f;
+      }
+      .btn-outline {
+        display: inline-block;
+        padding: 13px 34px;
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
 
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">🔥 Today's Hot Deals</h2>
-    <p class="section-sub">Loaded live from our inventory with special discounts</p>
-    <div id="dealsGrid" class="deals-grid">
-      <p style="text-align:center; padding:40px; color:#0077be;">Loading deals...</p>
-    </div>
-    <div class="text-center">
-      <a href="menu.html" class="btn">Browse Full Menu</a>
-    </div>
-  </div>
-</section>
+      /* COUNTDOWN BANNER */
+      .countdown-bar {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 12px 20px;
+        font-size: 0.92rem;
+      }
+      .countdown-bar span {
+        color: #f57215;
+        font-weight: 700;
+        font-size: 1rem;
+      }
 
-<section class="section section-grey">
-  <div class="container">
-    <h2 class="section-title">🎊 Combo Deals</h2>
-    <p class="section-sub">Pre-packed combos for the best value</p>
-    <div class="card-grid">
-      <div class="info-card">
-        <div class="card-icon">🦐🐟</div>
-        <h3>Prawns + Seer Fish</h3>
-        <p>500g Tiger Prawns + 500g Seer Fish. A complete seafood feast.</p>
-        <div class="combo-price">₹900 <span class="old">₹1000</span></div>
-        <a href="menu.html" class="combo-btn">Order Now</a>
+      /* SECTIONS */
+      .section {
+        padding: 70px 20px;
+      }
+      .section-grey {
+        background: #f2f4f5;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        color: #0077be;
+        margin-bottom: 8px;
+      }
+      .section-sub {
+        text-align: center;
+        color: #888;
+        margin-bottom: 40px;
+        font-size: 0.95rem;
+      }
+
+      /* FEATURED DEAL — big hero card */
+      .featured-deal {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        border-radius: 20px;
+        padding: 40px;
+        color: white;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+      }
+      .featured-deal::after {
+        content: "🐟";
+        position: absolute;
+        right: 160px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        opacity: 0.12;
+      }
+      .featured-badge {
+        display: inline-block;
+        background: #f57215;
+        color: white;
+        padding: 5px 14px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .featured-deal h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+      .featured-deal p {
+        opacity: 0.88;
+        margin-bottom: 20px;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      .featured-price {
+        font-size: 2.8rem;
+        font-weight: 900;
+      }
+      .featured-price .old {
+        font-size: 1.1rem;
+        text-decoration: line-through;
+        opacity: 0.6;
+        margin-left: 10px;
+        font-weight: normal;
+      }
+      .featured-discount-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #f57215;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 8px 30px rgba(245, 114, 21, 0.5);
+      }
+      .featured-discount-circle .pct {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: white;
+        line-height: 1;
+      }
+      .featured-discount-circle .off {
+        font-size: 0.75rem;
+        color: white;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      @media (max-width: 600px) {
+        .featured-deal {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .featured-discount-circle {
+          margin: 0 auto;
+        }
+        .featured-deal::after {
+          display: none;
+        }
+      }
+
+      /* OFFER CARDS GRID — only 3 curated deals */
+      .offers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 16px;
+      }
+      .offer-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.09);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .offer-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+      .offer-card-top {
+        padding: 26px 22px 18px;
+        color: white;
+        position: relative;
+      }
+      .offer-tag {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: rgba(255, 255, 255, 0.22);
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .offer-emoji {
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .offer-card-top h3 {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+      }
+      .offer-card-top p {
+        font-size: 0.85rem;
+        opacity: 0.88;
+      }
+      .offer-card-body {
+        padding: 18px 22px;
+      }
+      .offer-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+      .offer-new-price {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #0077be;
+      }
+      .offer-old-price {
+        font-size: 0.9rem;
+        color: #bbb;
+        text-decoration: line-through;
+      }
+      .offer-saving {
+        display: inline-block;
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .offer-expires {
+        font-size: 0.82rem;
+        color: #f57215;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+      .offer-btn {
+        width: 100%;
+        padding: 11px;
+        background: #0077be;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .offer-btn:hover {
+        background: #005fa3;
+      }
+      .offer-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      /* COMBO DEALS */
+      .combo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+      }
+      .combo-card {
+        background: white;
+        border-radius: 16px;
+        padding: 28px 24px;
+        text-align: center;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        border-top: 4px solid #0077be;
+        transition: transform 0.2s;
+      }
+      .combo-card:hover {
+        transform: translateY(-4px);
+      }
+      .combo-icon {
+        font-size: 2.8rem;
+        margin-bottom: 12px;
+      }
+      .combo-card h3 {
+        color: #0077be;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+      }
+      .combo-card p {
+        color: #666;
+        font-size: 0.88rem;
+        margin-bottom: 14px;
+        line-height: 1.5;
+      }
+      .combo-items {
+        background: #f2f4f5;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-bottom: 14px;
+        font-size: 0.84rem;
+        color: #555;
+        line-height: 1.8;
+      }
+      .combo-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+      .combo-new {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #f57215;
+      }
+      .combo-old {
+        font-size: 0.9rem;
+        color: #bbb;
+        text-decoration: line-through;
+      }
+      .combo-save {
+        font-size: 0.8rem;
+        color: #28a745;
+        font-weight: 700;
+      }
+      .combo-btn {
+        display: block;
+        width: 100%;
+        padding: 11px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .combo-btn:hover {
+        background: #d9620f;
+      }
+      .combo-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      /* MEMBERSHIP / PROMO CODES */
+      .promo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .promo-card {
+        background: white;
+        border-radius: 14px;
+        padding: 24px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+        border-left: 5px solid #0077be;
+      }
+      .promo-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+      }
+      .promo-card h4 {
+        color: #0077be;
+        margin-bottom: 4px;
+      }
+      .promo-card p {
+        color: #666;
+        font-size: 0.87rem;
+        margin-bottom: 10px;
+      }
+      .promo-code {
+        display: inline-block;
+        background: #f2f4f5;
+        border: 2px dashed #0077be;
+        color: #0077be;
+        padding: 6px 16px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+        cursor: pointer;
+      }
+      .promo-code:hover {
+        background: #e3f2fd;
+      }
+
+      /* DELIVERY BANNER */
+      .banner {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 60px 20px;
+        text-align: center;
+        color: white;
+      }
+      .banner h2 {
+        font-size: 1.9rem;
+        margin-bottom: 12px;
+      }
+      .banner p {
+        font-size: 1.05rem;
+        margin-bottom: 24px;
+        opacity: 0.9;
+      }
+
+      footer {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 36px 20px;
+      }
+      footer p {
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin: 10px 0;
+      }
+      .footer-links a {
+        color: #aaa;
+        font-size: 0.88rem;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: #00a8e8;
+      }
+
+      #toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        display: none;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      #toast.error {
+        background: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="logo">🐟 FreshCoastal</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="offers.html" class="active">Offers</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="add_to_cart.html">🛒 Cart</a></li>
+          <li id="navUser"><a href="login.html">Login</a></li>
+        </ul>
       </div>
-      <div class="info-card">
-        <div class="card-icon">🦀🦞</div>
-        <h3>Crab + Lobster Luxury</h3>
-        <p>500g Mud Crab + 500g Lobster. A premium treat for occasions.</p>
-        <div class="combo-price">₹1900 <span class="old">₹2100</span></div>
-        <a href="menu.html" class="combo-btn">Order Now</a>
-      </div>
-      <div class="info-card">
-        <div class="card-icon">🐟🦑</div>
-        <h3>Family Seafood Pack</h3>
-        <p>1kg Pomfret + 500g Squid + 500g Salmon. Variety for the whole week.</p>
-        <div class="combo-price">₹2100 <span class="old">₹2350</span></div>
-        <a href="menu.html" class="combo-btn">Order Now</a>
-      </div>
+    </nav>
+
+    <!-- Countdown bar -->
+    <div class="countdown-bar">
+      ⚡ Flash Sale ends in: <span id="countdown">--:--:--</span> &nbsp;|&nbsp;
+      Use code <span>FRESH10</span> for extra 10% off
     </div>
-  </div>
-</section>
 
-<div class="banner">
-  <h2>📦 Free Delivery on Orders Over ₹2000</h2>
-  <p>Order enough for the week and pay zero delivery charges!</p>
-  <a href="menu.html" class="btn">Shop Now</a>
-  <a href="contact.html" class="btn-outline">Contact Us</a>
-</div>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">🔥 Limited Time Offers</div>
+      <h1>Today's Best Deals</h1>
+      <p>
+        Handpicked discounts on the freshest seafood — straight from the coast
+        to your table
+      </p>
+      <div class="hero-btns">
+        <a href="menu.html" class="btn">Shop Full Menu</a>
+        <a href="add_to_cart.html" class="btn-outline">🛒 View Cart</a>
+      </div>
+    </section>
 
-<footer>
-  <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
-  <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
-  <div class="footer-links">
-    <a href="index.html">Home</a>
-    <a href="menu.html">Menu</a>
-    <a href="offers.html">Offers</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="add_to_cart.html">Cart</a>
-    <a href="login.html">Login</a>
-  </div>
-  <p style="color:#555; font-size:0.8rem;">&copy; 2025 FreshCoastal. All rights reserved.</p>
-</footer>
+    <!-- Featured Deal of the Day -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">⭐ Deal of the Day</h2>
+        <p class="section-sub">
+          Our biggest discount — refreshed every 24 hours
+        </p>
+        <div class="featured-deal" id="featuredDeal">
+          <div>
+            <span class="featured-badge">⭐ Today's Top Pick</span>
+            <h2 id="featuredName">Loading...</h2>
+            <p id="featuredDesc">
+              Fetching today's best deal from our inventory...
+            </p>
+            <div class="featured-price">
+              <span id="featuredNewPrice">—</span>
+              <span class="old" id="featuredOldPrice"></span>
+            </div>
+            <br />
+            <button
+              class="btn"
+              id="featuredBtn"
+              style="margin-top: 16px"
+              onclick="featuredAddToCart()"
+            >
+              Add to Cart 🛒
+            </button>
+          </div>
+          <div class="featured-discount-circle">
+            <span class="pct" id="featuredPct">—</span>
+            <span class="off">OFF</span>
+          </div>
+        </div>
 
-<div id="toast"></div>
+        <!-- 3 curated hot deals -->
+        <h2 class="section-title">🔥 Hot Deals</h2>
+        <p class="section-sub">3 specially selected offers — updated daily</p>
+        <div class="offers-grid" id="offersGrid">
+          <p style="text-align: center; padding: 40px; color: #0077be">
+            Loading deals...
+          </p>
+        </div>
+      </div>
+    </section>
 
-<script>
-  var API = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" ? "http://127.0.0.1:8000" : window.location.origin;
-  var DISCOUNTS = [20, 15, 10, 25, 18, 12];
-  var COLORS = [
-    "linear-gradient(135deg, #0077be, #00a8e8)",
-    "linear-gradient(135deg, #28a745, #20c997)",
-    "linear-gradient(135deg, #e91e63, #c2185b)",
-    "linear-gradient(135deg, #ff9800, #f57215)",
-    "linear-gradient(135deg, #9c27b0, #673ab7)",
-    "linear-gradient(135deg, #00bcd4, #0077be)"
-  ];
-  var DEAL_TAGS = ["TODAY ONLY", "WEEKEND", "LIMITED", "FLASH SALE", "DAILY DEAL", "HOT PICK"];
+    <!-- Combo Deals — static, curated -->
+    <section class="section section-grey">
+      <div class="container">
+        <h2 class="section-title">🎊 Combo Deals</h2>
+        <p class="section-sub">
+          Pre-packed value bundles — save more when you buy together
+        </p>
+        <div class="combo-grid">
+          <div class="combo-card">
+            <div class="combo-icon">🦐🐟</div>
+            <h3>Coastal Classic Combo</h3>
+            <p>A perfect everyday seafood bundle for the family.</p>
+            <div class="combo-items">
+              ✔ 500g Tiger Prawns<br />✔ 500g Seer Fish (Vanjaram)
+            </div>
+            <div class="combo-price-row">
+              <span class="combo-new">₹900</span>
+              <span class="combo-old">₹1,050</span>
+              <span class="combo-save">Save ₹150</span>
+            </div>
+            <button class="combo-btn" onclick="addCombo(0, this)">
+              Add Combo to Cart 🛒
+            </button>
+          </div>
+          <div class="combo-card">
+            <div class="combo-icon">🦀🦞</div>
+            <h3>Luxury Shellfish Pack</h3>
+            <p>Treat yourself — premium shellfish for special occasions.</p>
+            <div class="combo-items">✔ 500g Mud Crab<br />✔ 500g Lobster</div>
+            <div class="combo-price-row">
+              <span class="combo-new">₹1,900</span>
+              <span class="combo-old">₹2,200</span>
+              <span class="combo-save">Save ₹300</span>
+            </div>
+            <button class="combo-btn" onclick="addCombo(1, this)">
+              Add Combo to Cart 🛒
+            </button>
+          </div>
+          <div class="combo-card">
+            <div class="combo-icon">🐟🦑🦐</div>
+            <h3>Family Feast Pack</h3>
+            <p>Enough variety for the whole week. Best value combo.</p>
+            <div class="combo-items">
+              ✔ 1kg Pomfret<br />✔ 500g Squid<br />✔ 500g Tiger Prawns
+            </div>
+            <div class="combo-price-row">
+              <span class="combo-new">₹2,100</span>
+              <span class="combo-old">₹2,450</span>
+              <span class="combo-save">Save ₹350</span>
+            </div>
+            <button class="combo-btn" onclick="addCombo(2, this)">
+              Add Combo to Cart 🛒
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  function getUser() {
-    try { return JSON.parse(localStorage.getItem("fc_user")); }
-    catch (e) { return null; }
-  }
+    <!-- Promo Codes -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">🎟️ Promo Codes</h2>
+        <p class="section-sub">Copy a code and apply it at checkout</p>
+        <div class="promo-grid">
+          <div class="promo-card">
+            <div class="promo-icon">🆕</div>
+            <div>
+              <h4>New Customer Offer</h4>
+              <p>
+                Get 15% off on your very first order. Valid for new accounts
+                only.
+              </p>
+              <span class="promo-code" onclick="copyCode('WELCOME15')"
+                >WELCOME15</span
+              >
+            </div>
+          </div>
+          <div class="promo-card">
+            <div class="promo-icon">⚡</div>
+            <div>
+              <h4>Flash Sale Code</h4>
+              <p>Extra 10% off on any order today. Limited uses remaining.</p>
+              <span class="promo-code" onclick="copyCode('FRESH10')"
+                >FRESH10</span
+              >
+            </div>
+          </div>
+          <div class="promo-card">
+            <div class="promo-icon">📦</div>
+            <div>
+              <h4>Free Delivery</h4>
+              <p>
+                Free delivery on orders above ₹2000. No code needed — applied
+                automatically.
+              </p>
+              <span class="promo-code" style="cursor: default"
+                >AUTO APPLIED</span
+              >
+            </div>
+          </div>
+          <div class="promo-card">
+            <div class="promo-icon">👥</div>
+            <div>
+              <h4>Refer a Friend</h4>
+              <p>Share your referral code & both get ₹100 off on next order.</p>
+              <span class="promo-code" onclick="copyCode('REFERFC')"
+                >REFERFC</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  function showToast(message, isError) {
-    var toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.className = isError ? "error" : "";
-    toast.style.display = "block";
-    setTimeout(function() { toast.style.display = "none"; }, 2500);
-  }
+    <div class="banner">
+      <h2>📦 Free Delivery on Orders Over ₹2000</h2>
+      <p>Order enough for the week and pay zero delivery charges!</p>
+      <a href="menu.html" class="btn">Shop Now</a>
+      <a href="contact.html" class="btn-outline">Contact Us</a>
+    </div>
 
-  var user = getUser();
-  if (user) {
-    document.getElementById("navUser").innerHTML =
-      "👤 " + user.name + " &nbsp; <a href='login.html' onclick='logout()'>Logout</a>";
-  }
-  function logout() { localStorage.removeItem("fc_user"); location.reload(); }
+    <footer>
+      <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
+      <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="offers.html">Offers</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="add_to_cart.html">Cart</a>
+        <a href="login.html">Login</a>
+      </div>
+      <p style="color: #555; font-size: 0.8rem">
+        &copy; 2025 FreshCoastal. All rights reserved.
+      </p>
+    </footer>
 
-  function loadDeals() {
-    fetch(API + "/api/fishes/")
-      .then(function(r) { return r.json(); })
-      .then(function(fishList) {
-        var inStock = fishList.filter(function(f) { return f.stock > 0; });
-        renderDealCards(inStock);
-      })
-      .catch(function() {
-        document.getElementById("dealsGrid").innerHTML =
-          "<div class='msg-box'>⚠️ Could not load deals. Make sure the backend is running at " + API + "</div>";
-      });
-  }
+    <div id="toast"></div>
 
-  function renderDealCards(fishList) {
-    var grid = document.getElementById("dealsGrid");
-    grid.innerHTML = "";
-    if (fishList.length === 0) {
-      grid.innerHTML = "<div class='msg-box'>No items in stock right now. Check back tomorrow!</div>";
-      return;
-    }
-    for (var i = 0; i < fishList.length; i++) {
-      var fish = fishList[i];
-      var percent = DISCOUNTS[i % DISCOUNTS.length];
-      var discountedPrice = Math.round(fish.price * (1 - percent / 100));
-      var card = document.createElement("div");
-      card.className = "deal-card";
-      card.innerHTML =
-        "<div class='deal-header' style='background:" + COLORS[i % COLORS.length] + "'>" +
-          "<span class='deal-tag'>" + DEAL_TAGS[i % DEAL_TAGS.length] + "</span>" +
-          "<div class='deal-percent'>" + percent + "%</div>" +
-          "<div class='deal-label'>OFF — " + fish.name + "</div>" +
-        "</div>" +
-        "<div class='deal-body'>" +
-          "<h3>" + fish.name + "</h3>" +
-          "<p>" + (fish.description || "Fresh catch, delivered same day.") + "</p>" +
-          "<div class='price-row'>" +
-            "<span class='new-price'>₹" + discountedPrice + "/kg</span>" +
-            "<span class='old-price'>₹" + fish.price + "</span>" +
-          "</div>" +
-          "<div class='expires'>⏰ Limited time offer</div>" +
-          "<button class='fish-btn'>Add to Cart</button>" +
-        "</div>";
-      var btn = card.querySelector(".fish-btn");
-      btn.onclick = makeAddToCartHandler(fish.id, fish.name, btn);
-      grid.appendChild(card);
-    }
-  }
+    <script>
+      var API =
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname === "localhost"
+          ? "http://127.0.0.1:8000"
+          : window.location.origin;
 
-  function makeAddToCartHandler(fishId, fishName, button) {
-    return function() { addToCart(fishId, fishName, button); };
-  }
+      // ── Auth ──────────────────────────────────────────────────────────────
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("fc_user"));
+        } catch (e) {
+          return null;
+        }
+      }
+      var user = getUser();
+      if (user) {
+        document.getElementById("navUser").innerHTML =
+          '<span class="nav-user">👤 ' +
+          user.name +
+          '</span> &nbsp; <a href="login.html" onclick="logout()">Logout</a>';
+      }
+      function logout() {
+        localStorage.removeItem("fc_user");
+        location.reload();
+      }
 
-  /* BUG FIX: Cart API expects { user_id, items: [{fish_id, quantity}] }
-     Previously was sending flat { user_id, fish_id, quantity } which caused 422 errors */
-  function addToCart(fishId, fishName, button) {
-    var user = getUser();
-    if (!user) {
-      showToast("Please login first!", true);
-      setTimeout(function() { window.location.href = "login.html"; }, 1500);
-      return;
-    }
-    button.disabled = true;
-    button.textContent = "Adding...";
-    fetch(API + "/api/cart/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: user.id,
-        items: [{ fish_id: fishId, quantity: 1 }]
-      })
-    })
-    .then(function(r) { if (!r.ok) throw new Error("Server error"); return r.json(); })
-    .then(function() {
-      button.disabled = false;
-      button.textContent = "Add to Cart";
-      showToast("✅ " + fishName + " added to cart!");
-    })
-    .catch(function() {
-      button.disabled = false;
-      button.textContent = "Add to Cart";
-      showToast("❌ Could not add item.", true);
-    });
-  }
+      // ── Toast ─────────────────────────────────────────────────────────────
+      function showToast(msg, isErr) {
+        var t = document.getElementById("toast");
+        t.textContent = msg;
+        t.className = isErr ? "error" : "";
+        t.style.display = "block";
+        setTimeout(function () {
+          t.style.display = "none";
+        }, 2500);
+      }
 
-  loadDeals();
-</script>
-</body>
+      // ── Countdown timer ───────────────────────────────────────────────────
+      function updateCountdown() {
+        var now = new Date();
+        var end = new Date();
+        end.setHours(23, 59, 59, 0);
+        var diff = end - now;
+        var h = Math.floor(diff / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        document.getElementById("countdown").textContent =
+          String(h).padStart(2, "0") +
+          ":" +
+          String(m).padStart(2, "0") +
+          ":" +
+          String(s).padStart(2, "0");
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // ── Promo code copy ───────────────────────────────────────────────────
+      function copyCode(code) {
+        navigator.clipboard
+          .writeText(code)
+          .then(function () {
+            showToast("✅ Code '" + code + "' copied!");
+          })
+          .catch(function () {
+            showToast("Code: " + code, false);
+          });
+      }
+
+      // ── Offer colours ─────────────────────────────────────────────────────
+      var OFFER_STYLES = [
+        { bg: "linear-gradient(135deg,#0077be,#00a8e8)", tag: "FLASH SALE" },
+        { bg: "linear-gradient(135deg,#28a745,#20c997)", tag: "TODAY ONLY" },
+        { bg: "linear-gradient(135deg,#e91e63,#c2185b)", tag: "LIMITED" },
+      ];
+      var DISCOUNTS = [25, 20, 15];
+      var EMOJIS = ["🦐", "🐟", "🦀"];
+
+      var featuredFish = null;
+
+      // ── Load & render ──────────────────────────────────────────────────────
+      function loadOffers() {
+        fetch(API + "/api/fishes/")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (all) {
+            allFishCache = all; // cache full list for combo matching
+            var inStock = all.filter(function (f) {
+              return f.stock > 0;
+            });
+            if (inStock.length === 0) {
+              document.getElementById("offersGrid").innerHTML =
+                "<p style='text-align:center;color:#888;padding:40px'>No deals available right now. Check back soon!</p>";
+              return;
+            }
+
+            // Featured = highest-priced item (most impressive deal)
+            var sorted = inStock.slice().sort(function (a, b) {
+              return b.price - a.price;
+            });
+            featuredFish = sorted[0];
+            renderFeatured(featuredFish, 30);
+
+            // Hot deals = next 3 items (different from featured)
+            var hotItems = sorted.slice(1, 4);
+            // If fewer than 3 remaining, cycle back from beginning
+            if (hotItems.length === 0) hotItems = sorted.slice(0, 3);
+            renderHotDeals(hotItems);
+          })
+          .catch(function () {
+            document.getElementById("offersGrid").innerHTML =
+              "<p style='text-align:center;color:#888;padding:40px'>⚠️ Could not load deals. Make sure backend is running.</p>";
+            document.getElementById("featuredName").textContent = "Unavailable";
+            document.getElementById("featuredDesc").textContent =
+              "Backend is not reachable.";
+          });
+      }
+
+      function renderFeatured(fish, pct) {
+        var discounted = Math.round(fish.price * (1 - pct / 100));
+        document.getElementById("featuredName").textContent = fish.name;
+        document.getElementById("featuredDesc").textContent =
+          (fish.description ||
+            "Ultra-fresh, caught this morning. Limited quantity available.") +
+          " Get it at our lowest price of the day!";
+        document.getElementById("featuredNewPrice").textContent =
+          "₹" + discounted + "/kg";
+        document.getElementById("featuredOldPrice").textContent =
+          "₹" + fish.price;
+        document.getElementById("featuredPct").textContent = pct + "%";
+        document.getElementById("featuredBtn").dataset.id = fish.id;
+        document.getElementById("featuredBtn").dataset.name = fish.name;
+      }
+
+      function featuredAddToCart() {
+        var btn = document.getElementById("featuredBtn");
+        var id = parseInt(btn.dataset.id);
+        var name = btn.dataset.name;
+        if (!id) return;
+        addToCart(id, name, btn);
+      }
+
+      function renderHotDeals(items) {
+        var grid = document.getElementById("offersGrid");
+        grid.innerHTML = "";
+        for (var i = 0; i < items.length; i++) {
+          var fish = items[i];
+          var pct = DISCOUNTS[i % DISCOUNTS.length];
+          var discounted = Math.round(fish.price * (1 - pct / 100));
+          var saving = fish.price - discounted;
+          var style = OFFER_STYLES[i % OFFER_STYLES.length];
+
+          var card = document.createElement("div");
+          card.className = "offer-card";
+          card.innerHTML =
+            "<div class='offer-card-top' style='background:" +
+            style.bg +
+            "'>" +
+            "<span class='offer-tag'>" +
+            style.tag +
+            "</span>" +
+            "<span class='offer-emoji'>" +
+            EMOJIS[i % EMOJIS.length] +
+            "</span>" +
+            "<h3>" +
+            fish.name +
+            "</h3>" +
+            "<p>" +
+            (fish.description || "Fresh catch, delivered same day.") +
+            "</p>" +
+            "</div>" +
+            "<div class='offer-card-body'>" +
+            "<div class='offer-price-row'>" +
+            "<span class='offer-new-price'>₹" +
+            discounted +
+            "/kg</span>" +
+            "<span class='offer-old-price'>₹" +
+            fish.price +
+            "</span>" +
+            "</div>" +
+            "<span class='offer-saving'>You save ₹" +
+            saving +
+            "</span>" +
+            "<div class='offer-expires'>⏰ Offer ends at midnight</div>" +
+            "<button class='offer-btn'>Add to Cart 🛒</button>" +
+            "</div>";
+
+          (function (fid, fname, btn) {
+            btn.onclick = function () {
+              addToCart(fid, fname, btn);
+            };
+          })(fish.id, fish.name, card.querySelector(".offer-btn"));
+
+          grid.appendChild(card);
+        }
+      }
+
+      // ── Add to cart ────────────────────────────────────────────────────────
+      function addToCart(fishId, fishName, button) {
+        var u = getUser();
+        if (!u) {
+          showToast("Please login first!", true);
+          setTimeout(function () {
+            window.location.href = "login.html";
+          }, 1500);
+          return;
+        }
+        button.disabled = true;
+        button.textContent = "Adding...";
+        fetch(API + "/api/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: u.id,
+            items: [{ fish_id: fishId, quantity: 1 }],
+          }),
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error();
+            return r.json();
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = button.classList.contains("btn")
+              ? "Add to Cart 🛒"
+              : "Add to Cart 🛒";
+            showToast("✅ " + fishName + " added to cart!");
+          })
+          .catch(function () {
+            button.disabled = false;
+            button.textContent = "Add to Cart 🛒";
+            showToast("❌ Could not add item.", true);
+          });
+      }
+
+      // ── Combo definitions (matched by name keywords against API fish list) ──
+      var COMBOS = [
+        {
+          name: "Coastal Classic Combo",
+          keywords: ["prawn", "tiger prawn", "seer", "vanjaram"],
+        },
+        {
+          name: "Luxury Shellfish Pack",
+          keywords: ["crab", "mud crab", "lobster"],
+        },
+        {
+          name: "Family Feast Pack",
+          keywords: ["pomfret", "squid", "prawn", "tiger prawn"],
+        },
+      ];
+
+      var allFishCache = []; // populated once API loads
+
+      function findFishByKeyword(keyword) {
+        return allFishCache.find(function (f) {
+          return f.name.toLowerCase().includes(keyword.toLowerCase());
+        });
+      }
+
+      function addCombo(comboIndex, button) {
+        var u = getUser();
+        if (!u) {
+          showToast("Please login first!", true);
+          setTimeout(function () {
+            window.location.href = "login.html";
+          }, 1500);
+          return;
+        }
+        if (allFishCache.length === 0) {
+          showToast("Still loading fish list, please wait...", true);
+          return;
+        }
+
+        var combo = COMBOS[comboIndex];
+        var matchedItems = [];
+        var seen = {};
+
+        combo.keywords.forEach(function (kw) {
+          var fish = findFishByKeyword(kw);
+          if (fish && !seen[fish.id]) {
+            seen[fish.id] = true;
+            matchedItems.push({ fish_id: fish.id, quantity: 1 });
+          }
+        });
+
+        if (matchedItems.length === 0) {
+          showToast("⚠️ Combo items not found in current stock.", true);
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = "Adding...";
+
+        fetch(API + "/api/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: u.id, items: matchedItems }),
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error();
+            return r.json();
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = "Add Combo to Cart 🛒";
+            showToast(
+              "✅ " +
+                combo.name +
+                " (" +
+                matchedItems.length +
+                " items) added to cart!",
+            );
+          })
+          .catch(function () {
+            button.disabled = false;
+            button.textContent = "Add Combo to Cart 🛒";
+            showToast("❌ Could not add combo.", true);
+          });
+      }
+
+      loadOffers();
+    </script>
+  </body>
 </html>

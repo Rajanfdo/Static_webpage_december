@@ -1,556 +1,558 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCoastal - Home</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreshCoastal - Home</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        color: #333;
+      }
 
-    body {
-      font-family: "Segoe UI", sans-serif;
-      color: #333;
-    }
+      nav {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
 
-    nav {
-      background: linear-gradient(135deg, #0077be, #00a8e8);
-      padding: 12px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+      .logo {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
 
-    .logo {
-      font-size: 1.7rem;
-      font-weight: bold;
-      color: white;
-      text-decoration: none;
-    }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
 
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
+      .nav-links a:hover {
+        opacity: 0.75;
+      }
 
-    .nav-links a:hover {
-      opacity: 0.75;
-    }
+      .nav-links a.active {
+        border-bottom: 2px solid white;
+      }
 
-    .nav-links a.active {
-      border-bottom: 2px solid white;
-    }
+      .hero {
+        background:
+          linear-gradient(rgba(0, 119, 190, 0.7), rgba(0, 168, 232, 0.7)),
+          url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200")
+            center/cover;
+        color: white;
+        text-align: center;
+        padding: 120px 20px;
+      }
 
-    .hero {
-      background:
-        linear-gradient(rgba(0, 119, 190, 0.7), rgba(0, 168, 232, 0.7)),
-        url("https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=1200") center/cover;
-      color: white;
-      text-align: center;
-      padding: 120px 20px;
-    }
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+      }
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 16px;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-    }
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 28px;
+      }
 
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 28px;
-    }
+      .btn {
+        display: inline-block;
+        padding: 13px 36px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+      }
 
-    .btn {
-      display: inline-block;
-      padding: 13px 36px;
-      background: #f57215;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-    }
+      .btn:hover {
+        background: #d9620f;
+      }
 
-    .btn:hover {
-      background: #d9620f;
-    }
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
 
-    .btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
+      .btn-outline {
+        display: inline-block;
+        padding: 13px 36px;
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 12px;
+      }
 
-    .btn-outline {
-      display: inline-block;
-      padding: 13px 36px;
-      background: transparent;
-      color: white;
-      border: 2px solid white;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: bold;
-      text-decoration: none;
-      margin-left: 12px;
-    }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
 
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
+      .section {
+        padding: 70px 20px;
+      }
 
-    .section {
-      padding: 70px 20px;
-    }
+      .section-grey {
+        background: #f2f4f5;
+      }
 
-    .section-grey {
-      background: #f2f4f5;
-    }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+      .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        color: #0077be;
+        margin-bottom: 40px;
+      }
 
-    .section-title {
-      text-align: center;
-      font-size: 2.2rem;
-      color: #0077be;
-      margin-bottom: 40px;
-    }
+      .text-center {
+        text-align: center;
+        margin-top: 32px;
+      }
 
-    .text-center {
-      text-align: center;
-      margin-top: 32px;
-    }
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+      }
 
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-    }
+      .info-card {
+        background: white;
+        padding: 28px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
 
-    .info-card {
-      background: white;
-      padding: 28px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    }
+      .card-icon {
+        font-size: 2.8rem;
+        margin-bottom: 12px;
+      }
 
-    .card-icon {
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-    }
+      .info-card h3 {
+        color: #0077be;
+        margin-bottom: 10px;
+      }
 
-    .info-card h3 {
-      color: #0077be;
-      margin-bottom: 10px;
-    }
+      .info-card p {
+        color: #666;
+        font-size: 0.93rem;
+      }
 
-    .info-card p {
-      color: #666;
-      font-size: 0.93rem;
-    }
+      .fish-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+      }
 
-    .fish-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-    }
+      .fish-card {
+        background: white;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
 
-    .fish-card {
-      background: white;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    }
+      .fish-card img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+      }
 
-    .fish-card img {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-    }
+      .fish-body {
+        padding: 16px;
+      }
 
-    .fish-body {
-      padding: 16px;
-    }
+      .fish-body h3 {
+        margin-bottom: 6px;
+      }
 
-    .fish-body h3 {
-      margin-bottom: 6px;
-    }
+      .fish-body p {
+        color: #777;
+        font-size: 0.88rem;
+        margin-bottom: 8px;
+      }
 
-    .fish-body p {
-      color: #777;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
-    }
+      .fish-price {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
 
-    .fish-price {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin-bottom: 14px;
-    }
+      .fish-btn {
+        width: 100%;
+        padding: 10px;
+        background: #f57215;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-    .fish-btn {
-      width: 100%;
-      padding: 10px;
-      background: #f57215;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
+      .fish-btn:hover {
+        background: #d9620f;
+      }
 
-    .fish-btn:hover {
-      background: #d9620f;
-    }
+      .fish-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
 
-    .fish-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
+      .banner {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 60px 20px;
+        text-align: center;
+        color: white;
+      }
 
-    .banner {
-      background: linear-gradient(135deg, #0077be, #00a8e8);
-      padding: 60px 20px;
-      text-align: center;
-      color: white;
-    }
+      .banner h2 {
+        font-size: 1.9rem;
+        margin-bottom: 12px;
+      }
 
-    .banner h2 {
-      font-size: 1.9rem;
-      margin-bottom: 12px;
-    }
+      .banner p {
+        font-size: 1.05rem;
+        margin-bottom: 24px;
+        opacity: 0.9;
+      }
 
-    .banner p {
-      font-size: 1.05rem;
-      margin-bottom: 24px;
-      opacity: 0.9;
-    }
+      footer {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 36px 20px;
+      }
 
-    footer {
-      background: #1a1a1a;
-      color: white;
-      text-align: center;
-      padding: 36px 20px;
-    }
+      footer p {
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
 
-    footer p {
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-    }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin: 10px 0;
+      }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px 18px;
-      margin: 10px 0;
-    }
+      .footer-links a {
+        color: #aaa;
+        font-size: 0.88rem;
+        text-decoration: none;
+      }
 
-    .footer-links a {
-      color: #aaa;
-      font-size: 0.88rem;
-      text-decoration: none;
-    }
+      .footer-links a:hover {
+        color: #00a8e8;
+      }
 
-    .footer-links a:hover {
-      color: #00a8e8;
-    }
+      #toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        display: none;
+        z-index: 9999;
+      }
 
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #28a745;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      display: none;
-      z-index: 9999;
-    }
+      #toast.error {
+        background: #dc3545;
+      }
 
-    #toast.error {
-      background: #dc3545;
-    }
+      .msg-box {
+        background: #fff3cd;
+        border-radius: 10px;
+        padding: 20px;
+        color: #856404;
+        text-align: center;
+      }
+    </style>
+  </head>
 
-    .msg-box {
-      background: #fff3cd;
-      border-radius: 10px;
-      padding: 20px;
-      color: #856404;
-      text-align: center;
-    }
-  </style>
-</head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="logo">🐟 FreshCoastal</a>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="/HTML_FILES/menu.html">Menu</a></li>
+          <li><a href="/HTML_FILES/offers.html">Offers</a></li>
+          <li><a href="/HTML_FILES/about.html">About</a></li>
+          <li><a href="/HTML_FILES/contact.html">Contact</a></li>
+          <li><a href="add_to_cart.html">🛒 Cart</a></li>
+          <li id="navUser"><a href="/HTML_FILES/login.html">Login</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<body>
-  <nav>
-    <div class="nav-inner">
-      <a href="index.html" class="logo">🐟 FreshCoastal</a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="/HTML_FILES/menu.html">Menu</a></li>
-        <li><a href="/HTML_FILES/offers.html">Offers</a></li>
-        <li><a href="/HTML_FILES/about.html">About</a></li>
-        <li><a href="/HTML_FILES/contact.html">Contact</a></li>
-        <li><a href="add_to_cart.html">🛒 Cart</a></li>
-        <li id="navUser"><a href="/HTML_FILES/login.html">Login</a></li>
-        <li id="navUser"><a href="/HTML_FILES/admin.html">ADMIN</a></li>
-      </ul>
-    </div>
-  </nav>
+    <section class="hero">
+      <h1>🐟 Fresh Seafood, Delivered Daily</h1>
+      <p>
+        Sourced every morning from Tamil Nadu's coast — straight to your kitchen
+      </p>
+      <a href="/HTML_FILES/menu.html" class="btn">Explore Our Menu</a>
+      <a href="/HTML_FILES/offers.html" class="btn-outline">Today's Offers</a>
+    </section>
 
-  <section class="hero">
-    <h1>🐟 Fresh Seafood, Delivered Daily</h1>
-    <p>
-      Sourced every morning from Tamil Nadu's coast — straight to your kitchen
-    </p>
-    <a href="/HTML_FILES/menu.html" class="btn">Explore Our Menu</a>
-    <a href="/HTML_FILES/offers.html" class="btn-outline">Today's Offers</a>
-  </section>
+    <section class="section section-grey">
+      <div class="container">
+        <h2 class="section-title">Why Choose FreshCoastal?</h2>
+        <div class="card-grid">
+          <div class="info-card">
+            <div class="card-icon">🌅</div>
+            <h3>Caught Every Morning</h3>
+            <p>
+              Never frozen — your order ships the same day from the morning
+              catch.
+            </p>
+          </div>
+          <div class="info-card">
+            <div class="card-icon">🚚</div>
+            <h3>Fast Delivery</h3>
+            <p>Delivered 6 days a week, 8 AM to 8 PM in insulated packaging.</p>
+          </div>
+          <div class="info-card">
+            <div class="card-icon">⚖️</div>
+            <h3>Honest Pricing</h3>
+            <p>No hidden fees — weighed and priced fairly every time.</p>
+          </div>
+          <div class="info-card">
+            <div class="card-icon">🧼</div>
+            <h3>Hygiene Guaranteed</h3>
+            <p>FSSAI-compliant. Washed, weighed and sealed before dispatch.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="section section-grey">
-    <div class="container">
-      <h2 class="section-title">Why Choose FreshCoastal?</h2>
-      <div class="card-grid">
-        <div class="info-card">
-          <div class="card-icon">🌅</div>
-          <h3>Caught Every Morning</h3>
-          <p>
-            Never frozen — your order ships the same day from the morning
-            catch.
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Customer Favourites</h2>
+        <div id="fishGrid" class="fish-grid">
+          <p style="text-align: center; padding: 40px; color: #0077be">
+            Loading items...
           </p>
         </div>
-        <div class="info-card">
-          <div class="card-icon">🚚</div>
-          <h3>Fast Delivery</h3>
-          <p>Delivered 6 days a week, 8 AM to 8 PM in insulated packaging.</p>
-        </div>
-        <div class="info-card">
-          <div class="card-icon">⚖️</div>
-          <h3>Honest Pricing</h3>
-          <p>No hidden fees — weighed and priced fairly every time.</p>
-        </div>
-        <div class="info-card">
-          <div class="card-icon">🧼</div>
-          <h3>Hygiene Guaranteed</h3>
-          <p>FSSAI-compliant. Washed, weighed and sealed before dispatch.</p>
+        <div class="text-center">
+          <a href="/HTML_FILES/menu.html" class="btn">View Full Menu</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Customer Favourites</h2>
-      <div id="fishGrid" class="fish-grid">
-        <p style="text-align: center; padding: 40px; color: #0077be">
-          Loading items...
-        </p>
+    <div class="banner">
+      <h2>📦 Free Delivery on Orders Over ₹2000</h2>
+      <p>Order now and get your fresh catch at no extra cost.</p>
+      <a href="/HTML_FILES/offers.html" class="btn">View All Offers</a>
+      <a href="/HTML_FILES/menu.html" class="btn-outline">Shop Now</a>
+    </div>
+
+    <footer>
+      <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
+      <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="/HTML_FILES/menu.html">Menu</a>
+        <a href="/HTML_FILES/offers.html">Offers</a>
+        <a href="/HTML_FILES/about.html">About</a>
+        <a href="/HTML_FILES/contact.html">Contact</a>
+        <a href="add_to_cart.html">Cart</a>
+        <a href="/HTML_FILES/login.html">Login</a>
       </div>
-      <div class="text-center">
-        <a href="/HTML_FILES/menu.html" class="btn">View Full Menu</a>
-      </div>
-    </div>
-  </section>
+      <p style="color: #555; font-size: 0.8rem">
+        &copy; 2025 FreshCoastal. All rights reserved.
+      </p>
+    </footer>
 
-  <div class="banner">
-    <h2>📦 Free Delivery on Orders Over ₹2000</h2>
-    <p>Order now and get your fresh catch at no extra cost.</p>
-    <a href="/HTML_FILES/offers.html" class="btn">View All Offers</a>
-    <a href="/HTML_FILES/menu.html" class="btn-outline">Shop Now</a>
-  </div>
+    <div id="toast"></div>
 
-  <footer>
-    <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
-    <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="/HTML_FILES/menu.html">Menu</a>
-      <a href="/HTML_FILES/offers.html">Offers</a>
-      <a href="/HTML_FILES/about.html">About</a>
-      <a href="/HTML_FILES/contact.html">Contact</a>
-      <a href="add_to_cart.html">Cart</a>
-      <a href="/HTML_FILES/login.html">Login</a>
-    </div>
-    <p style="color: #555; font-size: 0.8rem">
-      &copy; 2025 FreshCoastal. All rights reserved.
-    </p>
-  </footer>
+    <script>
+      var API =
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname === "localhost"
+          ? "http://127.0.0.1:8000"
+          : window.location.origin;
 
-  <div id="toast"></div>
-
-  <script>
-    var API = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" ? "http://127.0.0.1:8000" : window.location.origin;
-
-    function getUser() {
-      try {
-        return JSON.parse(localStorage.getItem("fc_user"));
-      } catch (e) {
-        return null;
-      }
-    }
-
-    function showToast(message, isError) {
-      var toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.className = isError ? "error" : "";
-      toast.style.display = "block";
-      setTimeout(function () {
-        toast.style.display = "none";
-      }, 2500);
-    }
-
-    var user = getUser();
-    if (user) {
-      document.getElementById("navUser").innerHTML =
-        "👤 " +
-        user.name +
-        " &nbsp; <a href='login.html' onclick='logout()'>Logout</a>";
-    }
-
-    function logout() {
-      localStorage.removeItem("fc_user");
-      location.reload();
-    }
-
-    function loadFishItems() {
-      fetch(API + "/api/fishes/")
-        .then(function (r) {
-          return r.json();
-        })
-        .then(function (fishList) {
-          renderFishCards(fishList.slice(0, 4));
-        })
-        .catch(function () {
-          document.getElementById("fishGrid").innerHTML =
-            "<div class='msg-box'>⚠️ Could not load items. Make sure the backend is running at " +
-            API +
-            "</div>";
-        });
-    }
-
-    function renderFishCards(fishList) {
-      var grid = document.getElementById("fishGrid");
-      grid.innerHTML = "";
-      if (fishList.length === 0) {
-        grid.innerHTML =
-          "<div class='msg-box'>No items available right now.</div>";
-        return;
-      }
-      for (var i = 0; i < fishList.length; i++) {
-        var fish = fishList[i];
-        var imgSrc =
-          fish.img_url ||
-          "https://picsum.photos/seed/" + fish.id + "/400/200";
-        var isOutOfStock = fish.stock <= 0;
-        var card = document.createElement("div");
-        card.className = "fish-card";
-        card.innerHTML =
-          "<img src='" +
-          imgSrc +
-          "' alt='" +
-          fish.name +
-          "' onerror=\"this.src='https://picsum.photos/seed/" +
-          fish.id +
-          "/400/200'\">" +
-          "<div class='fish-body'>" +
-          "<h3>" +
-          fish.name +
-          "</h3>" +
-          "<p>" +
-          (fish.description || "") +
-          "</p>" +
-          "<div class='fish-price'>₹" +
-          fish.price +
-          " / kg</div>" +
-          "<button class='fish-btn'" +
-          (isOutOfStock ? " disabled" : "") +
-          ">" +
-          (isOutOfStock ? "Out of Stock" : "Add to Cart") +
-          "</button>" +
-          "</div>";
-        var btn = card.querySelector(".fish-btn");
-        if (!isOutOfStock) {
-          btn.onclick = makeAddToCartHandler(fish.id, fish.name, btn);
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("fc_user"));
+        } catch (e) {
+          return null;
         }
-        grid.appendChild(card);
       }
-    }
 
-    function makeAddToCartHandler(fishId, fishName, button) {
-      return function () {
-        addToCart(fishId, fishName, button);
-      };
-    }
-
-    /* BUG FIX: Cart API expects { user_id, items: [{fish_id, quantity}] }
-   Previously was sending flat { user_id, fish_id, quantity } which caused 422 errors */
-    function addToCart(fishId, fishName, button) {
-      var user = getUser();
-      if (!user) {
-        showToast("Please login first to add items!", true);
+      function showToast(message, isError) {
+        var toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = isError ? "error" : "";
+        toast.style.display = "block";
         setTimeout(function () {
-          window.location.href = "login.html";
-        }, 1500);
-        return;
+          toast.style.display = "none";
+        }, 2500);
       }
-      button.disabled = true;
-      button.textContent = "Adding...";
-      fetch(API + "/api/cart/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: user.id,
-          items: [{ fish_id: fishId, quantity: 1 }],
-        }),
-      })
-        .then(function (r) {
-          if (!r.ok) throw new Error("Server error");
-          return r.json();
-        })
-        .then(function () {
-          button.disabled = false;
-          button.textContent = "Add to Cart";
-          showToast("✅ " + fishName + " added to cart!");
-        })
-        .catch(function () {
-          button.disabled = false;
-          button.textContent = "Add to Cart";
-          showToast("❌ Could not add item. Try again.", true);
-        });
-    }
 
-    loadFishItems();
-  </script>
-</body>
+      var user = getUser();
+      if (user) {
+        document.getElementById("navUser").innerHTML =
+          "👤 " +
+          user.name +
+          " &nbsp; <a href='login.html' onclick='logout()'>Logout</a>";
+      }
 
+      function logout() {
+        localStorage.removeItem("fc_user");
+        location.reload();
+      }
+
+      function loadFishItems() {
+        fetch(API + "/api/fishes/")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (fishList) {
+            renderFishCards(fishList.slice(0, 4));
+          })
+          .catch(function () {
+            document.getElementById("fishGrid").innerHTML =
+              "<div class='msg-box'>⚠️ Could not load items. Make sure the backend is running at " +
+              API +
+              "</div>";
+          });
+      }
+
+      function renderFishCards(fishList) {
+        var grid = document.getElementById("fishGrid");
+        grid.innerHTML = "";
+        if (fishList.length === 0) {
+          grid.innerHTML =
+            "<div class='msg-box'>No items available right now.</div>";
+          return;
+        }
+        for (var i = 0; i < fishList.length; i++) {
+          var fish = fishList[i];
+          var imgSrc =
+            fish.img_url ||
+            "https://picsum.photos/seed/" + fish.id + "/400/200";
+          var isOutOfStock = fish.stock <= 0;
+          var card = document.createElement("div");
+          card.className = "fish-card";
+          card.innerHTML =
+            "<img src='" +
+            imgSrc +
+            "' alt='" +
+            fish.name +
+            "' onerror=\"this.src='https://picsum.photos/seed/" +
+            fish.id +
+            "/400/200'\">" +
+            "<div class='fish-body'>" +
+            "<h3>" +
+            fish.name +
+            "</h3>" +
+            "<p>" +
+            (fish.description || "") +
+            "</p>" +
+            "<div class='fish-price'>₹" +
+            fish.price +
+            " / kg</div>" +
+            "<button class='fish-btn'" +
+            (isOutOfStock ? " disabled" : "") +
+            ">" +
+            (isOutOfStock ? "Out of Stock" : "Add to Cart") +
+            "</button>" +
+            "</div>";
+          var btn = card.querySelector(".fish-btn");
+          if (!isOutOfStock) {
+            btn.onclick = makeAddToCartHandler(fish.id, fish.name, btn);
+          }
+          grid.appendChild(card);
+        }
+      }
+
+      function makeAddToCartHandler(fishId, fishName, button) {
+        return function () {
+          addToCart(fishId, fishName, button);
+        };
+      }
+
+      /* BUG FIX: Cart API expects { user_id, items: [{fish_id, quantity}] }
+   Previously was sending flat { user_id, fish_id, quantity } which caused 422 errors */
+      function addToCart(fishId, fishName, button) {
+        var user = getUser();
+        if (!user) {
+          showToast("Please login first to add items!", true);
+          setTimeout(function () {
+            window.location.href = "login.html";
+          }, 1500);
+          return;
+        }
+        button.disabled = true;
+        button.textContent = "Adding...";
+        fetch(API + "/api/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: user.id,
+            items: [{ fish_id: fishId, quantity: 1 }],
+          }),
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error("Server error");
+            return r.json();
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = "Add to Cart";
+            showToast("✅ " + fishName + " added to cart!");
+          })
+          .catch(function () {
+            button.disabled = false;
+            button.textContent = "Add to Cart";
+            showToast("❌ Could not add item. Try again.", true);
+          });
+      }
+
+      loadFishItems();
+    </script>
+  </body>
 </html>
