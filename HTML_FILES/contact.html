@@ -497,6 +497,18 @@
         location.reload();
       }
 
+      // ── Show Admin Panel button if logged in as admin ──────────────────────
+      (function() {
+        try {
+          var admin = JSON.parse(localStorage.getItem("fc_admin"));
+          if (admin) {
+            var adminLi = document.createElement("li");
+            adminLi.innerHTML = '<a href="admin.html" style="background:#f57215;padding:6px 14px;border-radius:20px;font-weight:700">🔐 Admin</a>';
+            document.querySelector("nav ul").appendChild(adminLi);
+          }
+        } catch(e) {}
+      })();
+
       // ── Send contact form via EmailJS ──────────────────────────────────────
       function sendContact() {
         var name    = document.getElementById("cName").value.trim();

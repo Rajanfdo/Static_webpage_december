@@ -9,14 +9,13 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        user-select: none;
       }
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         color: #333;
       }
-
-      /* NAV */
       nav {
         background: linear-gradient(135deg, #0077be, #00a8e8);
         padding: 12px 0;
@@ -63,8 +62,6 @@
         color: white;
         font-size: 0.85rem;
       }
-
-      /* HERO */
       .hero {
         background:
           linear-gradient(rgba(0, 119, 190, 0.7), rgba(0, 168, 232, 0.7)),
@@ -83,8 +80,6 @@
         font-size: 1.2rem;
         margin-bottom: 28px;
       }
-
-      /* BUTTONS */
       .btn {
         display: inline-block;
         padding: 13px 36px;
@@ -127,8 +122,6 @@
       .btn-outline:hover {
         background: rgba(255, 255, 255, 0.15);
       }
-
-      /* FILTER BAR */
       .filter-bar {
         background: #f2f4f5;
         padding: 20px;
@@ -155,8 +148,6 @@
         background: #0077be;
         color: white;
       }
-
-      /* SECTION */
       .section {
         padding: 60px 20px;
       }
@@ -174,8 +165,6 @@
         text-align: center;
         margin-top: 32px;
       }
-
-      /* FISH GRID */
       .fish-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -263,8 +252,6 @@
       .view-link:hover {
         text-decoration: underline;
       }
-
-      /* BANNER */
       .banner {
         background: linear-gradient(135deg, #0077be, #00a8e8);
         padding: 60px 20px;
@@ -280,8 +267,6 @@
         margin-bottom: 24px;
         opacity: 0.9;
       }
-
-      /* FOOTER */
       footer {
         background: #1a1a1a;
         color: white;
@@ -314,8 +299,6 @@
       .footer-links a:hover {
         color: #00a8e8;
       }
-
-      /* TOAST */
       #toast {
         position: fixed;
         bottom: 20px;
@@ -331,8 +314,6 @@
       #toast.error {
         background: #dc3545;
       }
-
-      /* MISC */
       .msg-box {
         background: #fff3cd;
         border-radius: 10px;
@@ -424,6 +405,7 @@
           return null;
         }
       }
+
       function showToast(msg, isErr) {
         var t = document.getElementById("toast");
         t.textContent = msg;
@@ -434,15 +416,20 @@
         }, 2500);
       }
 
+      /* ── Navbar: show user name or Login link ── */
       var user = getUser();
       if (user) {
+        /* FIX: use name OR username — whichever the backend returned */
+        var displayName = user.name || user.username || user.email;
         document.getElementById("navUser").innerHTML =
           "👤 " +
-          user.name +
-          " &nbsp; <a href='login.html' onclick='logout()'>Logout</a>";
+          displayName +
+          " &nbsp;<a href='login.html' onclick='logout()' style='color:rgba(255,255,255,0.8);font-size:0.85rem'>Logout</a>";
       }
+
       function logout() {
         localStorage.removeItem("fc_user");
+        localStorage.removeItem("fc_admin");
         location.reload();
       }
 
@@ -508,10 +495,10 @@
           return;
         }
         list.forEach(function (fish) {
-          var oos = fish.stock <= 0,
-            img =
-              fish.img_url ||
-              "https://picsum.photos/seed/" + fish.id + "/400/200";
+          var oos = fish.stock <= 0;
+          var img =
+            fish.img_url ||
+            "https://picsum.photos/seed/" + fish.id + "/400/200";
           var card = document.createElement("div");
           card.className = "fish-card";
           card.innerHTML =
@@ -578,36 +565,14 @@
         }
         btn.disabled = true;
         btn.textContent = "Adding...";
-
-        fetch(API + "/api/cart/" + u.id + "/")
-          .then(function (r) {
-            if (!r.ok) return { items: [] };
-            return r.json();
-          })
-          .catch(function () {
-            return { items: [] };
-          })
-          .then(function (cart) {
-            var items = cart && Array.isArray(cart.items) ? cart.items : [];
-            var currentQty = 0;
-            items.forEach(function (ci) {
-              if (ci.fish_id === fishId) currentQty = ci.quantity;
-            });
-            var found = false;
-            var merged = items.map(function (ci) {
-              if (ci.fish_id === fishId) {
-                found = true;
-                return { fish_id: ci.fish_id, quantity: currentQty + 1 };
-              }
-              return { fish_id: ci.fish_id, quantity: ci.quantity };
-            });
-            if (!found) merged.push({ fish_id: fishId, quantity: 1 });
-            return fetch(API + "/api/cart/", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ user_id: u.id, items: merged }),
-            });
-          })
+        fetch(API + "/api/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: u.id,
+            items: [{ fish_id: fishId, quantity: 1 }],
+          }),
+        })
           .then(function (r) {
             if (!r.ok) throw new Error("Save failed");
             return r.json();

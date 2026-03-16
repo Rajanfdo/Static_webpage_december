@@ -740,11 +740,12 @@
           "</div>";
         var right = document.createElement("div");
         right.className = "item-right";
+        var subtotal = (fish.price || 0) * ci.quantity;
         right.innerHTML =
           '<div><div class="item-subtotal" id="sub-' +
           ci.fish_id +
           '">₹' +
-          (fish.price || 0) * ci.quantity +
+          subtotal +
           "</div>" +
           '<div class="item-subtotal-lbl">subtotal</div></div>' +
           '<button class="remove-btn" id="rm-' +
@@ -761,16 +762,20 @@
       function changeQty(fishId, delta) {
         var inp = document.getElementById("qty-" + fishId);
         if (!inp) return;
-        var v = parseInt(inp.value) + delta,
-          mx = parseInt(inp.max) || 99;
-        inp.value = v < 1 ? 1 : v > mx ? mx : v;
-        applyQtyChange(fishId, parseInt(inp.value));
+        var v = parseInt(inp.value) || 1;
+        v += delta;
+        var mx = parseInt(inp.max) || 99;
+        if (v < 1) v = 1;
+        if (v > mx) v = mx;
+        inp.value = v;
+        applyQtyChange(fishId, v);
       }
       function onQtyInput(fishId, inp) {
-        var v = parseInt(inp.value),
-          mx = parseInt(inp.max) || 99;
-        inp.value = isNaN(v) || v < 1 ? 1 : v > mx ? mx : v;
-        applyQtyChange(fishId, parseInt(inp.value));
+        var v = parseInt(inp.value);
+        var mx = parseInt(inp.max) || 99;
+        v = isNaN(v) || v < 1 ? 1 : v > mx ? mx : v;
+        inp.value = v;
+        applyQtyChange(fishId, v);
       }
       function applyQtyChange(fishId, newQty) {
         var item = getCartItem(fishId);
@@ -826,7 +831,7 @@
       /* Sync: POST full cart — backend SETs each quantity */
       function syncCart() {
         if (!u) return;
-        fetch(API + "/api/cart/", {
+        fetch(API + "/api/cart/sync", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -851,7 +856,7 @@
           grandEl = document.getElementById("grandTotal");
         sumEl.innerHTML = "";
         var total = 0;
-        if (!cartData.items.length) {
+        if (!cartData || !cartData.items || !cartData.items.length) {
           sumEl.innerHTML =
             '<div style="color:#bbb;font-size:0.9rem;">No items yet</div>';
           grandEl.textContent = "₹0";

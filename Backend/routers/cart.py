@@ -2,7 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import Cart, CartItem, Users, Fish
-from schemas import CartCreate, CartOut
+from schemas import CartCreate, CartOut, CartItemCreate
+from pydantic import BaseModel
+from typing import List, Optional
 
 router = APIRouter()
 
@@ -15,23 +17,72 @@ def get_db():
         db.close()
 
 
+def get_or_create_cart(user_id: int, db: Session) -> Cart:
+    cart = db.query(Cart).filter(Cart.user_id == user_id).first()
+    if not cart:
+        cart = Cart(user_id=user_id)
+        db.add(cart)
+        db.commit()
+        db.refresh(cart)
+    return cart
+
+
+# ── POST /api/cart/ — ADDS items, never deletes existing ones ─────────────────
+# Used by menu, offers pages when clicking "Add to Cart"
 @router.post("/", response_model=CartOut)
 def add_to_cart(payload: CartCreate, db: Session = Depends(get_db)):
     user = db.query(Users).filter(Users.id == payload.user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    cart = db.query(Cart).filter(Cart.user_id == payload.user_id).first()
-    if not cart:
-        cart = Cart(user_id=payload.user_id)
-        db.add(cart)
-        db.commit()
-        db.refresh(cart)
+    cart = get_or_create_cart(payload.user_id, db)
 
-    # Build a set of fish_ids sent in this request
+    for i in payload.items:
+        fish = db.query(Fish).filter(Fish.id == i.fish_id).first()
+        if not fish:
+            raise HTTPException(status_code=404, detail=f"Fish {i.fish_id} not found")
+
+        existing = db.query(CartItem).filter(
+            CartItem.cart_id == cart.id,
+            CartItem.fish_id == i.fish_id
+        ).first()
+
+        if existing:
+            existing.quantity += i.quantity          # ADD to existing quantity
+        else:
+            db.add(CartItem(
+                cart_id=cart.id,
+                fish_id=i.fish_id,
+                quantity=i.quantity
+            ))
+
+    db.commit()
+    db.refresh(cart)
+    return cart
+
+
+# ── POST /api/cart/sync — REPLACES full cart ──────────────────────────────────
+# Used only by the cart page when user changes quantities
+class SyncItem(BaseModel):
+    fish_id: int
+    quantity: int
+    unit_price: Optional[float] = None
+
+class SyncPayload(BaseModel):
+    user_id: int
+    items: List[SyncItem]
+
+@router.post("/sync", response_model=CartOut)
+def sync_cart(payload: SyncPayload, db: Session = Depends(get_db)):
+    user = db.query(Users).filter(Users.id == payload.user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    cart = get_or_create_cart(payload.user_id, db)
+
     incoming_fish_ids = {i.fish_id for i in payload.items}
 
-    # Remove items that are NOT in the incoming list (supports "remove item" from frontend)
+    # Remove items not in the incoming list
     db.query(CartItem).filter(
         CartItem.cart_id == cart.id,
         CartItem.fish_id.notin_(incoming_fish_ids)
@@ -42,18 +93,19 @@ def add_to_cart(payload: CartCreate, db: Session = Depends(get_db)):
         if not fish:
             raise HTTPException(status_code=404, detail=f"Fish {i.fish_id} not found")
 
-        existing_item = db.query(CartItem).filter(
+        existing = db.query(CartItem).filter(
             CartItem.cart_id == cart.id,
             CartItem.fish_id == i.fish_id
         ).first()
 
-        if existing_item:
-            # FIX: SET the quantity (=), don't ADD to it (+=)
-            # The frontend sends the full desired quantity, not a delta.
-            existing_item.quantity = i.quantity
+        if existing:
+            existing.quantity = i.quantity           # SET quantity exactly
         else:
-            new_item = CartItem(cart_id=cart.id, fish_id=i.fish_id, quantity=i.quantity)
-            db.add(new_item)
+            db.add(CartItem(
+                cart_id=cart.id,
+                fish_id=i.fish_id,
+                quantity=i.quantity
+            ))
 
     db.commit()
     db.refresh(cart)
@@ -70,7 +122,6 @@ def view_cart(user_id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{user_id}", response_model=CartOut)
 def clear_cart(user_id: int, db: Session = Depends(get_db)):
-    """Clear all items from a user's cart."""
     cart = db.query(Cart).filter(Cart.user_id == user_id).first()
     if not cart:
         raise HTTPException(status_code=404, detail="Cart not found")
@@ -82,7 +133,6 @@ def clear_cart(user_id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{user_id}/item/{fish_id}")
 def remove_cart_item(user_id: int, fish_id: int, db: Session = Depends(get_db)):
-    """Remove a single item from the cart."""
     cart = db.query(Cart).filter(Cart.user_id == user_id).first()
     if not cart:
         raise HTTPException(status_code=404, detail="Cart not found")

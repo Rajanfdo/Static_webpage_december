@@ -15,11 +15,7 @@ def get_db():
         db.close()
 
 
-# BUG FIX #5: Changed admin_login from query parameters to a JSON request body.
-# Previously `email` and `password` were sent as URL query params like:
-#   POST /api/admin/login?email=x&password=y
-# This exposed credentials in server logs, browser history, and proxies.
-# Now they are sent as a JSON body using the AdminLogin schema.
+
 @router.post("/login")
 def admin_login(payload: AdminLogin, db: Session = Depends(get_db)):
     admin = db.query(Users).filter(

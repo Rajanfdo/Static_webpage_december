@@ -841,7 +841,7 @@
         inp.value = isNaN(v) || v < 1 ? 1 : v > mx ? mx : v;
       }
 
-      /* GET current cart → merge new qty → POST full cart */
+      /* ADD to cart logic — simplified, does not fetch cart just to add */
       function addToCart() {
         var u = getUser();
         if (!u) {
@@ -856,35 +856,11 @@
         btn.disabled = true;
         btn.textContent = "Adding...";
 
-        fetch(API + "/api/cart/" + u.id + "/")
-          .then(function (r) {
-            if (!r.ok) return { items: [] };
-            return r.json();
-          })
-          .catch(function () {
-            return { items: [] };
-          })
-          .then(function (cart) {
-            var items = cart && Array.isArray(cart.items) ? cart.items : [];
-            var currentQty = 0;
-            items.forEach(function (ci) {
-              if (ci.fish_id === currentFish.id) currentQty = ci.quantity;
-            });
-            var found = false;
-            var merged = items.map(function (ci) {
-              if (ci.fish_id === currentFish.id) {
-                found = true;
-                return { fish_id: ci.fish_id, quantity: currentQty + qty };
-              }
-              return { fish_id: ci.fish_id, quantity: ci.quantity };
-            });
-            if (!found) merged.push({ fish_id: currentFish.id, quantity: qty });
-            return fetch(API + "/api/cart/", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ user_id: u.id, items: merged }),
-            });
-          })
+        fetch(API + "/api/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: u.id, items: [{ fish_id: currentFish.id, quantity: qty }] }),
+        })
           .then(function (r) {
             if (!r.ok) throw new Error("Save failed");
             return r.json();

@@ -9,6 +9,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        user-select: none;
       }
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -22,6 +23,7 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        
       }
       nav .wrap {
         max-width: 1200px;
@@ -56,6 +58,7 @@
         border-bottom: 2px solid white;
         padding-bottom: 2px;
       }
+
       .hero {
         background:
           linear-gradient(rgba(0, 119, 190, 0.72), rgba(0, 168, 232, 0.72)),
@@ -73,6 +76,7 @@
       .hero p {
         font-size: 1.2rem;
       }
+
       .btn {
         display: inline-block;
         padding: 14px 38px;
@@ -89,6 +93,7 @@
       .btn:hover {
         background: #d9620f;
       }
+
       .section {
         padding: 80px 20px;
         background: #f2f4f5;
@@ -103,6 +108,7 @@
         margin-bottom: 3rem;
         color: #0077be;
       }
+
       .auth-wrap {
         max-width: 480px;
         margin: 0 auto 4rem;
@@ -136,6 +142,7 @@
       .auth-form.show {
         display: block;
       }
+
       .fg {
         margin-bottom: 16px;
       }
@@ -158,6 +165,7 @@
         outline: none;
         border-color: #0077be;
       }
+
       .sub-btn {
         width: 100%;
         padding: 14px;
@@ -179,6 +187,7 @@
         cursor: not-allowed;
         box-shadow: none;
       }
+
       .divider {
         text-align: center;
         margin: 14px 0;
@@ -198,7 +207,6 @@
         text-align: center;
         text-decoration: none;
         font-size: 1rem;
-        font-family: inherit;
       }
       .guest-btn:hover {
         background: #0077be;
@@ -224,6 +232,7 @@
         font-size: 0.9rem;
         display: none;
       }
+
       .success-box {
         display: none;
         text-align: center;
@@ -235,13 +244,19 @@
       }
       .success-box h3 {
         font-size: 1.4rem;
-        color: #28a745;
         margin-bottom: 0.5rem;
       }
       .success-box p {
         color: #666;
         margin-bottom: 1.5rem;
       }
+      .success-box.admin h3 {
+        color: #0077be;
+      }
+      .success-box.customer h3 {
+        color: #28a745;
+      }
+
       .feature-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -253,6 +268,7 @@
         border-radius: 15px;
         text-align: center;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+        transition: transform 0.2s;
       }
       .feature-card:hover {
         transform: translateY(-5px);
@@ -265,6 +281,7 @@
         margin-bottom: 0.8rem;
         color: #0077be;
       }
+
       .banner {
         background: linear-gradient(135deg, #0077be, #00a8e8);
         padding: 60px 20px;
@@ -280,6 +297,7 @@
         margin-bottom: 1.8rem;
         opacity: 0.9;
       }
+
       footer {
         background: #1a1a1a;
         color: white;
@@ -351,27 +369,24 @@
             </button>
           </div>
 
-          <!-- LOGIN PANEL -->
+          <!-- LOGIN FORM -->
           <div class="auth-form show" id="loginPanel">
+            <!-- Success shown after login -->
             <div class="success-box" id="loginSuccess">
-              <div class="s-ico">🎉</div>
-              <h3>Login Successful!</h3>
-              <p id="loginMsg">Taking you to the menu...</p>
-              <a href="menu.html" class="btn">Go to Menu</a>
+              <div class="s-ico" id="loginSIco">🎉</div>
+              <h3 id="loginSTitle">Login Successful!</h3>
+              <p id="loginSMsg">Redirecting...</p>
             </div>
+            <!-- Fields -->
             <div id="loginFields">
               <div class="api-err" id="loginErr"></div>
               <div class="fg">
-                <label>Email Address</label
-                ><input type="email" id="lEmail" placeholder="your@email.com" />
+                <label>Email Address</label>
+                <input type="email" id="lEmail" placeholder="your@email.com" />
               </div>
               <div class="fg">
-                <label>Password</label
-                ><input
-                  type="password"
-                  id="lPass"
-                  placeholder="Your password"
-                />
+                <label>Password</label>
+                <input type="password" id="lPass" placeholder="Your password" />
               </div>
               <button class="sub-btn" id="loginBtn" onclick="doLogin()">
                 Login to My Account
@@ -384,13 +399,12 @@
             </div>
           </div>
 
-          <!-- REGISTER PANEL -->
+          <!-- REGISTER FORM -->
           <div class="auth-form" id="regPanel">
-            <div class="success-box" id="regSuccess">
+            <div class="success-box customer" id="regSuccess">
               <div class="s-ico">🎊</div>
               <h3>Account Created!</h3>
               <p id="regMsg">Welcome! Taking you to the menu...</p>
-              <a href="menu.html" class="btn">Go to Menu</a>
             </div>
             <div id="regFields">
               <div class="api-err" id="regErr"></div>
@@ -475,12 +489,9 @@
         Tirunelveli, Tamil Nadu
       </p>
       <div class="foot-links">
-        <a href="index.html">Home</a>
-        <a href="menu.html">Menu</a>
-        <a href="offers.html">Special Offers</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="add_to_cart.html">Cart</a>
+        <a href="index.html">Home</a> <a href="menu.html">Menu</a>
+        <a href="offers.html">Special Offers</a> <a href="about.html">About</a>
+        <a href="contact.html">Contact</a> <a href="add_to_cart.html">Cart</a>
         <a href="login.html">Login</a>
       </div>
       <p style="color: #555; font-size: 0.8rem">
@@ -489,7 +500,11 @@
     </footer>
 
     <script>
-      var API = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost" ? "http://127.0.0.1:8000" : window.location.origin;
+      var API =
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname === "localhost"
+          ? "http://127.0.0.1:8000"
+          : window.location.origin;
 
       function switchTab(t) {
         document.getElementById("loginPanel").classList.remove("show");
@@ -513,7 +528,11 @@
         document.getElementById(id).style.display = "none";
       }
 
-      /* LOGIN — POST /api/users/login */
+      /* ══════════════════════════════════════════════════════════
+         LOGIN  —  one form, two destinations based on role
+         admin    → saves to localStorage "fc_admin" → admin.html
+         customer → saves to localStorage "fc_user"  → menu.html
+         ══════════════════════════════════════════════════════════ */
       function doLogin() {
         hideErr("loginErr");
         var email = document.getElementById("lEmail").value.trim();
@@ -527,7 +546,7 @@
         btn.disabled = true;
         btn.textContent = "Logging in...";
 
-        fetch(API + "/api/users/login", {
+        fetch(API + "/api/login/auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email, password: pass }),
@@ -541,27 +560,50 @@
             return r.json();
           })
           .then(function (user) {
-            localStorage.setItem("fc_user", JSON.stringify(user));
+            /* Hide form, show success */
             document.getElementById("loginFields").style.display = "none";
-            document.getElementById("loginMsg").textContent =
-              "Welcome back, " + user.name + "! Redirecting...";
             document.getElementById("loginSuccess").style.display = "block";
-            setTimeout(function () {
-              location.href = "menu.html";
-            }, 1800);
+
+            if (user.role === "admin") {
+              /* ── ADMIN: save session, redirect to admin dashboard ── */
+              localStorage.setItem("fc_admin", JSON.stringify(user));
+              localStorage.setItem("fc_user", JSON.stringify(user));
+              document.getElementById("loginSuccess").classList.add("admin");
+              document.getElementById("loginSIco").textContent = "🔧";
+              document.getElementById("loginSTitle").textContent =
+                "Welcome, Admin!";
+              document.getElementById("loginSMsg").textContent =
+                "Redirecting to Admin Panel...";
+              setTimeout(function () {
+                location.href = "admin.html";
+              }, 1500);
+            } else {
+              /* ── CUSTOMER: save session, redirect to menu ── */
+              localStorage.setItem("fc_user", JSON.stringify(user));
+              document.getElementById("loginSuccess").classList.add("customer");
+              document.getElementById("loginSIco").textContent = "🎉";
+              document.getElementById("loginSTitle").textContent =
+                "Login Successful!";
+              document.getElementById("loginSMsg").textContent =
+                "Welcome back, " +
+                (user.username || user.name) +
+                "! Taking you to the menu...";
+              setTimeout(function () {
+                location.href = "menu.html";
+              }, 1500);
+            }
           })
           .catch(function (err) {
             showErr(
               "loginErr",
-              err.message ||
-                "Cannot reach server at " + API + ". Is FastAPI running?",
+              err.message || "Cannot reach server. Is FastAPI running?",
             );
             btn.disabled = false;
             btn.textContent = "Login to My Account";
           });
       }
 
-      /* REGISTER — POST /api/users/ */
+      /* REGISTER — always creates a customer account */
       function doRegister() {
         hideErr("regErr");
         var name = document.getElementById("rName").value.trim();
@@ -569,6 +611,7 @@
         var phone = document.getElementById("rPhone").value.trim();
         var addr = document.getElementById("rAddr").value.trim();
         var pass = document.getElementById("rPass").value.trim();
+
         if (!name || !email || !pass) {
           showErr("regErr", "Name, email and password are required.");
           return;
@@ -586,16 +629,13 @@
         btn.disabled = true;
         btn.textContent = "Creating account...";
 
-        fetch(API + "/api/users/", {
+        fetch(API + "/api/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: name,
+            username: name,
             email: email,
             password: pass,
-            role: "customer",
-            phone: phone,
-            address: addr,
           }),
         })
           .then(function (r) {
@@ -610,12 +650,12 @@
             document.getElementById("regFields").style.display = "none";
             document.getElementById("regMsg").textContent =
               "Welcome, " +
-              newUser.name +
-              "! Your account is ready. Redirecting...";
+              (newUser.username || newUser.name) +
+              "! Redirecting...";
             document.getElementById("regSuccess").style.display = "block";
             setTimeout(function () {
               location.href = "menu.html";
-            }, 1800);
+            }, 1500);
           })
           .catch(function (err) {
             showErr(
@@ -626,6 +666,15 @@
             btn.textContent = "Create My Account";
           });
       }
+
+      /* Enter key on login form */
+      document.addEventListener("keydown", function (e) {
+        if (
+          e.key === "Enter" &&
+          document.getElementById("loginPanel").classList.contains("show")
+        )
+          doLogin();
+      });
     </script>
   </body>
 </html>
