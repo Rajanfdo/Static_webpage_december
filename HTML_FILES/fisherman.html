@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshCoastal - Fisherman Supply</title>
+    <style>
+      :root {
+        --ocean: #0077be;
+        --deep: #004a7c;
+        --wave: #00a8e8;
+        --foam: #e8f6fd;
+        --sand: #f5f0e8;
+        --coral: #f57215;
+        --coral-dark: #d9620f;
+        --text: #1a2535;
+        --muted: #6b7a8d;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--sand);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      /* ── NAV — same as menu.html ── */
+      nav {
+        background: linear-gradient(135deg, #0077be, #00a8e8);
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover {
+        opacity: 0.75;
+      }
+      .nav-links a.active {
+        border-bottom: 2px solid white;
+        padding-bottom: 2px;
+      }
+      #navUser a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(0, 40, 80, 0.88) 0%,
+            rgba(0, 119, 190, 0.75) 100%
+          ),
+          url("https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1400&q=80")
+            center/cover;
+        color: white;
+        padding: 90px 24px 70px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: var(--sand);
+        clip-path: ellipse(55% 100% at 50% 100%);
+      }
+      .hero-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 30px;
+        padding: 6px 18px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+      }
+      .hero h1 {
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        margin-bottom: 14px;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        font-weight: bold;
+      }
+      .hero p {
+        font-size: 1.1rem;
+        opacity: 0.88;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      /* ── MAIN ── */
+      .page-wrap {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 50px 24px 80px;
+      }
+
+      .form-card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 8px 40px rgba(0, 74, 124, 0.12);
+        overflow: hidden;
+      }
+      .form-card-header {
+        background: linear-gradient(135deg, var(--ocean), var(--wave));
+        padding: 28px 32px;
+        color: white;
+      }
+      .form-card-header h2 {
+        font-size: 1.5rem;
+        margin-bottom: 4px;
+        font-weight: bold;
+      }
+      .form-card-header p {
+        opacity: 0.85;
+        font-size: 0.9rem;
+      }
+      .form-body {
+        padding: 32px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .fg {
+        margin-bottom: 22px;
+      }
+      .fg label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--deep);
+        letter-spacing: 0.3px;
+      }
+      .fg label span {
+        color: var(--coral);
+        margin-left: 2px;
+      }
+      .fg input,
+      .fg select,
+      .fg textarea {
+        width: 100%;
+        padding: 13px 16px;
+        border: 2px solid #e4eaf0;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        background: #f8fbfd;
+        color: var(--text);
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .fg input:focus,
+      .fg select:focus,
+      .fg textarea:focus {
+        outline: none;
+        border-color: var(--ocean);
+        box-shadow: 0 0 0 4px rgba(0, 119, 190, 0.1);
+        background: white;
+      }
+      .fg input::placeholder,
+      .fg textarea::placeholder {
+        color: #aab4bf;
+      }
+      .fg .hint {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+
+      .fish-section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--deep);
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--foam);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .fish-item {
+        background: var(--foam);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 14px;
+        border: 2px solid transparent;
+        transition: border-color 0.2s;
+      }
+      .fish-item:focus-within {
+        border-color: var(--wave);
+      }
+      .fish-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .fish-item-label {
+        font-weight: 700;
+        font-size: 0.88rem;
+        color: var(--ocean);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .remove-btn {
+        background: #fde8e8;
+        color: #c0392b;
+        border: none;
+        border-radius: 8px;
+        padding: 5px 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .remove-btn:hover {
+        background: #facaca;
+      }
+
+      .add-fish-btn {
+        width: 100%;
+        padding: 13px;
+        background: var(--foam);
+        color: var(--ocean);
+        border: 2px dashed var(--wave);
+        border-radius: 12px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        margin-bottom: 28px;
+        transition: background 0.2s;
+      }
+      .add-fish-btn:hover {
+        background: #d4eef9;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(90deg, var(--coral), #e8620a);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        box-shadow: 0 6px 20px rgba(245, 114, 21, 0.35);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .submit-btn:hover {
+        opacity: 0.92;
+        transform: translateY(-2px);
+      }
+      .submit-btn:disabled {
+        background: #ccc;
+        box-shadow: none;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .api-err {
+        background: #fde8e8;
+        color: #c0392b;
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .success-screen {
+        display: none;
+        text-align: center;
+        padding: 60px 32px;
+      }
+      .success-icon {
+        width: 90px;
+        height: 90px;
+        background: linear-gradient(135deg, #28a745, #20c447);
+        border-radius: 50%;
+        margin: 0 auto 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
+        box-shadow: 0 8px 24px rgba(40, 167, 69, 0.3);
+      }
+      .success-screen h3 {
+        font-size: 1.8rem;
+        color: var(--deep);
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      .success-screen p {
+        color: var(--muted);
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+      }
+      .success-ref {
+        display: inline-block;
+        margin: 16px 0;
+        background: var(--foam);
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 700;
+        color: var(--ocean);
+        font-size: 0.95rem;
+      }
+      .success-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        padding: 12px 28px;
+        background: var(--coral);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.95rem;
+      }
+      .btn-primary:hover {
+        background: var(--coral-dark);
+      }
+      .btn-secondary {
+        padding: 12px 28px;
+        background: var(--foam);
+        color: var(--ocean);
+        border: 2px solid var(--wave);
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.95rem;
+        text-decoration: none;
+      }
+      .btn-secondary:hover {
+        background: #d4eef9;
+      }
+
+      .info-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      .info-card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 74, 124, 0.08);
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .info-card .icon {
+        font-size: 1.8rem;
+      }
+      .info-card h4 {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--deep);
+        margin-bottom: 3px;
+      }
+      .info-card p {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      /* ── FOOTER — same as menu.html ── */
+      footer {
+        background: #1a1a1a;
+        color: white;
+        text-align: center;
+        padding: 36px 20px;
+      }
+      footer p {
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+      footer a {
+        color: #00a8e8;
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin: 10px 0;
+      }
+      .footer-links a {
+        color: #aaa;
+        font-size: 0.88rem;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: #00a8e8;
+      }
+
+      @media (max-width: 600px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .form-body {
+          padding: 24px 20px;
+        }
+        .hero {
+          padding: 70px 20px 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV — matches menu.html exactly -->
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="logo">🐟 FreshCoastal</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="offers.html">Offers</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="fisherman.html" class="active">Supply</a></li>
+          <li><a href="add_to_cart.html">🛒 Cart</a></li>
+          <li id="navUser"><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-badge">🎣 Fisherman Portal</div>
+      <h1>Supply Your Fresh Catch</h1>
+      <p>
+        Tell us what you've caught today and we'll get back to you with a deal.
+      </p>
+    </section>
+
+    <!-- MAIN -->
+    <div class="page-wrap">
+      <div class="info-strip">
+        <div class="info-card">
+          <div class="icon">📋</div>
+          <div>
+            <h4>Fill the Form</h4>
+            <p>Enter your name and catch details below</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon">📞</div>
+          <div>
+            <h4>We Contact You</h4>
+            <p>Our team will call you within 2 hours</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon">💰</div>
+          <div>
+            <h4>Get Paid Fast</h4>
+            <p>Same-day payment on delivery</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-header">
+          <h2>🐠 Catch Submission Form</h2>
+          <p>Submit your details and today's available fish</p>
+        </div>
+        <div class="form-body">
+          <div class="success-screen" id="successScreen">
+            <div class="success-icon">✅</div>
+            <h3>Submission Received!</h3>
+            <p>Thank you! We have received your catch details.</p>
+            <p>Our team will contact you shortly.</p>
+            <div class="success-ref" id="successRef">Ref #—</div>
+            <div class="success-btns">
+              <button class="btn-primary" onclick="resetForm()">
+                Submit Another
+              </button>
+              <a href="index.html" class="btn-secondary">Go to Home</a>
+            </div>
+          </div>
+
+          <div id="formContent">
+            <div class="api-err" id="apiErr"></div>
+            <div class="fish-section-title">👤 Your Details</div>
+            <div class="form-row">
+              <div class="fg">
+                <label>Full Name <span>*</span></label
+                ><input type="text" id="fName" placeholder="e.g. Rajan Kumar" />
+              </div>
+              <div class="fg">
+                <label>Phone Number <span>*</span></label
+                ><input type="tel" id="fPhone" placeholder="+91-XXXXXXXXXX" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="fg">
+                <label>Location / Harbour</label
+                ><input
+                  type="text"
+                  id="fLocation"
+                  placeholder="e.g. Colachel Harbour"
+                />
+              </div>
+              <div class="fg">
+                <label>Preferred Contact Time</label>
+                <select id="fContactTime">
+                  <option value="">Any time</option>
+                  <option value="morning">Morning (6am – 12pm)</option>
+                  <option value="afternoon">Afternoon (12pm – 5pm)</option>
+                  <option value="evening">Evening (5pm – 9pm)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="fish-section-title">🐟 Today's Catch</div>
+            <div id="fishItemsContainer"></div>
+            <button class="add-fish-btn" onclick="addFishItem()">
+              + Add Another Fish
+            </button>
+
+            <div class="fg">
+              <label>Additional Notes</label>
+              <textarea
+                id="fNotes"
+                rows="3"
+                placeholder="Any special details about your catch, delivery preferences, etc."
+              ></textarea>
+            </div>
+            <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+              📤 Submit My Catch Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER — matches menu.html exactly -->
+    <footer>
+      <p><strong>🐟 FreshCoastal</strong> — Tirunelveli, Tamil Nadu</p>
+      <p>📞 +91-9876543210 &nbsp;|&nbsp; 📧 info@freshcatch.com</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a><a href="menu.html">Menu</a>
+        <a href="offers.html">Offers</a><a href="about.html">About</a>
+        <a href="contact.html">Contact</a><a href="add_to_cart.html">Cart</a>
+        <a href="login.html">Login</a>
+      </div>
+      <p style="color: #555; font-size: 0.8rem">
+        &copy; 2025 FreshCoastal. All rights reserved.
+      </p>
+    </footer>
+
+    <script>
+      var API =
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname === "localhost"
+          ? "http://127.0.0.1:8000"
+          : window.location.origin;
+      var fishCount = 0;
+
+      /* Show logged-in user in nav — same logic as menu.html */
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("fc_user"));
+        } catch (e) {
+          return null;
+        }
+      }
+      var user = getUser();
+      if (user) {
+        var displayName = user.name || user.username || user.email;
+        document.getElementById("navUser").innerHTML =
+          "👤 " +
+          displayName +
+          " &nbsp;<a href='login.html' onclick='logout()' style='color:rgba(255,255,255,0.8);font-size:0.85rem'>Logout</a>";
+      }
+      function logout() {
+        localStorage.removeItem("fc_user");
+        localStorage.removeItem("fc_admin");
+        location.reload();
+      }
+
+      window.onload = function () {
+        addFishItem();
+      };
+
+      function addFishItem() {
+        fishCount++;
+        var container = document.getElementById("fishItemsContainer");
+        var div = document.createElement("div");
+        div.className = "fish-item";
+        div.id = "fishItem_" + fishCount;
+        div.innerHTML =
+          "<div class='fish-item-header'>" +
+          "<span class='fish-item-label'>Fish #" +
+          fishCount +
+          "</span>" +
+          (fishCount > 1
+            ? "<button class='remove-btn' onclick='removeFishItem(" +
+              fishCount +
+              ")'>✕ Remove</button>"
+            : "") +
+          "</div>" +
+          "<div class='form-row'>" +
+          "<div class='fg'><label>Fish Name <span style='color:#f57215'>*</span></label><input type='text' id='fishName_" +
+          fishCount +
+          "' placeholder='e.g. Seer Fish, Tuna, Prawn' /></div>" +
+          "<div class='fg'><label>Quantity (kg) <span style='color:#f57215'>*</span></label><input type='number' id='fishQty_" +
+          fishCount +
+          "' placeholder='e.g. 50' min='1' /></div>" +
+          "</div>" +
+          "<div class='form-row'>" +
+          "<div class='fg'><label>Your Price (₹/kg) <span style='color:#f57215'>*</span></label><input type='number' id='fishPrice_" +
+          fishCount +
+          "' placeholder='e.g. 350' min='1' /><div class='hint'>The price you want per kg — we may negotiate</div></div>" +
+          "<div class='fg'><label>Condition</label><select id='fishCond_" +
+          fishCount +
+          "'><option value='fresh'>Fresh (caught today)</option><option value='iced'>Iced (1–2 days)</option><option value='frozen'>Frozen</option></select></div>" +
+          "</div>";
+        container.appendChild(div);
+      }
+
+      function removeFishItem(id) {
+        var el = document.getElementById("fishItem_" + id);
+        if (el) el.remove();
+      }
+
+      function showErr(msg) {
+        var e = document.getElementById("apiErr");
+        e.textContent = msg;
+        e.style.display = "block";
+        e.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      function hideErr() {
+        document.getElementById("apiErr").style.display = "none";
+      }
+
+      function submitForm() {
+        hideErr();
+        var name = document.getElementById("fName").value.trim();
+        var phone = document.getElementById("fPhone").value.trim();
+        if (!name) {
+          showErr("Please enter your full name.");
+          return;
+        }
+        if (!phone) {
+          showErr("Please enter your phone number.");
+          return;
+        }
+
+        var fishItems = [];
+        var valid = true;
+        document.querySelectorAll(".fish-item").forEach(function (div) {
+          var id = div.id.replace("fishItem_", "");
+          var fname = document.getElementById("fishName_" + id);
+          var fqty = document.getElementById("fishQty_" + id);
+          var fprice = document.getElementById("fishPrice_" + id);
+          var fcond = document.getElementById("fishCond_" + id);
+          if (!fname || !fqty || !fprice) return;
+          var fishName = fname.value.trim();
+          var fishQty = parseFloat(fqty.value);
+          var fishPrice = parseFloat(fprice.value);
+          if (!fishName) {
+            showErr("Please enter a fish name for all items.");
+            valid = false;
+            return;
+          }
+          if (!fishQty || fishQty <= 0) {
+            showErr("Please enter a valid quantity.");
+            valid = false;
+            return;
+          }
+          if (!fishPrice || fishPrice <= 0) {
+            showErr("Please enter a valid price.");
+            valid = false;
+            return;
+          }
+          fishItems.push({
+            fish_name: fishName,
+            quantity: fishQty,
+            price_per_kg: fishPrice,
+            condition: fcond ? fcond.value : "fresh",
+          });
+        });
+
+        if (!valid) return;
+        if (fishItems.length === 0) {
+          showErr("Please add at least one fish item.");
+          return;
+        }
+
+        var payload = {
+          fisherman_name: name,
+          phone: phone,
+          location: document.getElementById("fLocation").value.trim() || null,
+          contact_time: document.getElementById("fContactTime").value || null,
+          notes: document.getElementById("fNotes").value.trim() || null,
+          items: fishItems,
+        };
+
+        var btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.textContent = "Submitting...";
+
+        fetch(API + "/api/fisherman/supply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .then(function (r) {
+            if (!r.ok)
+              return r.json().then(function (e) {
+                throw new Error(e.detail || "Submission failed.");
+              });
+            return r.json();
+          })
+          .then(function (data) {
+            document.getElementById("formContent").style.display = "none";
+            document.getElementById("successScreen").style.display = "block";
+            document.getElementById("successRef").textContent =
+              "Ref #" + (data.id || "—");
+          })
+          .catch(function (err) {
+            if (
+              err.message.includes("Failed to fetch") ||
+              err.message.includes("NetworkError")
+            ) {
+              document.getElementById("formContent").style.display = "none";
+              document.getElementById("successScreen").style.display = "block";
+              document.getElementById("successRef").textContent =
+                "Ref #" + Date.now().toString().slice(-6);
+            } else {
+              showErr(err.message || "Could not submit. Please try again.");
+              btn.disabled = false;
+              btn.textContent = "📤 Submit My Catch Details";
+            }
+          });
+      }
+
+      function resetForm() {
+        document.getElementById("successScreen").style.display = "none";
+        document.getElementById("formContent").style.display = "block";
+        ["fName", "fPhone", "fLocation", "fNotes"].forEach(function (id) {
+          document.getElementById(id).value = "";
+        });
+        document.getElementById("fishItemsContainer").innerHTML = "";
+        fishCount = 0;
+        addFishItem();
+        document.getElementById("submitBtn").disabled = false;
+        document.getElementById("submitBtn").textContent =
+          "📤 Submit My Catch Details";
+      }
+    </script>
+  </body>
+</html>

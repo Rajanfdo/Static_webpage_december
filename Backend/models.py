@@ -1,10 +1,12 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Date
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Date , Float, JSON
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from database import Base
 from sqlalchemy import Column, Integer, String, DateTime,Text
 from datetime import datetime
 from database import Base
+
+
 
 
 
@@ -163,3 +165,22 @@ class ContactUs(Base):
     subject = Column(String(255), nullable=False)
     message = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+
+
+from sqlalchemy import Column, Integer, String, JSON, DateTime
+from datetime import datetime
+
+class FishermanSupply(Base):
+    __tablename__ = "fisherman_supply"
+
+    id             = Column(Integer, primary_key=True, index=True)
+    fisherman_name = Column(String, nullable=False)
+    phone          = Column(String, nullable=False)
+    location       = Column(String, nullable=True)
+    contact_time   = Column(String, nullable=True)
+    notes          = Column(String, nullable=True)
+    items          = Column(JSON,   nullable=False)
+    status         = Column(String, default="pending")
+    created_at     = Column(DateTime, default=datetime.utcnow)

@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine  
 from routers import (
     admin , login, users, address, categories,
-    fishes, orders, order_items, reviews,cart,contactus
+    fishes, orders, order_items, reviews,cart,contactus , fisherman
 )
 origins = [
     "http://localhost:5502",
@@ -45,3 +45,4 @@ app.include_router(orders.router, prefix="/api/orders", tags=["orders"])
 app.include_router(order_items.router, prefix="/api/order-items", tags=["order-items"])
 app.include_router(reviews.router, prefix="/api/reviews", tags=["reviews"])
 app.include_router(contactus.router, prefix="/api/contactus", tags=["contactus"])
+app.include_router(fisherman.router, prefix="/api/fisherman", tags=["fisherman"])
